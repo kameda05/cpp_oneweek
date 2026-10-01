@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="330" viewBox="0 0 480 330">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="240" y="50" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="26" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">鳥</text>
+<polygon points="180,32.0 180,48.0 218,40" fill="#fff" stroke="#777" stroke-width="1"/>
+<rect x="20" y="15" width="160" height="50" rx="10" fill="#fff" stroke="#777" stroke-width="1"/>
+<line x1="180.0" y1="32.0" x2="180.0" y2="48.0" stroke="#fff" stroke-width="2"/>
+<text x="100.0" y="36.7" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">"鳥"はあくまでも</text>
+<text x="100.0" y="51.7" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">抽象的な概念</text>
+<line x1="225" y1="65" x2="120" y2="140" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="255" y1="65" x2="360" y2="140" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<path d="M90,230 C60,220 65,180 100,190 C110,160 135,160 140,180 L155,185 L140,190 C145,225 120,235 90,230 Z" fill="#fff" stroke="#777" stroke-width="1.5"/>
+<path d="M120,168 q4,-12 8,0 q4,-12 8,0 q4,-10 6,4" fill="#d93025" stroke="#d93025" stroke-width="1.2"/>
+<path d="M138,190 q4,10 -2,14 q-5,-4 2,-14" fill="#d93025" stroke="#d93025" stroke-width="1.2"/>
+<circle cx="130" cy="178" r="2.5" fill="#333" stroke="#333" stroke-width="1.2"/>
+<path d="M70,200 q-15,-25 5,-30 q0,15 10,25" fill="#fff" stroke="#777" stroke-width="1.2"/>
+<path d="M100,232 v16 m-6,0 h12 M115,232 v16 m-6,0 h12" fill="none" stroke="#e09a1e" stroke-width="2.5"/>
+<path d="M305,220 L330,210 C335,190 355,185 370,188 C380,175 395,175 400,185 L418,190 L400,196 C400,220 380,235 350,232 Z" fill="#222" stroke="#111" stroke-width="1.2"/>
+<path d="M400,185 L418,190 L400,196 Z" fill="#f5c400" stroke="#d9a400" stroke-width="1.2"/>
+<circle cx="392" cy="186" r="2.5" fill="#fff" stroke="#fff" stroke-width="1.2"/>
+<path d="M360,232 v18 m-6,0 h12 M372,230 v20 m-6,0 h12" fill="none" stroke="#333" stroke-width="2.5"/>
+<text x="110" y="275" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">ニワトリ</text>
+<text x="360" y="275" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">カラス</text>
+<polygon points="230.0,285 250.0,285 240,260" fill="#fff" stroke="#777" stroke-width="1"/>
+<rect x="150" y="285" width="180" height="40" rx="10" fill="#fff" stroke="#777" stroke-width="1"/>
+<line x1="230.0" y1="285.0" x2="250.0" y2="285.0" stroke="#fff" stroke-width="2"/>
+<text x="240.0" y="309.2" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">ニワトリやカラスは実在する鳥</text>
+</svg>

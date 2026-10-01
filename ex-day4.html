@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="STLのコンテナのうち、vectorとlist、およびイテレータの使い方を学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|応用編4日目：STL①</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">応用編</div>
+  <h1>応用編4日目：STL①</h1>
+  <p>動的配列 vector と list、そしてイテレータ</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  応用編4日目：STL①
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>応用編：</span>
+  <a href="ex-day1.html">1</a>
+  <a href="ex-day2.html">2</a>
+  <a href="ex-day3.html">3</a>
+  <a href="ex-day4.html" class="active">4</a>
+  <a href="ex-day5.html">5</a>
+  <a href="ex-day6.html">6</a>
+  <a href="ex-day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>STL</h2>
+
+      <h3>STLとは</h3>
+      <p>第4日目、第5日目にわたり、C++言語で最も大事な概念のひとつである、<strong>STL</strong>について学習します。すでに述べたように、<strong>STL</strong>とは、<strong>Standard Template Library（標準テンプレートライブラリ）</strong>の略です。「標準」と名のつく通り、現在ではC++言語の標準的なライブラリとして広く用いられています。</p>
+      <h3>配列とSTL</h3>
+      <p>STLには、さまざまな機能がありますが、ここでは、配列関連のクラスについて扱います。具体的にいえば、<strong>vector</strong>と<strong>list</strong>を扱います。それらは、種類こそ違え、配列の概念を拡張したものです。</p>
+      <p>C言語ですでに学んだ配列は、あらかじめ大きさの決まったものでした。しかし、通常の配列は、ファイルの読み込みなど、あらかじめどのくらいの大きさの配列を確保したらよいかわからないようなケースには不向きです。そこで便利なのが、これらのクラスです。これらの機能はいずれもサイズを意識せずに使える配列として使えますが、それぞれ独自の特徴があります。ここでは、それらについて説明していくことにします。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>vector</h2>
+
+      <h3>動的配列</h3>
+      <p>まずは、一番最初に<strong>vector</strong>について説明します。<strong>vector</strong>は、単純に、サイズを意識せずに使える配列で、<strong>動的配列(どうてきはいれつ）</strong>と呼ばれます。それに対し、今まで学習してきた、大きさが固定された配列のことを、<strong>静的配列</strong>と呼びます。</p>
+      <p><strong>静的配列</strong>には、あらかじめ確保するメモリの容量がはっきりしているというメリットがありますが、どのくらいのメモリを確保しなくてはならないか不明確な場合には不向きです。そんな時便利なのが、この<strong>動的配列</strong>なのです。</p>
+      <h3>サンプルコード</h3>
+      <p>まずは、以下のサンプルを実行してみてください。</p>
+      <div class="code-label">listex4-1：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+int main(){
+    vector&lt;int&gt; v1;
+    vector&lt;string&gt; v2;
+    v1.push_back(1);
+    v1.push_back(2);
+    v1.push_back(3);
+    v2.push_back("ABC");
+    v2.push_back("DEF");
+    unsigned int i;
+    for (i = 0; i &lt; v1.size(); i++)
+    {
+        cout &lt;&lt; "v1[" &lt;&lt; i &lt;&lt; "]=" &lt;&lt; v1[i] &lt;&lt; endl;
+    }
+    for (i = 0; i &lt; v2.size(); i++)
+    {
+        cout &lt;&lt; "v2[" &lt;&lt; i &lt;&lt; "]=" &lt;&lt; v2[i] &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">v[0]=1<br>v[1]=2<br>v[2]=3<br>v2[0]=ABC<br>v2[1]=DEF</div>
+      <h3>vectorの宣言と値の代入</h3>
+      <p>では、実際にプログラムの流れを見ながら、<strong>vector</strong>クラスの解説をしていきましょう。まずは、3行目を見てください。</p>
+      <div class="format-label">vectorクラスのインクルード</div>
+      <div class="format-box">#include &lt;vector&gt;</div>
+      <p><strong>vector</strong>クラスを利用するには、ヘッダファイル、<strong>vector</strong>をインクルードする必要があります。<strong>vector</strong>クラスを利用する際には、必ずこのヘッダファイルをインクルードしてください。また、<strong>vector</strong>に限らず、<strong>STLは、標準名前空間で利用される</strong>ので、かならず、標準名前空間を使えるようにしてください。(5行目参照)</p>
+      <p>続いて、<strong>vector</strong>クラスの利用方法を見てみましょう。8行目、9行目を見てください。</p>
+      <div class="format-label">vectorによる動的配列の宣言</div>
+      <div class="format-box">vector&lt;int&gt; v1;<br>vector&lt;string&gt; v2;</div>
+      <p>これは、テンプレートを用いて、配列の型を宣言しています。この場合、<strong>v1</strong>は、<strong>int</strong>、<strong>v2</strong>は<strong>string</strong>の配列にしています。続いて、これに値を入れていくのが、10行目から14行目に現れる<strong>push_back</strong>関数です。</p>
+      <div class="format-label">v1への値の代入</div>
+      <div class="format-box">v1.push_back(1);<br>v1.push_back(2);<br>v1.push_back(3);<br>v2.push_back("ABC");<br>v2.push_back("DEF");</div>
+      <p>これにより、v1の成分は、成分0から、1,2,3と設定されています(図4-1.)。<strong>string</strong>を使っているv2についても同様で、最初から、"ABC"、"DEF"が入ります。</p>
+      <div class="figure-box">
+        <img src="img/figex4-1.svg" alt="STLのvector">
+        <p>図4-1：vectorへのデータの挿入</p>
+      </div>
+      <h3>配列のサイズの取得と、要素へのアクセス</h3>
+      <p>以上のようにして、<strong>vector</strong>に要素を挿入することができました。次は、要素のアクセスについて説明します。まず、要素の取得に先立ち、配列の大きさの取得方法を説明しましょう。<strong>vector</strong>のサイズを取得するのは、<strong>size</strong>関数です。</p>
+      <p><strong>listex4-1</strong>の16行目と20行目を見てください。<strong>v1</strong>および、<strong>v2</strong>に対し、<strong>size()</strong>メソッドを使って、サイズを取得し、要素にアクセスしています。要素のアクセスは、<strong>配列変数と同じで、[]の中に0から始まる番号</strong>を入れることにより、取得できます。</p>
+      <div class="format-label">vectorへの成分のアクセス</div>
+      <div class="format-box">vector&lt;int&gt; v;<br>v[0] = 1;  <strong><span class="hint">←  値の代入</span></strong><br>cout &lt;&lt; v[0] &lt;&lt; endl;  <strong><span class="hint">←  値の取得</span></strong></div>
+      <p>このようにして、配列と同じように扱えるのが、vectorの特徴です。</p>
+      <h3>vectorの主なメンバ関数</h3>
+      <p>以上から、<strong>vector</strong>の主なメンバ関数をまとめると、以下のようになります。（表4-1）</p>
+      <table class="data-table">
+        <caption>表4-1.<strong>vector</strong>の主なメンバ関数</caption>
+        <thead><tr><th>関数名</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td><strong>push_back()</strong></td><td>要素の追加</td></tr>
+          <tr><td><strong>clear()</strong></td><td>要素のクリア</td></tr>
+          <tr><td><strong>size()</strong></td><td>配列の大きさを得る関数</td></tr>
+          <tr><td><strong>capacity()</strong></td><td>動的配列に追加できる要素の許容量</td></tr>
+          <tr><td><strong>empty()</strong></td><td>要素が空かどうかを調べる</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-card">
+      <h2>list</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>続いて<strong>list</strong>を使った簡単なサンプルを見てみましょう。まずは、以下のサンプルを実行してみてください。</p>
+      <div class="code-label">listex4-2：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;list&gt;
+
+using namespace std;
+
+int main(){
+    list&lt;int&gt; li;
+    li.push_back(1);    //    後ろにデータを挿入
+    li.push_back(2);    //    後ろにデータを挿入
+    li.push_front(3);    //    前にデータを挿入
+    list&lt;int&gt;::iterator itr;
+    //    データの挿入
+    itr = li.begin();    //    イテレータを先頭に設定
+    itr++;                //    一つ移動
+    li.insert(itr,4);    //    値の挿入
+    //    データの表示
+    for (itr = li.begin(); itr != li.end(); itr++){
+        cout &lt;&lt; *itr &lt;&lt; " ";
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">3 4 1 2</div>
+      <p><strong>list</strong>も、<strong>vector</strong>同様、クラスを利用するには、専用のヘッダファイルをインクルードする必要があります(2行目参照)。また、名前空間<strong>std</strong>の利用も忘れてはいけません。(4行目参照)</p>
+      <h3>データの挿入</h3>
+      <p><strong>list</strong>も<strong>vector</strong>同様、指定した型・クラスのデータを格納できます。プログラムを実行すると、まず8,9行目の<strong>push_back</strong>関数の処理で、先頭から数値、1，2が挿入されます。そのあと、10行目で、先頭にデータが挿入され、この段階で、リストの中身は、{ 3,1,2 }となります（図4-2.）。</p>
+      <p>この点が、<strong>vector</strong>と<strong>list</strong>の大きな違いの一つです。<strong>vector</strong>は動的配列であることから、配列のインデックスが変わってしまうような、前へのデータの挿入はできません。それに対し、<strong>list</strong>は、<strong>任意の位置に自由にデータを挿入することができる</strong>のです。</p>
+      <div class="figure-box">
+        <img src="img/figex4-2.svg" alt="STLのlist">
+        <p>図4-2：listへのデータの挿入①</p>
+      </div>
+      <h3>イテレータ</h3>
+      <p>そのため、<strong>list</strong>には、<strong>vector</strong>や配列のような、インデックスを使うことができません。では、<strong>list</strong>では、どのようにして要素のアクセスするのでしょうか？そのカギを握るのは、<strong>イテレータ</strong>と呼ばれるものです。これは、要素にアクセスする一種のポインタです。11行目で</p>
+      <div class="format-label">イテレータの宣言</div>
+      <div class="format-box">list&lt;int&gt;::iterator itr;</div>
+      <p>と宣言されている変数itrが、この場合の<strong>イテレータ</strong>になります。しかし、このままではイテレータは使うことができません。イテレータは、場所を宣言して使用する必要があります。それが、13行目の<strong>begin</strong>メソッドです。これは、リスト内の先頭にアクセスすることを意味しています。</p>
+      <div class="format-label">イテレータをリストの先頭に</div>
+      <div class="format-box">itr = li.begin();</div>
+      <h3>値の挿入</h3>
+      <p>とすることにより、イテレータitrは、リストliの先頭の要素にアクセスできるようになります。さらに、14行目のitr++で、先頭より一つ後ろに移動します。次に、15行目でイテレータが指す要素の前に値を挿入しています（図4-3.）。</p>
+      <div class="figure-box">
+        <img src="img/figex4-3.svg" alt="STLのlistとイテレータ">
+        <p>図4-3：listへのデータの挿入②</p>
+      </div>
+      <div class="format-label">イテレータが指す要素の前に値を挿入</div>
+      <div class="format-box">insert(イテレータ,値);</div>
+      <p>この処理により、<strong>list</strong>であるliの中身は、{ 3,4,1,2 }となります。</p>
+      <h3>値へのアクセス</h3>
+      <p>では、リストでこういった値へのアクセスをするにはどうすればよいのでしょうか？まず、<strong>list</strong>に設定されている値全体にアクセスする方法としては、イテレータのループをよく利用します。17行目をみてください。</p>
+      <div class="format-label">イテレータによる、listの全要素へのアクセス</div>
+      <div class="format-box">for (itr = li.begin(); itr != li.end(); itr++)</div>
+      <p>前述のように、<strong>begin</strong>メソッドを用いれば、<strong>list</strong>の先頭にアクセスできます。さらに、<strong>end</strong>メソッドで、最後の要素の次の位置（終端）を得られます。そのため、このように先頭から終端にたどりつくまでインクリメントを繰り返すことにより、すべての要素にアクセスすることができます。なお、<strong>list</strong>の値へのアクセスは、<strong>イテレータの値</strong>を用います。このサンプルの場合、イテレータが<strong>itr</strong>ですので、<strong>*itr</strong>によってアクセスします。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>vectorとlistの違い</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>さて、このような<strong>vector</strong>と<strong>list</strong>は、一見大変似ているように思います。ではいったい、どこが違い、どこが同じなのでしょうか？そこで、ここでは両者の共通点と違いに注目してみましょう。</p>
+      <div class="code-label">listex4-3：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;list&gt;
+
+using namespace std;
+
+int main(){
+    vector&lt;string&gt; v;
+    list&lt;string&gt; l;
+    v.push_back("HELLO");
+    v.push_back("WORLD");
+    l.push_back("hello");
+    l.push_back("world");
+    l.push_back("!");
+    //    vectorでのイテレータ
+    vector&lt;string&gt;::iterator i1;
+    list&lt;string&gt;::iterator i2;
+    for (i1 = v.begin(); i1 != v.end(); i1++){
+        cout &lt;&lt; *i1 &lt;&lt; endl;
+    }
+    //    listの要素の削除
+    i2 = l.begin();
+    l.remove(*i2);        //    要素の削除(listにしかできない）
+    for (i2 = l.begin(); i2 != l.end(); i2++){
+        cout &lt;&lt; *i2 &lt;&lt; endl;
+    }
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">HELLO<br>WORLD<br>world<br>!</div>
+      <h3>vectorとlistの共通点と違う点</h3>
+      <p>19行目から21行目までが、<strong>vector</strong>のイテレータです。つまり、<strong>vectorでも、listと同様、イテレータを使用することができます</strong>。</p>
+      <p>それに対し、23行目から24行目の処理は、<strong>list</strong>でしか使えません。<strong>remove</strong>は、<strong>list</strong>の中から、指定した値と一致する要素をすべて除去してくれます。しかし、このメソッドは、<strong>vector</strong>には存在しません。</p>
+      <h3>vectorとlistの特徴</h3>
+      <p>一見似たような概念の<strong>vector</strong>と、<strong>list</strong>ですが、考え方には根本的に違いがあります。<strong>vector</strong>は、あくまでも<strong>配列の延長上の概念で、サイズを最初に指定しなくても使えること</strong>が主眼になっています。そのため、任意の場所に要素を追加したり、削除したりすることが使用の主な目的ではありません。</p>
+      <p>それに対し、<strong>list</strong>は、<strong>双方向連結リスト</strong>と言い、<strong>任意の場所の要素が削除されたり、挿入されたりするような使用方法を想定</strong>しています。したがって、要素の位置や順番が変化することから、配列とは異なり、<strong>インデックスで管理することはできません</strong>。そのため、管理はもっぱらイテレータを使うことになります。</p>
+      <h3>listの主なメソッド</h3>
+      <p>最後に、<strong>list</strong>クラスの主なメンバ関数を紹介しておきます(表4-2.)。</p>
+      <table class="data-table">
+        <caption>表4-2.<strong>list</strong>の主なメンバ関数</caption>
+        <thead><tr><th>関数名</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td><strong>push_front()</strong></td><td>先頭に要素を追加する。</td></tr>
+          <tr><td><strong>push_back()</strong></td><td>末尾に要素を追加する。</td></tr>
+          <tr><td><strong>pop_front()</strong></td><td>先頭の要素を削除する。</td></tr>
+          <tr><td><strong>pop_back()</strong></td><td>末尾の要素を削除する。</td></tr>
+          <tr><td><strong>insert()</strong></td><td>要素を挿入する。</td></tr>
+          <tr><td><strong>erase()</strong></td><td>要素を削除する。</td></tr>
+          <tr><td><strong>clear()</strong></td><td>全要素を削除する。</td></tr>
+        </tbody>
+      </table>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problemex4.html">練習問題（応用編）4 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="ex-day3.html">← 応用編3日目へ</a>
+        <a href="ex-day5.html">応用編5日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

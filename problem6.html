@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++言語の練習問題（基本編）6。継承に関する問題です。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|練習問題6：継承</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">練習問題</div>
+  <h1>練習問題6：継承</h1>
+  <p>基本編6日目「継承」の内容を確認する問題です</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  練習問題6：継承
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>練習問題：</span>
+  <a href="problem1.html">1</a>
+  <a href="problem2.html">2</a>
+  <a href="problem3.html">3</a>
+  <a href="problem4.html">4</a>
+  <a href="problem5.html">5</a>
+  <a href="problem6.html" class="active">6</a>
+  <a href="problem7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>継承（対応：基本編6日目）</h2>
+
+      <div class="info-box">この問題を解くためには… → <a href="day6.html">基本編6日目「継承」</a> を参照してください。</div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 6-1</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">戦闘機クラスの作成</span>
+      </div>
+      <div class="prob-body">
+      <p>以下のプログラムに、飛行機クラスAirplaneを継承した戦闘機クラスFighterを指定されたとおりの仕様で追加し、期待された実行結果通りにプログラムが動くように改造しなさい。</p>
+      <div class="code-label">prob6-1：airplane.h</div>
+<pre>#ifndef AIRPLANE_H
+#define AIRPLANE_H
+
+//    飛行機クラス
+class Airplane{
+public:
+    //    飛行する
+    void fly();
+};
+
+#endif // AIRPLANE_H</pre>
+      <div class="code-label">airplane.cpp</div>
+<pre>#include "airplane.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+void Airplane::fly(){
+    cout &lt;&lt; "飛行する" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "fighter.h"
+
+using namespace std;
+
+int main(){
+    Fighter f;    //    戦闘機クラス
+    Airplane a;    //    飛行機クラス
+    //    飛行機が飛行する
+    a.fly();
+    //    戦闘機が飛行する
+    f.fly();
+    //    戦闘機が戦闘する
+    f.fight();
+    return 0;
+}</pre>
+      <div class="result-label">期待される実行結果</div>
+      <div class="result-box">飛行する<span class="hint">← Airplaneクラスのfly()メソッドによる処理</span><br>飛行する<span class="hint">← Fighterクラスのfly()メソッドによる処理</span><br>戦闘する<span class="hint">← Fighterクラスのfight()メソッドによる処理</span></div>
+      <p>Fighterクラスのヘッダファイルは、<strong>fighter.h</strong>、ソースファイルは、<strong>fighter.cpp</strong>とすること。</p>
+      <table class="data-table">
+        <caption>クラスFighterの仕様(メンバ関数)</caption>
+        <thead><tr><th>関数名</th><th>戻り値の型</th><th>引数</th><th>概要</th></tr></thead>
+        <tbody>
+          <tr><td>fight</td><td>void</td><td>なし</td><td>「戦闘する」と表示し、改行する。</td></tr>
+        </tbody>
+      </table>
+      </div></div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 6-2</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">計算クラスの拡張</span>
+      </div>
+      <div class="prob-body">
+      <p>以下のプログラムに、基本計算クラスFundCalcを継承した新計算クラスNewCalcを指定されたとおりの仕様で追加し、期待された実行結果通りにプログラムが動くように改造しなさい。この際、必要があれば、FundCalcクラスの必要な部分を改造しなさい。</p>
+      <div class="code-label">prob6-2：fundcalc.h</div>
+<pre>#ifndef FUNDCALC_H
+#define FUNDCALC_H
+
+class FundCalc{
+private:
+    double m_number1;    //    一つ目の数
+    double m_number2;    //    二つ目の数
+public:
+    //    コンストラクタ
+    FundCalc();
+    //    一つ目の数を設定
+    void setNumber1(double number);
+    //    二つ目の数を設定
+    void setNumber2(double number);
+    //    一つ目の数を設定
+    double getNumber1();
+    //    二つ目の数を設定
+    double getNumber2();
+    //    二つの数の和を出力
+    double add();
+    //    二つの数の差を出力
+    double sub();
+};
+
+#endif // FUNDCALC_H</pre>
+      <div class="code-label">fundcalc.cpp</div>
+<pre>#include "fundcalc.h"
+
+FundCalc::FundCalc() : m_number1(0), m_number2(0)
+{
+}
+//    一つ目の数を設定
+void FundCalc::setNumber1(double number)
+{
+    m_number1 = number;
+}
+//    二つ目の数を設定
+void FundCalc::setNumber2(double number)
+{
+    m_number2 = number;
+}
+//    一つ目の数を設定
+double FundCalc::getNumber1()
+{
+    return m_number1;
+}
+//    二つ目の数を設定
+double FundCalc::getNumber2()
+{
+    return m_number2;
+}
+//    二つの数の和を出力
+double FundCalc::add()
+{
+    return m_number1 + m_number2;
+}
+//    二つの数の差を出力
+double FundCalc::sub()
+{
+    return m_number1 - m_number2;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "newcalc.h"
+
+using namespace std;
+
+int main(){
+    NewCalc n;
+    n.setNumber1(10);    //    一つ目の数を設定
+    n.setNumber2(2);    //    二つ目の数を設定
+    cout &lt;&lt; n.getNumber1() &lt;&lt; " + " &lt;&lt; n.getNumber2() &lt;&lt; " = " &lt;&lt; n.add() &lt;&lt; endl;
+    cout &lt;&lt; n.getNumber1() &lt;&lt; " - " &lt;&lt; n.getNumber2() &lt;&lt; " = " &lt;&lt; n.sub() &lt;&lt; endl;
+    cout &lt;&lt; n.getNumber1() &lt;&lt; " * " &lt;&lt; n.getNumber2() &lt;&lt; " = " &lt;&lt; n.mul() &lt;&lt; endl;
+    cout &lt;&lt; n.getNumber1() &lt;&lt; " / " &lt;&lt; n.getNumber2() &lt;&lt; " = " &lt;&lt; n.div() &lt;&lt; endl;
+
+    return 0;
+}</pre>
+      <div class="result-label">期待される実行結果の例</div>
+      <div class="result-box">10 + 2 = 12<br>10 - 2 = 8<br>10 * 2 = 20<br>10 / 2 = 5</div>
+      <p>NewCalcクラスのヘッダファイルは、<strong>newcalc.h</strong>、ソースファイルは、<strong>newcalc.cpp</strong>とすること。</p>
+      <table class="data-table">
+        <caption>クラスNewCalcの仕様(メンバ関数)</caption>
+        <thead><tr><th>関数名</th><th>戻り値の型</th><th>引数</th><th>概要</th></tr></thead>
+        <tbody>
+          <tr><td>mul</td><td>double</td><td>なし</td><td>メンバ変数m_number1、m_number2の積</td></tr>
+          <tr><td>div</td><td>double</td><td>なし</td><td>メンバ変数m_number1、m_number2の商</td></tr>
+        </tbody>
+      </table>
+      </div></div>
+
+      <div class="page-nav">
+        <a href="problem5.html">← 練習問題5へ</a>
+        <a href="problem7.html">練習問題7へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>練習問題（基本編）</h3>
+      <ul>
+        <li><a href="problem1.html">問題1：名前空間</a></li>
+        <li><a href="problem2.html">問題2：クラス</a></li>
+        <li><a href="problem3.html">問題3：アクセス指定子</a></li>
+        <li><a href="problem4.html">問題4：生成と消去</a></li>
+        <li><a href="problem5.html">問題5：静的メンバ</a></li>
+        <li><a href="problem6.html">問題6：継承</a></li>
+        <li><a href="problem7.html">問題7：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

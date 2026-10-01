@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++言語の練習問題（基本編）5。静的メンバに関する問題です。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|練習問題5：静的メンバ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">練習問題</div>
+  <h1>練習問題5：静的メンバ</h1>
+  <p>基本編5日目「静的メンバ」の内容を確認する問題です</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  練習問題5：静的メンバ
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>練習問題：</span>
+  <a href="problem1.html">1</a>
+  <a href="problem2.html">2</a>
+  <a href="problem3.html">3</a>
+  <a href="problem4.html">4</a>
+  <a href="problem5.html" class="active">5</a>
+  <a href="problem6.html">6</a>
+  <a href="problem7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>静的メンバ（対応：基本編5日目）</h2>
+
+      <div class="info-box">この問題を解くためには… → <a href="day5.html">基本編5日目「静的メンバ」</a> を参照してください。</div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 5-1</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">静的メンバ関数の実装</span>
+      </div>
+      <div class="prob-body">
+      <p>以下のクラスの静的メンバ関数を実装した、function.cppを追加し、期待される実行結果通りの結果が得られるように改造しなさい。</p>
+      <div class="code-label">prob5-1：function.h</div>
+<pre>#ifndef FUNCTION_H
+#define FUNCTION_H
+
+class Function{
+public:
+    //    最大値を返す関数
+    static int max(int n1, int n2);
+    //    最小値を返す関数
+    static int min(int n1, int n2);
+};
+
+#endif // FUNCTION_H</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "function.h"
+
+using namespace std;
+
+int main(){
+    int m = 3, n = 1;
+    cout &lt;&lt; m &lt;&lt; "と" &lt;&lt; n &lt;&lt; "のうち、最大のものは" &lt;&lt; Function::max(m, n) &lt;&lt; endl;
+    cout &lt;&lt; m &lt;&lt; "と" &lt;&lt; n &lt;&lt; "のうち、最大のものは" &lt;&lt; Function::min(m, n) &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">3と1のうち、最大のものは3<br>3と1のうち、最小のものは1</div>
+      </div></div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 5-2</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">オブジェクトの数を取得する静的メンバ関数</span>
+      </div>
+      <div class="prob-body">
+      <p>次のプログラムの、クラスObjectは、生成したオブジェクトの数を、静的メンバ変数m_objectNumで数えている。このクラスに、m_objectNumの値を取得するint型の静的メンバ関数getObjectNum()を追加し、プログラムを、期待される実行結果が得られるように変更しなさい。</p>
+      <div class="code-label">prob5-2：object.h</div>
+<pre>#ifndef OBJECT_H
+#define OBJECT_H
+
+class Object{
+private:
+    static int m_objectNum;
+public:
+    //    コンストラクタ
+    Object();
+    //    デストラクタ
+    ~Object();
+};
+
+#endif // OBJECT_H</pre>
+      <div class="code-label">object.cpp</div>
+<pre>#include "object.h"
+
+//    静的メンバ変数の初期値を設定
+int Object::m_objectNum = 0;
+
+//    コンストラクタ
+Object::Object()
+{
+    //    オブジェクトの数をカウントする
+    m_objectNum++;
+}
+//    デストラクタ
+Object::~Object()
+{
+    //    オブジェクトの数をカウントする
+    m_objectNum--;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "object.h"
+
+using namespace std;
+
+int main(){
+    Object *o1, *o2, *o3;
+    o1 = new Object();
+    o2 = new Object();
+    o3 = new Object();
+    cout &lt;&lt; "オブジェクトの数:" &lt;&lt; Object::getObjectNum() &lt;&lt; endl;
+    delete o3;
+    cout &lt;&lt; "オブジェクトの数:" &lt;&lt; Object::getObjectNum() &lt;&lt; endl;
+    delete o2;
+    delete o1;
+    return 0;
+}</pre>
+      <div class="result-label">期待される実行結果</div>
+      <div class="result-box">オブジェクトの数:3<br>オブジェクトの数:2</div>
+      </div></div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 5-3</span>
+        <span class="difficulty">★★</span>
+      <span class="prob-title">合計回数を数える静的メンバ</span>
+      </div>
+      <div class="prob-body">
+      <p>以下のプログラムは、カウンタークラスCounterを使用したプログラムである。このプログラムを、指定されたように変更しなさい。</p>
+      <div class="code-label">prob5-3：counter.h</div>
+<pre>#ifndef COUNTER_H
+#define COUNTER_H
+
+class Counter{
+private:
+    //    回数
+    int m_count;
+public:
+    //    コンストラクタ
+    Counter();
+    //    リセット
+    void reset();
+    //    カウント
+    void count();
+    //    カウントの数
+    int getCount();
+};
+
+#endif // COUNTER_H</pre>
+      <div class="code-label">counter.cpp</div>
+<pre>#include "counter.h"
+
+//    コンストラクタ（カウント回数を0で初期化）
+Counter::Counter() : m_count(0)
+{
+}
+void Counter::reset(){
+    m_count = 0;
+}
+void Counter::count(){
+    m_count++;
+}
+int Counter::getCount(){
+    return m_count;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+#include "counter.h"
+
+using namespace std;
+
+int main(){
+    Counter c1, c2;
+    c1.count();
+    c2.count();
+    c2.count();
+    c2.reset();
+    c1.count();
+    c1.count();
+    c2.count();
+    cout &lt;&lt; "c1のカウント数：" &lt;&lt; c1.getCount() &lt;&lt; endl;
+    cout &lt;&lt; "c2のカウント数：" &lt;&lt; c2.getCount() &lt;&lt; endl;
+    cout &lt;&lt; "トータルのカウント数:" &lt;&lt; c1.getCount() + c2.getCount() &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">c1のカウント数:3<br>c2のカウント数:1<br>トータルのカウント数:4</div>
+      <p>main.cppの18行目に出ている、c1.getCount() + c2.getCount()を、クラスCounterの静的メソッドによって出力できるようにプログラムを改造しなさい。その際、以下のようにクラスCounterを変更すること。</p>
+      <p><strong>Counterクラスの変更ポイント</strong></p>
+      <ol><li>作成する静的メンバ関数の名前は、getTotalCount()とする。（戻り値はint）</li><li>この関数内では、トータルのカウント回数を記録した静的メンバ変数を、m_totalCountとする。</li></ol>
+      </div></div>
+
+      <div class="page-nav">
+        <a href="problem4.html">← 練習問題4へ</a>
+        <a href="problem6.html">練習問題6へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>練習問題（基本編）</h3>
+      <ul>
+        <li><a href="problem1.html">問題1：名前空間</a></li>
+        <li><a href="problem2.html">問題2：クラス</a></li>
+        <li><a href="problem3.html">問題3：アクセス指定子</a></li>
+        <li><a href="problem4.html">問題4：生成と消去</a></li>
+        <li><a href="problem5.html">問題5：静的メンバ</a></li>
+        <li><a href="problem6.html">問題6：継承</a></li>
+        <li><a href="problem7.html">問題7：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

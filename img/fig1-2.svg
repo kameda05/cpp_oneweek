@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="260" viewBox="0 0 480 260">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<ellipse cx="130" cy="130" rx="95" ry="90" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="8 6"/>
+<text x="130" y="26" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">名前空間C</text>
+<text x="120" y="105" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">power</text>
+<text x="120" y="160" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">power</text>
+<line x1="270" y1="130" x2="172" y2="100" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="270" y1="130" x2="172" y2="155" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<path d="M282,122 l14,14 M296,122 l-14,14" stroke="#d93025" stroke-width="2.5"/>
+<text x="306" y="126" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">同一名前空間では、</text>
+<text x="306" y="146" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">同じ名前は使えない。</text>
+</svg>

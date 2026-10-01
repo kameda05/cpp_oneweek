@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<ellipse cx="130" cy="110" rx="95" ry="70" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="8 6"/>
+<text x="130" y="26" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">名前空間A</text>
+<text x="130" y="115" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">power</text>
+<ellipse cx="340" cy="110" rx="95" ry="70" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="8 6"/>
+<text x="340" y="26" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">名前空間B</text>
+<text x="340" y="115" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">power</text>
+<line x1="225" y1="230" x2="140" y2="125" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<line x1="225" y1="230" x2="325" y2="125" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<circle cx="60" cy="270" r="6" fill="none" stroke="#d93025" stroke-width="1.2"/>
+<text x="76" y="275" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">名前空間が異なれば、同じ名前を用いてもよい。</text>
+</svg>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="互いに参照し合うクラス同士で、ヘッダファイルを相互にインクルードする際の問題点と、前方宣言による解決方法を学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|応用編2日目：クラス間の相互参照</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">応用編</div>
+  <h1>応用編2日目：クラス間の相互参照</h1>
+  <p>互いに参照し合うクラスのヘッダファイルの書き方</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  応用編2日目：クラス間の相互参照
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>応用編：</span>
+  <a href="ex-day1.html">1</a>
+  <a href="ex-day2.html" class="active">2</a>
+  <a href="ex-day3.html">3</a>
+  <a href="ex-day4.html">4</a>
+  <a href="ex-day5.html">5</a>
+  <a href="ex-day6.html">6</a>
+  <a href="ex-day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>クラスの相互参照</h2>
+
+      <h3>C++のクラスの相互参照</h3>
+      <p>C言語のケースと同様、C++のプログラムでも、ある程度複雑になると、多数のクラスが存在し、互いに参照するようになります。その参照関係は、どちらか一方が他方を一方的に利用・参照する関係ばかりとは限りません。場合によっては、複数のクラスが互いに参照しあうようなケースも考えられます。ここでは、そういったケースのソースコードの作成方法について説明します。</p>
+      <h3>#includeの問題点</h3>
+      <p>C++である程度実用的なプログラムを作成しようとする場合、避けて通れないのが、このクラスの相互参照です。あるクラスAとクラスBがあり、互いに参照する必要があるとします。このとき、通常であれば、以下のようにヘッダーファイルを定義するでしょう。</p>
+      <div class="code-label">相互参照の例①（一つ目のクラス）:A.h</div>
+<pre>#ifndef A_H
+#define A_H
+
+#include "B.h"
+
+class A{
+    B* m_bB;
+    …
+}
+
+#endif // A_H</pre>
+      <div class="code-label">相互参照の例②（二つ目のクラス）:B.h</div>
+<pre>#ifndef B_H
+#define B_H
+
+#include "A.h"
+
+class B{
+    A* m_bA;
+    …
+}
+
+#endif // B_H</pre>
+      <p>この方法の問題点は、仮に<strong>A.h</strong>で、クラス<strong>B</strong>を使用する際、<strong>B.h</strong>をインクルードすることになりますが、その際、<strong>B.h</strong>の中でも、クラス<strong>A</strong>を利用することになることから、いつまでたっても#includeの処理が終わらないということにあります。（図2-1）</p>
+      <div class="figure-box">
+        <img src="img/figex2-1.svg" alt="ヘッダファイルで相互にインクルードする際の問題点">
+        <p>図2-1：ヘッダファイルで相互にインクルードする際の問題点</p>
+      </div>
+      <p>つまり、この方法ではビルドエラーが発生します。しかし、このように複数のクラスが互いを参照することはよくあることです。では、どうすればよいのでしょうか？</p>
+      <h3>サンプルコード</h3>
+      <p>この問題に対応するためには、以下のようにすれば解決できます。</p>
+      <div class="code-label">listex2-1:A.h</div>
+<pre>#ifndef A_H
+#define A_H
+
+class B;    //    クラスBへの参照
+
+class A{
+private:
+    B* m_pB;
+public:
+    A();    //    コンストラクタ
+    void foo();
+    void bar();
+};
+
+#endif // A_H</pre>
+      <div class="code-label">B.h</div>
+<pre>#ifndef B_H
+#define B_H
+
+class A;    //    クラスAへの参照
+
+class B{
+private:
+    A* m_pA;
+public:
+    B(A* pA);
+    void hoge();
+};
+
+#endif // B_H</pre>
+      <div class="code-label">A.cpp</div>
+<pre>#include "A.h"
+#include "B.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+A::A(){
+    m_pB = new B(this);
+}
+void A::foo(){
+    cout &lt;&lt; "foo" &lt;&lt; endl;
+}
+void A::bar(){
+    m_pB-&gt;hoge();
+}</pre>
+      <div class="code-label">B.cpp</div>
+<pre>#include "A.h"
+#include "B.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+B::B(A* pA){
+    m_pA = pA;
+}
+void B::hoge(){
+    cout &lt;&lt; "bar" &lt;&lt; endl;
+    m_pA-&gt;foo();
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "A.h"
+#include "B.h"
+
+using namespace std;
+
+int main(){
+    A a;
+    a.foo();
+    a.bar();
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">foo<br>bar<br>foo</div>
+      <p>A.hの4行目および、B.hの4行目を参照して下さい。ここでは、<strong>class</strong>の後に、<strong>参照するクラスのクラス名を記述するだけで</strong>クラスを参照することができます。使用する際は、.cppファイルで必要なヘッダファイルをインクルードします。(図2-2.)</p>
+      <div class="figure-box">
+        <img src="img/figex2-2.svg" alt="クラスの相互参照のイメージ">
+        <p>図2-2：クラスの相互参照のイメージ</p>
+      </div>
+      <p>参照するクラスが増えても、この方法を用いれば、問題ありません。</p>
+      <h3>thisポインタ</h3>
+      <p>続いて、プログラムの中身を見てみましょう。まず、<strong>A.cpp</strong>の8行目を見てください。</p>
+      <div class="format-label">thisポインタの利用</div>
+      <div class="format-box">m_pB = new B(this);</div>
+      <p>ここで出てくる、<strong>this</strong>というポインタは何でしょう？実は、これは、<strong>thisポインタ</strong>と言い、<strong>自分自身を表すポインタ</strong>です。<strong>B.h</strong>を見てみると、クラスBのコンストラクタ（B.hの10行目）の中で、</p>
+      <div class="format-label">Bクラスのコンストラクタ</div>
+      <div class="format-box">B(A* pA);</div>
+      <p>としています。つまり、Bのコンストラクタには、引数として、Aクラスのインスタンスを渡すことになるわけです。そのため、<strong>Aクラス内でBクラスを生成する際に、自分自身のポインタを渡している</strong>のです。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>const修飾子</h2>
+
+      <h3>クラス間の相互参照の問題点</h3>
+      <p>このように、クラス間の相互参照を行うようになると、いろいろな問題が発生します。たとえば、引数として、あるクラスのインスタンスを渡した場合、それによって、インスタンスのメンバ変数などの値が変化するか、といった問題です。</p>
+      <p>そこで、インスタンスのポインタおよび参照を渡す場合、それによって、<strong>引数の状態が変更されないことを保証する</strong>ことができます。それを可能にするのが、<strong>const修飾子</strong>です。</p>
+      <h3>constによる定数の定義</h3>
+      <p>詳しい説明をする前に、まずは、一番簡単な<strong>const</strong>の使い方を見てみましょう。constは通常、以下のように定数を表す修飾子として使用されます。</p>
+      <div class="format-label">constによる定数の定義</div>
+      <div class="format-box">const int max = 120;	//	定数の定義（以後、値は変更できない)<br>max = 130;   // コンパイル エラー(constの定数の値を変更しようとしたので)</div>
+      <p>このように、定数を定義するのが、<strong>const</strong>の役割です。</p>
+      <h3>引数のconst</h3>
+      <p>さらに、<strong>const</strong>は、関数の引数にもつけることができます。</p>
+      <div class="format-label">const指定した関数の引数</div>
+      <div class="format-box">void foo(const A* pA);	//	Aはクラス名（ポインタの場合）<br>void bar(const A&amp; pA);	//	Aはクラス名（参照の場合）</div>
+      <p>これにより、Aクラスのインスタンス、pAの値は変更されないことが保証されます。<strong>もしこの関数のなかで、値を変更するような処理をした場合、エラーが発生</strong>します。ポインタの場合も、参照の場合も、同じ使用方法ができます。</p>
+      <h3>constメンバ関数</h3>
+      <p>また、メンバ関数にも<strong>const</strong>を付加することができます。この場合、このメソッドを呼び出すことによって、インスタンス内のメンバ変数が変化することがないことを保証します。</p>
+      <div class="format-label">constメンバ関数の例</div>
+      <div class="format-box">int getNum() const;		//	constメンバ関数</div>
+      <h3>サンプルプログラム</h3>
+      <p>では、実際に<strong>const</strong>のサンプルプログラムを見てみましょう。</p>
+      <div class="code-label">listex2-2:Sample.h</div>
+<pre>#ifndef SAMPLE_H
+#define SAMPLE_H
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+class Sample{
+private:
+    string m_str;
+public:
+    Sample();
+    void setStr(const string str);  //  引数をconstに
+    string getStr() const;          //  メンバ関数のconst
+public:
+    static const int m_cst = 100;  //  定数
+};
+
+#endif // SAMPLE_H</pre>
+      <div class="code-label">Sample.cpp</div>
+<pre>#include "Sample.h"
+
+Sample::Sample(){
+    m_str = "";
+}
+void Sample::setStr(const string str)
+{
+    m_str = str;
+    //str = "";
+}
+string Sample::getStr() const
+{
+    //    m_str = "";
+    return m_str;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include "Sample.h"
+
+using namespace std;
+
+int main(){
+    Sample s;
+    cout &lt;&lt; "定数：" &lt;&lt; s.m_cst &lt;&lt; endl;
+    s.setStr("ABC");                //    値の設定
+    cout &lt;&lt; s.getStr() &lt;&lt; endl;        //    値の取得
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">定数: 100<br>ABC</div>
+      <p><strong>Sample.h</strong>の17行目では、int型の定数、m_cstを定義しています。通常のメンバ変数と違い、ヘッダファイルの中で定義できます。ただ、この場合、<strong>先頭にconstをつける必要があります。</strong></p>
+      <p>次に、14行目、および15行目を見て下さい。これは、<strong>string</strong>型のメンバ変数m_strのセッターとゲッターです。セッターは、引数に、<strong>const</strong>、ゲッターが<strong>const</strong>のメンバ関数になっています。</p>
+      <p>そのため、<strong>Sample.cpp</strong>の9行目のコメントを取ると、ビルドエラーになります。これは、<strong>const指定した引数の値を変更しようとした</strong>ためです。同じく、13行目のコメントをとってもエラーになります。これは、<strong>const指定したメソッドの中で、メンバ変数の値を変えようとした</strong>ためです。</p>
+      <h3>constまとめ</h3>
+      <p>以上の<strong>const修飾子</strong>の使い方による意味の違いをまとめると、以下の表(表2-1.)のようになります。</p>
+      <table class="data-table">
+        <caption>表2-1:const修飾子の使われ方とその意味</caption>
+        <thead><tr><th>使用場所</th><th>使用例</th><th>意味</th><th>解説</th></tr></thead>
+        <tbody>
+          <tr><td><strong>変数の前</strong></td><td>const int a = 100;</td><td>定数の定義</td><td>定数として値を変更できない</td></tr>
+          <tr><td><strong>メンバ関数の引数</strong></td><td>void setNum(const int a);</td><td>引数の変更不可能</td><td>関数内では、引数の状態が変化しない</td></tr>
+          <tr><td><strong>メンバ関数の後ろ</strong></td><td>int getNum() const;</td><td>メンバ変数の変更不可能</td><td>関数内では、メンバ変数の状態が変化しない</td></tr>
+        </tbody>
+      </table>
+      <h3>constが使われるその他の意味</h3>
+      <p>このように、定数を定義したり、値が変更されないことを保証する<strong>const</strong>修飾子ですが、実は、それ以外にも意味があります。まず一つは、<strong>const</strong>をつけることで、<strong>コンパイラは最適化をしやすくなり</strong>、処理速度を向上させたり、メモリを効率的に使用することが可能であるとされています。また、同時に、変数の使用方法に制限をつけることで、<strong>プログラミングの誤りを未然に防ぐ</strong>ことができる、といった効果があります。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problemex2.html">練習問題（応用編）2 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="ex-day1.html">← 応用編1日目へ</a>
+        <a href="ex-day3.html">応用編3日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

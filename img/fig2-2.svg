@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="300" viewBox="0 0 520 300">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="230" y="26" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">オブジェクト：obj</text>
+<circle cx="250" cy="165" r="115" fill="none" stroke="#999" stroke-width="1.2"/>
+<text x="250" y="105" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="15" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">m_num</text>
+<text x="250" y="205" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">void set(int num)</text>
+<text x="250" y="245" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">int get()</text>
+<line x1="470" y1="200" x2="340" y2="200" stroke="#333" stroke-width="3" marker-end="url(#a)"/>
+<text x="400" y="190" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">① 値の設定</text>
+<line x1="470" y1="240" x2="300" y2="240" stroke="#333" stroke-width="3" marker-end="url(#a)"/>
+<text x="400" y="230" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">③ 値の取得</text>
+<path d="M178,200 C150,175 160,120 200,102" fill="none" stroke="#333" stroke-width="3" marker-end="url(#a)"/>
+<text x="196" y="160" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">② m_numに代入</text>
+<path d="M195,245 C10,250 20,60 215,84" fill="none" stroke="#333" stroke-width="3" marker-end="url(#a)"/>
+<text x="20" y="66" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">④ m_num読み出し</text>
+</svg>

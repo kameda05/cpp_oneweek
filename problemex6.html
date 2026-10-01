@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++言語の練習問題（応用編）6。virtualと仮想関数に関する問題です。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|練習問題（応用編）6：virtualと仮想関数</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">練習問題（応用編）</div>
+  <h1>練習問題（応用編）6：virtualと仮想関数</h1>
+  <p>応用編6日目「virtualと仮想関数」の内容を確認する問題です</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  練習問題（応用編）6：virtualと仮想関数
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>練習問題（応用編）：</span>
+  <a href="problemex1.html">1</a>
+  <a href="problemex2.html">2</a>
+  <a href="problemex3.html">3</a>
+  <a href="problemex4.html">4</a>
+  <a href="problemex5.html">5</a>
+  <a href="problemex6.html" class="active">6</a>
+  <a href="problemex7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>virtualと仮想関数（対応：応用編6日目）</h2>
+
+      <div class="info-box">この問題を解くためには… → <a href="ex-day6.html">応用編6日目「virtualと仮想関数」</a> を参照してください。</div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 6-1</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">抽象クラスへのまとめ直し</span>
+      </div>
+      <div class="prob-body">
+      <p>以下のプログラムは、二種類の飛行機、戦闘機(FighterAircraft)と、旅客機（PassengerPlane）クラスのインスタンスを生成し、メンバ関数を実行するプログラムである。この２つのクラスには、共通するメンバが存在する。</p>
+      <p>そこで、これら2つのクラスに共通するメンバを、飛行機(AirPlane)クラスに集約し、FighterAircraftクラス、およびPassengerPlaneは、それらのクラスを継承したものにするように、プログラムを書き換えなさい。ただし、この時、AirPlaneは、純粋仮想関数fly()を持つ抽象クラスとすること。</p>
+      <div class="code-label">fighteraircraft.h</div>
+<pre>#ifndef FIGHTERAIRCRAFT_H
+#define FIGHTERAIRCRAFT_H
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+//    戦闘機クラス
+class FighterAircraft{
+private:
+    string m_type;
+public:
+    //    コンストラクタ
+    FighterAircraft();
+    //    タイプの取得
+    string getType();
+    //    飛行する
+    void fly();
+    //    戦闘する
+    void fight();
+};
+
+#endif // FIGHTERAIRCRAFT_H</pre>
+      <div class="code-label">fighteraircraft.cpp</div>
+<pre>#include "fighteraircraft.h"
+
+//    コンストラクタ
+FighterAircraft::FighterAircraft()
+{
+    m_type = "戦闘機";
+}
+//    タイプの取得
+string FighterAircraft::getType()
+{
+    return m_type;
+}
+//    飛行する
+void FighterAircraft::fly()
+{
+    cout &lt;&lt; "攻撃に出るために飛行" &lt;&lt; endl;
+}
+//    戦闘する
+void FighterAircraft::fight()
+{
+    cout &lt;&lt; "戦闘します" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">passengerplane.h</div>
+<pre>#ifndef PASSENGERPLANE_H
+#define PASSENGERPLANE_H
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+//    旅客機クラス
+class PassengerPlane{
+private:
+    string m_type;
+public:
+    //    コンストラクタ
+    PassengerPlane();
+    //    タイプの取得
+    string getType();
+    //    飛行する
+    void fly();
+    //    乗客を運ぶ
+    void carryPassengers();
+};
+
+#endif // PASSENGERPLANE_H</pre>
+      <div class="code-label">passengerplane.cpp</div>
+<pre>#include "passengerplane.h"
+
+//    コンストラクタ
+PassengerPlane::PassengerPlane()
+{
+    m_type = "旅客機";
+}
+//    タイプの取得
+string PassengerPlane::getType()
+{
+    return m_type;
+}
+//    飛行する
+void PassengerPlane::fly()
+{
+    cout &lt;&lt; "乗客を乗せて目的地まで飛行します。" &lt;&lt; endl;
+}
+//    乗客を運ぶ
+void PassengerPlane::carryPassengers()
+{
+    cout &lt;&lt; "乗客を目的地まで運びます" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "fighteraircraft.h"
+#include "passengerplane.h"
+
+using namespace std;
+
+int main(){
+    //    戦闘機クラスのインスタンスの生成
+    FighterAircraft* fighter = new FighterAircraft();
+    PassengerPlane* airlinear = new PassengerPlane();
+    //    戦闘機クラスの処理
+    fighter-&gt;fly();                    //    飛行する
+    fighter-&gt;fight();                //    戦闘する
+    //    旅客機クラスの処理
+    airlinear-&gt;fly();                //    飛行する
+    airlinear-&gt;carryPassengers();    //    乗客を運ぶ
+    //    delete処理
+    delete fighter;
+    delete airlinear;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">攻撃に出るため飛行<br>戦闘します<br>乗客を乗せて目的地まで飛行します。<br>乗客を目的地まで運びます。</div>
+      </div></div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 6-2</span>
+        <span class="difficulty">★★</span>
+      <span class="prob-title">派生クラスの作成</span>
+      </div>
+      <div class="prob-body">
+      <p>以下のプログラムは、野球選手（BaseballPlayer）クラスを基に派生した、ピッチャー（Pitcher）クラス、捕手(Catcher)クラス、野手(Fielder)クラスのインスタンスをチームのメンバーの数だけ生成し、その内容を表示したプログラムである。PitcherクラスおよびFielderクラスを参考にして、捕手(Catcher)クラスを作成し、プログラムを完成させなさい。</p>
+      <div class="code-label">baseballplayer.h</div>
+<pre>#ifndef BASEBALLPLAYER_H
+#define BASEBALLPLAYER_H
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+class BaseballPlayer{
+protected:
+    //    背番号
+    int m_number;
+    //    プレイヤーの種類
+    string m_kind;
+    //    名前
+    string m_name;
+public:
+    //    名前の取得
+    int getNumber();
+    //    種類の取得
+    string getKind();
+    //    名前の取得
+    string getName();
+    //    プレイ（純粋仮関数)
+    virtual void play()=0;
+};
+
+#endif // BASEBALLPLAYER_H</pre>
+      <div class="code-label">fielder.h</div>
+<pre>#ifndef FIELDER_H
+#define FIELDER_H
+
+#include "BaseballPlayer.h"
+
+class Fielder : public BaseballPlayer{
+public:
+    //    コンストラクタ
+    Fielder(string name,int number);
+    //    野手がプレイする
+    void play();
+};
+
+#endif // FIELDER_H</pre>
+      <div class="code-label">fielder.cpp</div>
+<pre>#include "fielder.h"
+
+Fielder::Fielder(string name,int number)
+{
+    m_name = name;
+    m_number = number;
+    m_kind = "野手";
+}
+//    野手がプレイする
+void Fielder::play()
+{
+    cout &lt;&lt; "守備をする" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">pitcher.h</div>
+<pre>#ifndef PITCHER_H
+#define PITCHER_H
+
+#include "BaseballPlayer.h"
+
+class Pitcher : public BaseballPlayer{
+public:
+    //    コンストラクタ
+    Pitcher(string name,int number);
+    //    ピッチャーがプレイする
+    void play();
+};
+
+#endif //PITCHER_H</pre>
+      <div class="code-label">pitcher.cpp</div>
+<pre>#include "pitcher.h"
+
+Pitcher::Pitcher(string name,int number)
+{
+    m_name = name;
+    m_number = number;
+    m_kind = "ピッチャー";
+}
+//    ピッチャーがプレイする
+void Pitcher::play()
+{
+    cout &lt;&lt; "投球する" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include "pitcher.h"
+#include "catcher.h"
+#include "fielder.h"
+
+int main(){
+    //    野球選手の配列作成
+    BaseballPlayer* players[9];
+    players[0] = new Fielder("山田",8);
+    players[1] = new Fielder("高坂",16);
+    players[2] = new Fielder("ゴメス",16);
+    players[3] = new Fielder("中村",6);
+    players[4] = new Fielder("春日井",32);
+    players[5] = new Fielder("堀田",5);
+    players[6] = new Catcher("逢坂",54);
+    players[7] = new Fielder("トーマス",11);
+    players[8] = new Pitcher("斉藤",34);
+    int i;
+    for(i = 0; i &lt; 9; i++){
+        cout &lt;&lt; "---------------------------------------------" &lt;&lt; endl;
+        cout &lt;&lt; "名前:" &lt;&lt; players[i]-&gt;getName() &lt;&lt; endl;
+        cout &lt;&lt; "背番号:" &lt;&lt; players[i]-&gt;getNumber() &lt;&lt; endl;
+        cout &lt;&lt; "種類:" &lt;&lt; players[i]-&gt;getKind() &lt;&lt; endl;
+    }
+    //    インスタンスの消去
+    for(i = 0; i &lt; 9; i++){
+        delete players[i];
+    }
+    return 0;
+}</pre>
+      <div class="result-label">期待される実行結果</div>
+      <div class="result-box">---------------------------------------------<br>名前:山田<br>背番号:8<br>種類:野手<br>---------------------------------------------<br>名前:高坂<br>背番号:16<br>種類:野手<br>---------------------------------------------<br>名前:ゴメス<br>背番号:16<br>種類:野手<br>---------------------------------------------<br>名前:中村<br>背番号:6<br>種類:野手<br>---------------------------------------------<br>名前:春日井<br>背番号:32<br>種類:野手<br>---------------------------------------------<br>名前:堀田<br>背番号:5<br>種類:野手<br>---------------------------------------------<br>名前:逢坂<br>背番号:54<br>種類:キャッチャー<br>---------------------------------------------<br>名前:トーマス<br>背番号:11<br>種類:野手<br>---------------------------------------------<br>名前:斉藤<br>背番号:34<br>種類:ピッチャー</div>
+      </div></div>
+
+      <div class="page-nav">
+        <a href="problemex5.html">← 練習問題（応用編）5へ</a>
+        <a href="problemex7.html">練習問題（応用編）7へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>練習問題（応用編）</h3>
+      <ul>
+        <li><a href="problemex1.html">問題1：C言語との違い</a></li>
+        <li><a href="problemex2.html">問題2：クラス間の相互参照</a></li>
+        <li><a href="problemex3.html">問題3：テンプレートとSTL</a></li>
+        <li><a href="problemex4.html">問題4：STL①</a></li>
+        <li><a href="problemex5.html">問題5：STL②</a></li>
+        <li><a href="problemex6.html">問題6：virtualと仮想関数</a></li>
+        <li><a href="problemex7.html">問題7：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

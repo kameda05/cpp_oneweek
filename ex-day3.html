@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++のテンプレート関数・テンプレートクラスと、それを応用した標準テンプレートライブラリ（STL）の概要を学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|応用編3日目：テンプレートとSTL</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">応用編</div>
+  <h1>応用編3日目：テンプレートとSTL</h1>
+  <p>型に依存しないプログラムを書くテンプレートとSTLの概要</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  応用編3日目：テンプレートとSTL
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>応用編：</span>
+  <a href="ex-day1.html">1</a>
+  <a href="ex-day2.html">2</a>
+  <a href="ex-day3.html" class="active">3</a>
+  <a href="ex-day4.html">4</a>
+  <a href="ex-day5.html">5</a>
+  <a href="ex-day6.html">6</a>
+  <a href="ex-day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>テンプレート</h2>
+
+      <h3>汎用性の高いプログラム</h3>
+      <p>C++言語に限らず、オブジェクト指向言語でプログラミングをする際に意識されることが、処理になるべく汎用性を持たせるという点にあります。同じような処理を何度も作るのではなく、できるだけ少ない記述で多数のことをできるようにすることが求められます。そのようなコーディングを実現する手段はいくつかありますが、ここではそのうち、<strong>テンプレート</strong>と呼ばれる方法について説明していきます。</p>
+      <h3>型の違い</h3>
+      <p>今まで学習してきたC++言語は、変数やクラスの型などは厳密に定義をする必要がありました。わかりやすい例をあげると、演算子の"+"を考えてみましょう。この演算子は、数値でも利用できますし、また、<strong>string</strong>クラスのようなクラスでも使われます。例えば、数値の場合は、</p>
+      <div class="format-label">数値における+演算子の利用方法</div>
+      <div class="format-box">4 + 3 → 7</div>
+      <p>となり、数値の和を表す演算になります。これに対し、<strong>string</strong>クラスの場合は、</p>
+      <div class="format-label">stringクラスにおける+演算子の利用方法</div>
+      <div class="format-box">"ABC" + "DEF" → "ABCDEF"</div>
+      <p>といったように、意味が違います。そのため、例えば＋演算子を使って数値の和を求める関数と、文字列をつなげる関数を使う場合には、別の関数を用意しなくてはなりません。つまり、これら演算子は違うものとして扱うわけです。このように、今までのプログラミングにおいては、<strong>同じ演算子でも、データ形式に依存する</strong>ということがわかります。</p>
+      <h3>ジェネリックプログラミングとテンプレート</h3>
+      <p>これに対し、「同じ演算子であれば、型が違っても使えるべきである」という考え方もあります。前述のような関数のたとえで言うのであれば、演算子が同じであれば、型が何であっても使えるようにする、という考え方です。このような考え方を<strong>ジェネリックプログラミング</strong>と言います。</p>
+      <p>そして、C++言語でジェネリックプログラミングを実現するための仕組みを、<strong>テンプレート</strong>と言います。テンプレートには、大きく分けて二つあり、関数に用いる<strong>テンプレート関数</strong>とクラスに用いる<strong>テンプレートクラス</strong>があります。ここでは、それらを解説していきます。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>テンプレート関数</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>まずは、関数テンプレートの例をみてみましょう。以下のプログラムを実行してみてください。</p>
+      <div class="code-label">listex3-1：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+//    テンプレート関数
+template &lt;typename T&gt;
+T add(T x, T y){
+    return x + y;
+}
+
+int main(){
+    cout &lt;&lt; add&lt;int&gt;(4, 3) &lt;&lt; endl;            //    数値でadd関数を利用
+    cout &lt;&lt; add&lt;string&gt;("ABC", "DEF") &lt;&lt; endl;    //    stringでaddを利用
+    cout &lt;&lt; add(1, 2) &lt;&lt; endl;                    //    両方ともintの場合、型指定省略可能
+    //    cout &lt;&lt; add("abc", "def") &lt;&lt; endl;        //    stringの場合、型指定が必要
+    //    cout &lt;&lt; add(1,2.3) &lt;&lt; endl;                //    型が不一致した場合、使えない。
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">7<br>ABCDEF<br>3</div>
+      <p><strong>add</strong>という関数が使われていますが、呼び出すときに、関数名のあとに、<strong>&lt;int&gt;</strong>とすれば、整数の加算関数として、<strong>&lt;string&gt;</strong>をつければ、文字列の結合の演算子として利用できます。</p>
+      <h3>関数テンプレートの定義</h3>
+      <p>このプログラムで出てくる、</p>
+      <div class="format-label">テンプレートの定義</div>
+      <div class="format-box">template &lt;typename T&gt;</div>
+      <p>の部分で、テンプレートを定義しています。これにより、これに続く関数が、テンプレート関数であることを示しています。<strong>T</strong>という文字が変数の型を表すテンプレート引数で、次の行からの関数定義部分の Tを int や stringといったデータ型およびクラスに対応させて、変数型の異なる関数をまとめて定義しているのです。続いて、このTを引数、もしくは戻り値の型とする関数を定義します。</p>
+      <div class="format-label">関数テンプレートの定義</div>
+      <div class="format-box">T add(T x, T y){<br>    return x + y;<br>}</div>
+      <p><strong>T</strong>の部分には、さまざまな型が入ります。<strong>int</strong>といった基本データ型、もしくはクラス名がここに入ります。</p>
+      <h3>関数テンプレートの利用</h3>
+      <p>では、このように定義された関数テンプレートは、どのように利用されるのでしょうか？サンプルの、13行目～15行目を見てください。13行目の場合は引数として、<strong>int</strong>を、14行目では、<strong>string</strong>を引数として利用しています。</p>
+      <div class="format-label">関数テンプレートの呼び出し</div>
+      <div class="format-box">add&lt;int&gt;(4,3);<br>add&lt;string&gt;("ABC", "DEF");</div>
+      <p>このように、<strong>&lt;</strong>と<strong>&gt;</strong>でデータ型、もしくはクラス名を囲めば、テンプレートの<strong>T</strong>にあたる部分がこの型、もしくはクラスとなって、その関数を利用できるわけです（図3-1.参照）。したがって、<strong>型、およびクラスごとに同じ処理をする関数を多数定義する必要はありません</strong>。</p>
+      <div class="figure-box">
+        <img src="img/figex3-1.svg" alt="テンプレート関数">
+        <p>図3-1：テンプレート関数のイメージ</p>
+      </div>
+      <p>また、15行目のように、引数の型がはっきりしていれば、<strong>&lt;</strong>と<strong>&gt;</strong>を省略することができます。</p>
+      <div class="format-label">テンプレートの型指定を省略できるケース</div>
+      <div class="format-box">add(1, 2)</div>
+      <p>どちらも明らかに<strong>int</strong>型であり、このようにはっきりした場合は、省略可能です。ただし、次のようなケースは例外です。</p>
+      <div class="format-label">テンプレートの型指定が省略できないケース</div>
+      <div class="format-box">add("abc", "def")  <span class="hint"><strong>← stringなのか、char*なのか、はっきりしない。</strong></span><br>add(1,2.3)  <span class="hint"><strong>← 両方の型が異なる。</strong></span></div>
+      <p>16行目および、17行目のコメントを外してみてください。ビルドエラーが発生します。理由は、16行目のケースは、一見両方とも<strong>string</strong>を使っているのでよさそうな感じがしますが、実は、このような形で表れるのは、<strong>char*</strong>である可能性もあることから、<strong>型指定があいまいになり、エラーに</strong>なります。</p>
+      <p>さらに、17行目のケースでは、第一の引数が<strong>int</strong>であるのに対し、第二の引数が小数であることから、<strong>double</strong>となり、<strong>ひとつのテンプレートに異なるデータ型を指定している</strong>ことから、エラーになります。以上のことから、テンプレートを用いる際には、<strong>必ず型・およびクラスを明確に指定してから使用</strong>することが推奨されます。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>テンプレートクラス</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>関数に続き、今度はクラスにテンプレートが適用された場合のサンプルを見てみましょう。まずは、以下のサンプルを実行してみてください。</p>
+      <div class="code-label">listex3-2：calc.h</div>
+<pre>#ifndef CALC_H
+#define CALC_H
+
+template&lt;typename T&gt; class Calc{
+private:
+    T m_n1;
+    T m_n2;
+public:
+    inline void set(const T n1, const T n2)
+    { m_n1 = n1; m_n2 = n2; };    //    引数のセット
+    inline T add() const{
+        return m_n1 + m_n2;
+    }                //    計算結果
+};
+
+#endif // CALC_H</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include "calc.h"
+
+using namespace std;
+
+int main(){
+    Calc&lt;int&gt; i1;
+    Calc&lt;string&gt; i2;
+    i1.set(1, 2);
+    i2.set("ABC", "DEF");
+    cout &lt;&lt; i1.add() &lt;&lt; endl &lt;&lt; i2.add() &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">3<br>ABCDEF</div>
+      <h3>ヘッダファイルへの実装</h3>
+      <p>プログラムの解説に入る前に、このソースコードには注意すべき点がありますので、まずはその点について説明していきましょう。テンプレートクラスのプログラムを見ると、先頭にテンプレートの宣言が来るのは、関数の場合と同じです。ただ、見てわかるとおり、このサンプルには、calc.hに対応する.cppファイルがありません。実は、<strong>テンプレートクラスでは、実装はヘッダファイルにすることが推奨</strong>されているからなのです。理由については、難しくなるのでここでは省略しますが、テンプレートを用いたクラスを記述するときは、このほうが効率的です。</p>
+      <h3>テンプレートクラスの実装</h3>
+      <p>では、以上を踏まえ、<strong>calc.h</strong>の中身を見てみましょう。このプログラムを見ると、<strong>calc.h</strong>の4行目で</p>
+      <div class="format-label">テンプレートクラスの宣言</div>
+      <div class="format-box">template&lt;typename T&gt; class Calc</div>
+      <p>としています。これは、これから、テンプレート<strong>T</strong>をこのプログラムの中で利用するということを宣言しています。したがって、以下、<strong>T</strong>という文字が出てくると、その部分を、任意のデータ型・クラスに変更できるということを意味しているのは、テンプレート関数の場合と変わりません。続いて<strong>main.cpp</strong>の8行目、9行目を見てみましょう。</p>
+      <div class="format-label">テンプレートクラスのインスタンスの生成</div>
+      <div class="format-box">Calc&lt;int&gt; i1;<br>Calc&lt;string&gt; i2;</div>
+      <p>これにより、i1は、<strong>T</strong>の部分が、<strong>int</strong>に、<strong>i2</strong>は、<strong>T</strong>の部分が<strong>string</strong>として扱うことができるようになります。この点は、関数の場合とまったく同じです（図3-2.参照）。</p>
+      <div class="figure-box">
+        <img src="img/figex3-2.svg" alt="テンプレートクラス">
+        <p>図3-2：テンプレートクラスのイメージ</p>
+      </div>
+      <p>以上で、<strong>listex3-2</strong>のプログラムの処理自体の説明は終わりですが、最後に、<strong>inline(インライン)</strong>関数について説明しておくことにします。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>inline関数</h2>
+
+      <h3>inline修飾子</h3>
+      <p><strong>calc.h</strong>の9行目、および11行目に、<strong>inline</strong>という修飾子がついています。先頭にこの修飾子がつくと、その関数はコンパイル時に<strong>インライン展開</strong>されることになる、という宣言です。では、インライン展開とはなんでしょう？</p>
+      <p>inline宣言されていない普通の関数は、コンパイルされたアセンブラの中で、プログラムの流れの中と別の部分に記述され、必要な時だけ呼び出されます。しかし、inline関数を用いると、この部分が<strong>処理の部分に直接埋め込まれる</strong>ため、処理呼び出しなどのオーバーヘッドが少なくなり、<strong>処理速度が向上する</strong>というメリットがあります(図3-3.参照)。</p>
+      <div class="figure-box">
+        <img src="img/figex3-3.svg" alt="inline関数">
+        <p>図3-3：inline関数のイメージ</p>
+      </div>
+      <h3>inline関数のメリットとデメリット</h3>
+      <p>このように、インライン関数は、C言語で言うマクロのような役割があることがわかります。ただ、<strong>inline</strong>関数も万能というわけではありません。頻繁に使われるうえに、関数の処理が長い場合には、ビルドされて生成されたソースコードが大きくなりすぎるなどのデメリットがあります。また、<strong>inline</strong>の処理は、コンパイラに依存する部分が多く、<strong>どのようなコードに使用しても必ず効果があるというわけではありません</strong>。</p>
+      <p>なお、inline関数は、テンプレートの場合と同様、通常は<strong>ヘッダーファイル内に処理を記述する</strong>のが普通です。inline関数を宣言する場合には、必ずヘッダーファイルに記述するようにしましょう。</p>
+      <h3>inlineを用いるのが好ましい場合</h3>
+      <p>では、どのような場合が、この<strong>inline</strong>を用いるのに最も好ましいのでしょうか？それは、このサンプルのような、<strong>セッター・ゲッター</strong>のようなケースです。こういった処理は、オーバーヘッドが少ない上に、頻繁に使用されることから、一般に、<strong>const</strong>などと併せて用いると、C++のプログラムのパフォーマンスを向上させると言われています。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>テンプレートのまとめ</h2>
+
+      <h3>複数のテンプレート</h3>
+      <p>ここでのサンプルでは、テンプレートの種類は、一種類でしたが、場合によっては複数扱わなくてはならないケースも出てきます。その場合は、以下のように記述します。</p>
+      <div class="format-label">複数のテンプレートの宣言</div>
+      <div class="format-box">template&lt;typename T, typename S&gt;</div>
+      <p>この例では、二種類のデータ型・およびクラスを利用できます。,で区切れば、さらに多くの型を宣言することも可能です。これを利用する場合も、</p>
+      <div class="format-box">add&lt;int, double&gt;(1, 2.3);</div>
+      <p>のように利用します。</p>
+      <h3>利用する上での注意点</h3>
+      <p>このように便利なテンプレートですが、利用する上では注意が必要です。まず、テンプレートを利用すると、以下のようなデメリットも存在します。</p>
+      <p><strong>テンプレートを用いるデメリット</strong></p>
+      <ol><li>実行しないと不明な事項が多い</li><li>生成されるコードが大きくなる</li></ol>
+      <p>このため、便利だからといってむやみにテンプレートを使うことはおすすめできません。<strong>使用する場合、C言語のマクロなどの場合と同様、必要最低限</strong>にしましょう。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>STL</h2>
+
+      <h3>STLとは</h3>
+      <p>では、テンプレートを使う最大のメリットはなんでしょうか？実は、テンプレートがあることの最大のメリットは、今から説明する、<strong>STL(Standard Template Library)</strong>が使えるということにあるのです。</p>
+      <p>STLは、その名の通り、テンプレートを用いた標準的なC++のライブラリであり、プログラミングの上で必要な様々なデータ形式を、複雑な記述なしにだれでも簡単に利用できるようにしたものです。</p>
+      <h3>STLのデータ構造</h3>
+      <p>では、STLのデータ構造にはどのようなものがあるのでしょうか？代表的なものをピックアップして、以下の表にまとめてみます。</p>
+      <table class="data-table">
+        <caption><strong>表3-1.代表的なSTLのデータ構造</strong></caption>
+        <thead><tr><th>名前</th><th>読み方</th><th>役割</th></tr></thead>
+        <tbody>
+          <tr><td><strong>vector</strong></td><td>ベクター／ベクトル</td><td>動的配列</td></tr>
+          <tr><td><strong>list</strong></td><td>リスト</td><td>双方向リスト</td></tr>
+          <tr><td><strong>map</strong></td><td>マップ</td><td>連想配列</td></tr>
+          <tr><td><strong>set</strong></td><td>セット</td><td>集合</td></tr>
+          <tr><td><strong>stack</strong></td><td>スタック</td><td>スタック</td></tr>
+          <tr><td><strong>queue</strong></td><td>キュー</td><td>キュー</td></tr>
+        </tbody>
+      </table>
+      <p>次回から、2回に分けてこれらSTLの代表的なデータ構造と、その利用方法について説明していきます。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problemex3.html">練習問題（応用編）3 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="ex-day2.html">← 応用編2日目へ</a>
+        <a href="ex-day4.html">応用編4日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

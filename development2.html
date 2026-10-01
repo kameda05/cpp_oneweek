@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Visual Studio CodeとC++コンパイラ（g++・clang++）を使って、C++のプログラムをコンパイル・実行する方法を説明します。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|開発環境：Visual Studio Code</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">開発環境</div>
+  <h1>開発環境：Visual Studio Code</h1>
+  <p>Windows・macOS・Linux で C++ のプログラムを作成・実行する</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  開発環境：Visual Studio Code
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>Visual Studio Code とは</h2>
+
+      <h3>VSCode の特徴</h3>
+      <p><strong>Visual Studio Code（VSCode）</strong>は、Microsoft が開発している無料の軽量コードエディタです。Windows・macOS・Linux のすべてに対応しており、拡張機能を追加することで、さまざまな言語の開発環境として使えます。</p>
+
+      <h3>C++ で VSCode を使う場合に必要なもの</h3>
+      <p>VSCode はエディタなので、それだけでは C++ のプログラムをコンパイルできません。以下の 3 つをそろえる必要があります。</p>
+      <ol>
+        <li><strong>Visual Studio Code</strong>（エディタ本体）</li>
+        <li><strong>C++ コンパイラ</strong>（g++ または clang++）</li>
+        <li><strong>C/C++ 拡張機能</strong>（VSCode 上でのコード補完・エラー表示・デバッグ支援）</li>
+      </ol>
+
+      <div class="info-box">
+        💡 Windows だけで学習するなら、インストールするだけで C++ のコンパイラまでそろう <a href="development1.html">Visual Studio 2026</a> のほうが手軽です。macOS や Linux を使っている人や、軽いエディタで学習したい人は、このページの手順で環境を作りましょう。
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h2>インストール</h2>
+
+      <h3>手順1：Visual Studio Code のインストール</h3>
+      <p>以下の公式サイトから VSCode をダウンロードしてインストールします。</p>
+      <p><strong>VSCode 公式サイト：</strong><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">https://code.visualstudio.com/</a></p>
+      <p>インストールオプションは基本的にデフォルトのままで問題ありません。Windows の場合は「<strong>PATH への追加</strong>」にチェックが入っていることを確認しておきましょう。</p>
+
+      <h3>手順2：C++ コンパイラのインストール</h3>
+      <p>使っている OS に合わせて、C++ コンパイラをインストールします。</p>
+
+      <p><strong>Windows の場合（MSYS2 の MinGW-w64）</strong></p>
+      <p><a href="https://www.msys2.org/" target="_blank" rel="noopener">MSYS2 の公式サイト</a>からインストーラーをダウンロードして実行します。インストールが終わったら、スタートメニューから <strong>MSYS2 UCRT64</strong> を起動し、次のコマンドを実行します。</p>
+      <div class="terminal-label">MSYS2 UCRT64</div>
+      <pre class="terminal">pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain</pre>
+      <p>次に、Windows の環境変数 <strong>Path</strong> に <code>C:\msys64\ucrt64\bin</code> を追加します（インストール先を変えた場合は、そのフォルダーの <code>ucrt64\bin</code> を指定します）。</p>
+
+      <p><strong>macOS の場合</strong></p>
+      <p>ターミナルで次のコマンドを実行し、コマンドラインデベロッパツールをインストールします。clang++ が使えるようになります。</p>
+      <div class="terminal-label">ターミナル</div>
+      <pre class="terminal">xcode-select --install</pre>
+
+      <p><strong>Linux（Ubuntu など）の場合</strong></p>
+      <div class="terminal-label">ターミナル</div>
+      <pre class="terminal">sudo apt update
+sudo apt install build-essential</pre>
+
+      <p>インストールできたら、新しく開いたターミナル（コマンドプロンプト）で次のコマンドを実行します。バージョン番号が表示されれば成功です（macOS では <code>clang++ --version</code>）。</p>
+      <div class="terminal-label">ターミナル</div>
+      <pre class="terminal">g++ --version</pre>
+
+      <div class="note-box">
+        ⚠️ 「コマンドが見つかりません」と表示される場合は、Path の設定を確認し、ターミナルや VSCode を開き直してから、もう一度試してください。
+      </div>
+
+      <h3>手順3：C/C++ 拡張機能のインストール</h3>
+      <p>VSCode を起動し、左側のアクティビティバーにある <strong>拡張機能</strong> アイコンをクリックします。検索欄に <strong>「C/C++」</strong> と入力し、Microsoft 製の <strong>C/C++</strong>（または関連する拡張機能をまとめた <strong>C/C++ Extension Pack</strong>）をインストールします。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>プログラムの作成と実行</h2>
+
+      <h3>フォルダーを開く</h3>
+      <div class="step-box">
+        <div class="step-num">Step 1</div>
+        <p>サンプルごとに作業用のフォルダー（例：<code>Sample101</code>）を作り、VSCode のメニューの <span class="menu-path">ファイル → フォルダーを開く</span> で開きます。</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">Step 2</div>
+        <p>エクスプローラーの「新しいファイル」アイコンで <code>main.cpp</code> を作成し、プログラムを入力して保存します。</p>
+      </div>
+
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(){
+    cout &lt;&lt; "HelloWorld." &lt;&lt; endl;
+    return 0;
+}</pre>
+
+      <h3>ターミナルでコンパイル・実行する</h3>
+      <p>メニューの <span class="menu-path">ターミナル → 新しいターミナル</span> でターミナルを開き、次のコマンドでコンパイルします。<code>-o main</code> は、できあがる実行ファイルの名前の指定です。</p>
+      <div class="terminal-label">ターミナル</div>
+      <pre class="terminal">g++ -o main main.cpp</pre>
+      <p>エラーが出なければ、実行ファイルができています。次のコマンドで実行します。</p>
+      <div class="terminal-label">ターミナル（Windows）</div>
+      <pre class="terminal">.\main.exe</pre>
+      <div class="terminal-label">ターミナル（macOS・Linux）</div>
+      <pre class="terminal">./main</pre>
+
+      <div class="result-label">実行結果</div>
+      <div class="result-box">HelloWorld.</div>
+
+      <h3>複数のファイルからなるプログラム</h3>
+      <p>2日目以降のサンプルのように、ひとつのプログラムが <code>sample.h</code>・<code>sample.cpp</code>・<code>main.cpp</code> などの複数のファイルに分かれている場合は、<strong>.cpp ファイルをすべて</strong> 指定してコンパイルします。ヘッダファイル（.h）は、#include で読み込まれるので指定は不要です。</p>
+      <div class="terminal-label">ターミナル</div>
+      <pre class="terminal">g++ -o main main.cpp sample.cpp</pre>
+
+      <div class="info-box">
+        💡 C/C++ 拡張機能をインストールすると、エディタ右上に実行ボタン（▷）が表示されます。手軽ですが、標準の設定では開いているファイルだけをコンパイルするため、複数のファイルからなるプログラムでは「未定義の参照（undefined reference）」エラーになります。その場合は、上のようにターミナルでコンパイルしてください。
+      </div>
+
+      <div class="note-box">
+        ⚠️ <strong>Windows で日本語が文字化けする場合：</strong>ソースファイルは UTF-8 で保存されますが、コマンドプロンプトの標準の文字コードは Shift_JIS（CP932）です。実行する前にターミナルで <code>chcp 65001</code> を実行して表示を UTF-8 に切り替えるか、<code>g++ -fexec-charset=CP932 -o main main.cpp</code> のように、実行ファイル側の文字コードを指定してコンパイルしてください。
+      </div>
+
+      <div class="page-nav">
+        <a href="development1.html">← Visual Studio 2026 編へ</a>
+        <a href="index.html">トップページへ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

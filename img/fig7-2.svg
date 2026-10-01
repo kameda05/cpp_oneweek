@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="270" viewBox="0 0 560 270">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="60" y="45" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="16" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">sp1 = new Sup1();</text>
+<text x="60" y="69" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="16" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">sp2 = new Sub1();</text>
+<text x="60" y="93" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="16" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">sp1-&gt;func();</text>
+<text x="60" y="117" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="16" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">sp2-&gt;func();</text>
+<rect x="310" y="20" width="210" height="24" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="415.0" y="37" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">Sup1</text>
+<rect x="310" y="44" width="210" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<rect x="310" y="72" width="210" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="318" y="92" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">+ func() : void</text>
+<rect x="310" y="160" width="210" height="24" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="415.0" y="177" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">Sub1</text>
+<rect x="310" y="184" width="210" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<rect x="310" y="212" width="210" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="318" y="232" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">+ func() : void</text>
+<line x1="415" y1="160" x2="415" y2="102" stroke="#333" stroke-width="1.2" marker-end="url(#tri)"/>
+<line x1="173.60000000000002" y1="87" x2="308" y2="87" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<path d="M173.60000000000002,111 H230 V227 H308" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="320" viewBox="0 0 360 320">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="180" y="22" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">score</text>
+<circle cx="180" cy="160" r="130" fill="none" stroke="#999" stroke-width="1.2"/>
+<rect x="85" y="70" width="90" height="190" rx="10" fill="none" stroke="#d93025" stroke-width="1.2" stroke-dasharray="2 3"/>
+<rect x="190" y="70" width="90" height="190" rx="10" fill="none" stroke="#d93025" stroke-width="1.2" stroke-dasharray="2 3"/>
+<rect x="92" y="85" width="76" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="130" y="104" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">"Tom"</text>
+<rect x="197" y="85" width="76" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="235" y="104" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">100</text>
+<line x1="168" y1="99" x2="195" y2="99" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="92" y="145" width="76" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="130" y="164" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">"Bob"</text>
+<rect x="197" y="145" width="76" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="235" y="164" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">80</text>
+<line x1="168" y1="159" x2="195" y2="159" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<rect x="92" y="205" width="76" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="130" y="224" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">"Mike"</text>
+<rect x="197" y="205" width="76" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="235" y="224" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">120</text>
+<line x1="168" y1="219" x2="195" y2="219" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<text x="130" y="285" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">キー</text>
+<text x="235" y="285" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">値</text>
+</svg>

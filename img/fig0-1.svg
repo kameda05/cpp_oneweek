@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="270" viewBox="0 0 600 270">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="110" y="26" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">操作（メソッド）</text>
+<text x="470" y="26" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">属性</text>
+<polygon points="195,114.0 195,130.0 230,150" fill="#fff" stroke="#777" stroke-width="1"/>
+<rect x="20" y="42" width="175" height="160" rx="10" fill="#fff" stroke="#777" stroke-width="1"/>
+<line x1="195.0" y1="114.0" x2="195.0" y2="130.0" stroke="#fff" stroke-width="2"/>
+<text x="50" y="100" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">・走行する</text>
+<text x="50" y="124" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">・停車する</text>
+<text x="50" y="148" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">・曲がる</text>
+<polygon points="405,114.0 405,130.0 375,150" fill="#fff" stroke="#777" stroke-width="1"/>
+<rect x="405" y="42" width="175" height="160" rx="10" fill="#fff" stroke="#777" stroke-width="1"/>
+<line x1="405.0" y1="114.0" x2="405.0" y2="130.0" stroke="#fff" stroke-width="2"/>
+<text x="430" y="100" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">・スピード</text>
+<text x="430" y="124" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">・走行距離</text>
+<text x="430" y="148" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">・排気量</text>
+<path d="M228.5,155.5 L230.7,138.4 Q232.8,132.0 243.5,130.9 L262.7,128.8 L281.9,108.5 Q286.1,105.3 294.7,105.3 L330.9,105.3 Q339.5,105.3 344.8,111.7 L360.8,128.8 L369.3,130.9 Q376.8,133.1 375.7,142.7 L373.6,155.5 Z" fill="#f5c400" stroke="#555" stroke-width="1.2"/>
+<path d="M269.1,128.8 L286.1,111.7 L309.6,111.7 L309.6,128.8 Z" fill="#cfe8f7" stroke="#555" stroke-width="1"/>
+<path d="M316.0,128.8 L316.0,111.7 L335.2,111.7 L350.1,128.8 Z" fill="#cfe8f7" stroke="#555" stroke-width="1"/>
+<circle cx="258.4" cy="155.46666666666667" r="12.8" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="258.4" cy="155.46666666666667" r="5.333333333333333" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<circle cx="343.73333333333335" cy="155.46666666666667" r="12.8" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="343.73333333333335" cy="155.46666666666667" r="5.333333333333333" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<text x="300" y="250" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">オブジェクト（自動車）</text>
+</svg>

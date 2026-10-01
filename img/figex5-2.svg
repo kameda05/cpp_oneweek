@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="360" viewBox="0 0 520 360">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="320" y="22" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">names</text>
+<circle cx="330" cy="165" r="130" fill="none" stroke="#999" stroke-width="1.2"/>
+<rect x="290" y="80" width="84" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="332" y="99" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">"Tom"</text>
+<rect x="290" y="140" width="84" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="332" y="159" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">"Bob"</text>
+<rect x="290" y="200" width="84" height="28" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="332" y="219" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">"Mike"</text>
+<text x="40" y="99" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">"Tom"</text>
+<path d="M100,94 C190,94 200,94 288,94" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<text x="40" y="159" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">"Bob"</text>
+<path d="M100,154 C190,154 200,154 288,154" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<text x="40" y="219" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">"Mike"</text>
+<path d="M100,214 C190,214 200,214 288,214" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<text x="40" y="305" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">"Mike"</text>
+<path d="M100,300 C200,300 180,214 288,214" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<polygon points="440.0,280 460.0,280 350,240" fill="#fff" stroke="#777" stroke-width="1"/>
+<rect x="390" y="280" width="120" height="50" rx="10" fill="#fff" stroke="#777" stroke-width="1"/>
+<line x1="440.0" y1="280.0" x2="460.0" y2="280.0" stroke="#fff" stroke-width="2"/>
+<text x="450.0" y="301.55" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">同じものは</text>
+<text x="450.0" y="317.55" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">一つになる。</text>
+</svg>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++言語でクラスを定義し、オブジェクト（インスタンス）を生成して利用する方法を学びます。ヘッダファイルとソースファイルの分け方も説明します。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|2日目：クラス</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>2日目：クラス</h1>
+  <p>クラスとオブジェクトをC++で実装してみよう</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  2日目：クラス
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>日数：</span>
+  <a href="day0.html">0</a>
+  <a href="day1.html">1</a>
+  <a href="day2.html" class="active">2</a>
+  <a href="day3.html">3</a>
+  <a href="day4.html">4</a>
+  <a href="day5.html">5</a>
+  <a href="day6.html">6</a>
+  <a href="day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>クラス</h2>
+
+      <p>この章から先は、クラスと呼ばれるデータ構造を使用したプログラムを行います。すでに述べたとおり、オブジェクト指向プログラミングでは、クラスは必ず登場します。C++言語におけるクラスは、その構造だけを見ると、C言語の構造体とよく似ています。構造体は、複数の変数を１つにまとめたものでした。配列と違い、それぞれの変数はデータ型が異なっても構いません。</p>
+      <p>それに対し、クラスは、構造体の中に、さらに関数まで加えたものだといえばわかり易いでしょう。つまり、メンバとして変数と関数の両方を含めることができるという構造です。変数の方を<strong>メンバ変数</strong>、関数の方を<strong>メンバ関数</strong>と呼びます。クラスと構造体の違いは、これだけではありませんが、その他の違いについては、今後少しずつ説明していきます。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>C++言語のクラスの概要</h2>
+
+      <h3>クラスの宣言</h3>
+      <p>では、実際にC++言語のクラス宣言を見てみましょう。</p>
+      <div class="code-label">C++言語におけるクラスの宣言</div>
+<pre>class Sample
+{
+public:
+    void function();
+private:
+    int m_num;
+};</pre>
+      <p>最初に付ける<strong>class</strong>は、<strong>クラス宣言</strong>をすることを意味するものです。構造体の<strong>struct</strong>と同じような役割を果たしています。<strong>Sample</strong>はクラスの名前です。</p>
+      <h3>メンバ変数・メンバ関数</h3>
+      <p>構造体の場合と同様、クラスの構成要素は、<strong>メンバ</strong>と呼ばれます。これには、メンバ変数とメンバ関数とがありますが、普通の変数宣言や、関数プロトタイプの書き方と同じです。ここで宣言されるので、外側にプロトタイプ宣言を書く必要はありません。</p>
+      <p>このサンプルでは、メンバ変数として、<strong>m_num</strong>が、メンバ関数として<strong>function()</strong>が定義されています。また、特にメンバ関数のことを、<strong>メソッド</strong>とも呼びます。</p>
+      <h3>アクセス修飾子</h3>
+      <p>また、ここで出てくる、<strong>public</strong>と<strong>private</strong>というキーワードは、<strong>アクセス修飾子（しゅうしょくし）</strong>と言います。詳細は後で説明します。今のところは、<strong>メンバ関数の宣言の前にpublic、メンバ変数の宣言の前にprivateと書く</strong>と思っておいて下さい。もし、メンバ変数やメンバ関数が複数ある場合、次のようになります。</p>
+      <div class="code-label">クラスが複数のメンバ関数、メンバ変数を持つ場合の記述方法の例</div>
+<pre>class Sample
+{
+public:
+    void function();
+    int  function2();
+private:
+    int m_num;
+    char* m_str;
+};</pre>
+    </div>
+
+    <div class="content-card">
+      <h2>クラスの定義とオブジェクトの生成</h2>
+
+      <p>続いて、簡単なサンプルプログラムを通して、実際にクラスおよびオブジェクトをどのように活用するかについて説明しましょう。実際にこのクラスを利用するには、まずクラスの変数を宣言します。これは構造体変数を宣言するのと同じことです。</p>
+      <div class="format-label">オブジェクトの生成</div>
+      <div class="format-box">Sample obj;  // Sampleクラスの変数objを宣言</div>
+      <p>通常、これらは<strong>インスタンス</strong>とか<strong>オブジェクト</strong>などといいます。オブジェクト指向という言葉は、このオブジェクトから来ている訳ですが、オブジェクトという言葉は、場面によって様々に意味を持ち得るため分かりにくい場合があります。そのため本サイトでは、クラスから生成されたものを、<strong>インスタンス</strong>という言葉で記述することにします。</p>
+      <h3>インスタンス</h3>
+      <p>クラスのインスタンスを生成することを<strong>インスタンス化</strong>、もしくは<strong>インスタンスの生成</strong>などといいます。なお、「インスタンス」という言葉には「実体」という意味があり、「インスタンス化」は「クラスを実体化する」という意味があるのです。</p>
+      <p>「クラス」はそのままでは単なる「型」に過ぎないので、使うには実体化する必要があるということです。メンバ変数やメンバ関数を使うとき（アクセスするとき）も、構造体と同じで、<strong>ドット演算子（.）</strong>を使います。また、インスタンスへのポインタを経由するときは<strong>アロー演算子（-&gt;）</strong>を使います。</p>
+      <h3>簡単なサンプル</h3>
+      <p>では実際に、簡単なサンプルプログラムを通してみてみましょう。</p>
+      <p><strong>list2-1：クラスを用いた処理</strong></p>
+      <div class="code-label">sample.h</div>
+<pre>#ifndef SAMPLE_H
+#define SAMPLE_H
+
+// クラス宣言
+class Sample
+{
+public:
+    void set(int num);  // m_numに値を設定する
+    int get();          // m_numの値を取得する
+private:
+    int m_num;
+};
+
+#endif //SAMPLE_H</pre>
+      <div class="code-label">sample.cpp</div>
+<pre>#include "sample.h"
+
+void Sample::set(int num)
+{
+    m_num = num;
+}
+
+int Sample::get()
+{
+    return m_num;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "sample.h"
+
+using namespace std;
+
+int main()
+{
+    Sample obj;  // Sampleをインスタンス化
+    int num;
+
+    cout &lt;&lt; "整数を入力して下さい:" &lt;&lt; endl;
+    cin &gt;&gt; num;
+
+    obj.set( num );  // Sampleのメンバ変数をセット
+    cout &lt;&lt; obj.get() &lt;&lt; endl;  // メンバ変数の値を出力
+
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">整数を入力して下さい:5    <span class="hint">← キーボードから数値を入力</span><br>5</div>
+      <p>実行結果を見れば判る通り、キーボードから入力された数値がそのまま出力されています。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>プログラムの概要</h2>
+
+      <h3>ファイルの依存関係</h3>
+      <p>では、ここでプログラムの概要を見ていきましょう。まずは、ファイルの依存関係を見ていきましょう。通常、クラス宣言は、ヘッダファイルの中で行います。そのためここでは、<strong>sample.h</strong>の中で、クラスの定義がなされています。このヘッダファイルは、実装を行う、<strong>sample.cpp</strong>および、このクラスを利用する<strong>main.cpp</strong>で参照されます。</p>
+      <p>ヘッダファイルの内容がクラスの定義になったということと、ソースファイルの拡張子が、<strong>.cpp</strong>に変わった以外は、ほぼC言語の場合と同じです。</p>
+      <div class="figure-box">
+        <img src="img/fig2-1.svg" alt="C++の各ファイルの依存関係">
+        <p>図2-1：C++の各ファイルの依存関係</p>
+      </div>
+      <p>通常、ヘッダファイルの<strong>ファイル名は、クラスの名前と対応した名前がつけられる</strong>のが一般的です。この例だと、ファイル名がsample.hであることから、クラス名は、<strong>Sample</strong>となっています。</p>
+      <p>また、このファイルはヘッダファイルであることから、C言語の場合と同様に、<strong>#ifndef</strong>、<strong>#define</strong>、<strong>#endif</strong>マクロで<strong>二重インクルードの防止</strong>処理が施されています。この規則に関しては、C言語の場合とまったく同様のルールが適用されます。</p>
+      <h3>メンバ関数</h3>
+      <p>C言語のプロトタイプ宣言にあたる部分は、クラスのメンバ関数の宣言の中に記述されています。ただ、<strong>実装は、対応する.cppファイルの中でなされています。</strong>ここでは、<strong>sample.cpp</strong>の中で記述されています。</p>
+      <p>メンバ関数の定義の仕方は、通常の関数とそれほど変わりません。ただ、関数名だけでは、何というクラスのメンバ関数なのかが分からないので、関数名の頭にクラス名を付け<strong>::</strong>を挟みます。<strong>Sample::set</strong>なら、Sampleクラスのsetメンバ関数ということになります。その他のメンバ関数についても、同様です。（表2-1参照）</p>
+      <table class="data-table">
+        <caption>表2-1：Sampleクラスのメンバ関数の宣言と、実装の組み合わせ</caption>
+        <thead><tr><th>宣言</th><th>実装</th></tr></thead>
+        <tbody>
+          <tr><td>void set(int num)</td><td>Sample::set(int num)</td></tr>
+          <tr><td>int get()</td><td>int Sample::get()</td></tr>
+        </tbody>
+      </table>
+      <h3>プログラムの処理の流れ</h3>
+      <p>このプログラムは、キーボードから入力された整数を、一旦メンバ変数に記憶してから、それを出力するという非常に単純な例です。入力された値は、ローカル変数numに格納してから、setメンバ関数を使って、メンバ変数に記憶しています。この一連の処理の流れを、図にすると、以下のようになります。(図2-2.)</p>
+      <div class="figure-box">
+        <img src="img/fig2-2.svg" alt="プログラムの流れ">
+        <p>図2-2：プログラムの流れ</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h2>複数のインスタンス</h2>
+
+      <p><strong>list2-1</strong>だけを見る限りでは、「C言語と違い、随分と面倒くさいことをするものだな」と思うかもしれません。C言語であれば、変数と関数を定義し、呼び出すことによって、このような処理は簡単に処理できますし、コードももっと短くなるでしょう。</p>
+      <p>しかし、このようなプログラムのメリットは、実はすでに述べた通り、<strong>インスタンスを複数作ることができる</strong>ことにあるのです。まずは、以下の<strong>list2-2</strong>を入力し、実行してみてください。なお、これを使用するにあたり、<strong>sample.hおよび、sample.cppは、list2-1のものをコピーしてそのまま利用</strong>して下さい。</p>
+      <div class="code-label">list2-2：複数のインスタンスの生成(main.cpp)</div>
+<pre>#include &lt;iostream&gt;
+#include "sample.h"
+
+using namespace std;
+
+int main(){
+    Sample obj1,obj2;  // Sampleのインスタンスを複数生成
+
+    obj1.set( 1 );  // obj1のsetメソッド呼び出し
+    obj2.set( 2 );  // obj1のsetメソッド呼び出し
+
+    cout &lt;&lt; obj1.get() &lt;&lt; endl;  // obj1のメンバ変数の値を出力
+    cout &lt;&lt; obj2.get() &lt;&lt; endl;  // obj2のメンバ変数の値を出力
+
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">1<br>2</div>
+      <p>このプログラムでは、<strong>obj1</strong>および<strong>obj2</strong>という二つのインスタンスを作っています。実行結果からわかる通り、同じメソッドにアクセスし、同じメンバ変数に値を入れていますが、それぞれの実行結果は異なります。</p>
+      <p>これは、<strong>同じ名前のメンバ変数、メンバ関数であっても、インスタンスが異なれば別物</strong>であることを意味します。たとえば、obj1.set(1)とすれば、obj1のm_numが1になりますが、obj2のm_numにはなんら変化は起こりません。</p>
+      <p>同様に、obj1.get()を実行しても、値がとられるのはあくまでも、obj1.m_numであり、obj2とは、なんら関係ありません。このように、同じ名前がついたインスタンス変数やインスタンス関数であっても、<strong>インスタンスが異なれば別物</strong>であるというのが、オブジェクト指向最大の特徴です。(図2-3.参照)</p>
+      <div class="figure-box">
+        <img src="img/fig2-3.svg" alt="C++で複数のインスタンスが生成されたときの模様">
+        <p>図2-3：list2-2のイメージ</p>
+      </div>
+      <p>この例でいくのなら、obj1のm_numに値を代入しても、obj2のm_numの値は変わりませんし、その逆も同じです。つまり、インスタンスが違うと、同じ名前のメンバ変数でもまったく違うものだということです。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problem2.html">練習問題 2 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="day1.html">← 1日目へ</a>
+        <a href="day3.html">3日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

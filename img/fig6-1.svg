@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="330" viewBox="0 0 600 330">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<path d="M233.0,72.0 L235.0,56.0 Q237.0,50.0 247.0,49.0 L265.0,47.0 L283.0,28.0 Q287.0,25.0 295.0,25.0 L329.0,25.0 Q337.0,25.0 342.0,31.0 L357.0,47.0 L365.0,49.0 Q372.0,51.0 371.0,60.0 L369.0,72.0 Z" fill="#f5c400" stroke="#555" stroke-width="1.2"/>
+<path d="M271.0,47.0 L287.0,31.0 L309.0,31.0 L309.0,47.0 Z" fill="#cfe8f7" stroke="#555" stroke-width="1"/>
+<path d="M315.0,47.0 L315.0,31.0 L333.0,31.0 L347.0,47.0 Z" fill="#cfe8f7" stroke="#555" stroke-width="1"/>
+<circle cx="261.0" cy="72.0" r="12.0" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="261.0" cy="72.0" r="5.0" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<circle cx="341.0" cy="72.0" r="12.0" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="341.0" cy="72.0" r="5.0" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<text x="395" y="50" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">自動車</text>
+<text x="205" y="40" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#3b5bdb" text-anchor="end" font-weight="bold" xml:space="preserve">親クラス（スーパークラス）</text>
+<line x1="300" y1="92" x2="105" y2="160" stroke="#d93025" stroke-width="2" marker-end="url(#ar)"/>
+<text x="194.5" y="122" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="end" font-weight="normal" xml:space="preserve">継承</text>
+<line x1="300" y1="92" x2="300" y2="160" stroke="#d93025" stroke-width="2" marker-end="url(#ar)"/>
+<text x="308.0" y="122" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">継承</text>
+<line x1="300" y1="92" x2="495" y2="160" stroke="#d93025" stroke-width="2" marker-end="url(#ar)"/>
+<text x="405.5" y="122" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">継承</text>
+<path d="M42.5,223.5 L44.3,208.6 Q46.2,203.0 55.5,202.1 L72.3,200.2 L89.1,182.5 Q92.9,179.7 100.3,179.7 L132.1,179.7 Q139.5,179.7 144.2,185.3 L158.2,200.2 L165.7,202.1 Q172.2,203.9 171.3,212.3 L169.4,223.5 Z" fill="#fff" stroke="#555" stroke-width="1.2"/>
+<path d="M77.9,200.2 L92.9,185.3 L113.4,185.3 L113.4,200.2 Z" fill="#cfe8f7" stroke="#555" stroke-width="1"/>
+<path d="M119.0,200.2 L119.0,185.3 L135.8,185.3 L148.9,200.2 Z" fill="#cfe8f7" stroke="#555" stroke-width="1"/>
+<rect x="104.06666666666666" y="175.93333333333334" width="13.066666666666666" height="4.666666666666667" rx="0" fill="#d93025" stroke="#555" stroke-width="1"/>
+<rect x="44.333333333333336" y="209.53333333333333" width="125.06666666666666" height="4.666666666666667" rx="0" fill="#222" stroke="none" stroke-width="0"/>
+<circle cx="68.6" cy="223.53333333333333" r="11.2" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="68.6" cy="223.53333333333333" r="4.666666666666667" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<circle cx="143.26666666666665" cy="223.53333333333333" r="11.2" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="143.26666666666665" cy="223.53333333333333" r="4.666666666666667" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<text x="105" y="262" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">パトカー</text>
+<path d="M235.6,218.53333333333333 V175.6 H327.06666666666666 L349.4666666666667,194.26666666666665 L364.4,199.86666666666667 V218.53333333333333 Z" fill="#fff" stroke="#555" stroke-width="1.2"/>
+<path d="M328.93333333333334,179.33333333333334 L345.73333333333335,195.2 H328.93333333333334 Z" fill="#cfe8f7" stroke="#555" stroke-width="1.2"/>
+<rect x="235.6" y="199.86666666666667" width="128.8" height="5.6" rx="0" fill="#d93025" stroke="none" stroke-width="0"/>
+<rect x="272.93333333333334" y="181.2" width="5.6" height="14.933333333333334" rx="0" fill="#d93025" stroke="none" stroke-width="0"/>
+<rect x="268.26666666666665" y="185.86666666666667" width="14.933333333333334" height="5.6" rx="0" fill="#d93025" stroke="none" stroke-width="0"/>
+<rect x="286.0" y="170.93333333333334" width="11.2" height="4.666666666666667" rx="0" fill="#d93025" stroke="#555" stroke-width="1"/>
+<circle cx="261.73333333333335" cy="218.53333333333333" r="11.2" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="261.73333333333335" cy="218.53333333333333" r="4.666666666666667" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<circle cx="340.1333333333333" cy="218.53333333333333" r="11.2" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="340.1333333333333" cy="218.53333333333333" r="4.666666666666667" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<text x="300" y="262" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">救急車</text>
+<rect x="428.73333333333335" y="172" width="91.46666666666667" height="44.8" rx="0" fill="#2f6fdb" stroke="#555" stroke-width="1.2"/>
+<path d="M522.0666666666666,216.8 V185.06666666666666 H544.4666666666667 L559.4,200.0 V216.8 Z" fill="#f39c12" stroke="#555" stroke-width="1.2"/>
+<path d="M527.6666666666666,188.8 H542.6 L553.8,200.0 H527.6666666666666 Z" fill="#cfe8f7" stroke="#555" stroke-width="1.2"/>
+<circle cx="449.26666666666665" cy="220.53333333333333" r="10.266666666666667" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="449.26666666666665" cy="220.53333333333333" r="4.2" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<circle cx="501.5333333333333" cy="220.53333333333333" r="10.266666666666667" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="501.5333333333333" cy="220.53333333333333" r="4.2" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<circle cx="540.7333333333333" cy="220.53333333333333" r="10.266666666666667" fill="#333" stroke="#333" stroke-width="1.2"/>
+<circle cx="540.7333333333333" cy="220.53333333333333" r="4.2" fill="#ccc" stroke="#bbb" stroke-width="1.2"/>
+<text x="495" y="262" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">トラック</text>
+<text x="105" y="292" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#3b5bdb" text-anchor="middle" font-weight="bold" xml:space="preserve">子クラス</text>
+<text x="105" y="310" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#3b5bdb" text-anchor="middle" font-weight="normal" xml:space="preserve">（サブクラス）</text>
+<text x="300" y="292" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#3b5bdb" text-anchor="middle" font-weight="bold" xml:space="preserve">子クラス</text>
+<text x="300" y="310" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#3b5bdb" text-anchor="middle" font-weight="normal" xml:space="preserve">（サブクラス）</text>
+<text x="495" y="292" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#3b5bdb" text-anchor="middle" font-weight="bold" xml:space="preserve">子クラス</text>
+<text x="495" y="310" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#3b5bdb" text-anchor="middle" font-weight="normal" xml:space="preserve">（サブクラス）</text>
+</svg>

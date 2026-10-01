@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="インスタンスの生成時・消去時に呼ばれるコンストラクタとデストラクタ、およびnew演算子とdelete演算子の使い方を学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|4日目：生成と消去</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>4日目：生成と消去</h1>
+  <p>コンストラクタ・デストラクタと new・delete 演算子</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  4日目：生成と消去
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>日数：</span>
+  <a href="day0.html">0</a>
+  <a href="day1.html">1</a>
+  <a href="day2.html">2</a>
+  <a href="day3.html">3</a>
+  <a href="day4.html" class="active">4</a>
+  <a href="day5.html">5</a>
+  <a href="day6.html">6</a>
+  <a href="day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>コンストラクタとデストラクタ</h2>
+
+      <h3>コンストラクタとデストラクタ</h3>
+      <p>前回は、クラスのメソッド（メンバ関数）および、メンバ変数について学びました。これにより、クラス、インスタンス、さらにはメンバ変数、メンバ関数という、C++のオブジェクト指向の基本について学びました。</p>
+      <p>しかし、もちろんこれですべてというわけではありません。このうち、メンバ関数のなかには、<strong>コンストラクタ</strong>と、<strong>デストラクタ</strong>と呼ばれる特殊なメソッドがあります。今回はこれら特殊なメソッドについて説明します。</p>
+      <h3>サンプルコード</h3>
+      <p>まずは、その両者が含まれている簡単なサンプルプログラムを見てみましょう。</p>
+      <div class="code-label">list4-1：car.h</div>
+<pre>#ifndef CAR_H
+#define CAR_H
+
+//    自動車クラス
+class Car{
+public:
+    //    コンストラクタ
+    Car();
+    //    デストラクタ
+    ~Car();
+    //    移動メソッド
+    void move();
+    //    燃料補給メソッド
+    void supply(int fuel);
+private:
+    int m_fuel;            //    燃料
+    int m_migration;    //    移動距離
+};
+#endif // CAR_H</pre>
+      <div class="code-label">car.cpp</div>
+<pre>#include "car.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+//    コンストラクタ
+Car::Car() : m_fuel(0),m_migration(0)
+{
+    cout &lt;&lt; "Carオブジェクト生成" &lt;&lt; endl;
+}
+//    デストラクタ
+Car::~Car()
+{
+    cout &lt;&lt; "Carオブジェクト破棄" &lt;&lt; endl;
+}
+void Car::move()
+{
+    //    燃料があるなら移動
+    if(m_fuel &gt;= 0){
+        m_migration++;    //    距離移動
+        m_fuel--;        //    燃料消費
+    }
+    cout &lt;&lt; "移動距離:" &lt;&lt; m_migration &lt;&lt; endl;
+    cout &lt;&lt; "燃料" &lt;&lt; m_fuel &lt;&lt; endl;
+}
+//    燃料補給メソッド
+void Car::supply(int fuel)
+{
+    if(fuel &gt; 0){
+        m_fuel += fuel;    //    燃料補給
+    }
+    cout &lt;&lt; "燃料" &lt;&lt; m_fuel &lt;&lt; endl;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include "car.h"
+
+int main() {
+    Car c;
+    c.supply(10);    //    燃料補給
+    c.move();    //    移動
+    c.move();    //    移動
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">Carオブジェクト生成   <span class="hint">← コンストラクタの処理(自動的に呼び出される）</span><br>燃料10<br>移動距離:1<br>燃料9<br>移動距離:2<br>燃料8<br>Carオブジェクト破棄   <span class="hint">← デストラクタの処理(自動的に呼び出される）</span></div>
+      <h3>コンストラクタ</h3>
+      <p>コンストラクタは、そのクラスをインスタンス化したときに、自動的に呼び出される特別なメンバ関数です（図4-1.参照）。コンストラクタ内で何をするかは、C++の規則にさえ従っていれば自由です。<strong>コンストラクタの名前は、クラス名と同じ</strong>です。また、<strong>戻り値がない</strong>のも特徴です。このサンプルの場合、<strong>car.h</strong>の8行目の<strong>Car()</strong>メソッドがコンストラクタになります。</p>
+      <p>コンストラクタの実装が、<strong>car.cpp</strong>の7行目から10行目です。</p>
+      <p>ここで、７行目に着目してください。</p>
+      <div class="format-label">コンストラクタの最初の行</div>
+      <div class="format-box">Car::Car() : m_fuel(0),m_migration(0)</div>
+      <p>コンストラクタの定義の最初の行で、<strong>:</strong>で区切って、何かが記述されています。これは、<strong>メンバ変数の初期化処理</strong>で、コンストラクタの最初の行で利用可能です。書式は以下の通りになります。ここでは、<strong>m_fuelに0を、m_migrationに0</strong>をそれぞれ代入しています。</p>
+      <div class="format-label">コンストラクタにおけるメンバ変数初期化処理</div>
+      <div class="format-box">クラス名::クラス名() : メンバ変数1(初期値1),メンバ変数2(初期値2)…</div>
+      <p>このように、間を<strong>,(コンマ)</strong>で区切り、()内に値を入れると、メンバ変数をその値で初期化することができます。なお、<strong>メンバ変数の並び順は、ヘッダファイルでの定義順</strong>にすることが推奨されています。その順番にしたがっていなくても文法上は間違いではありませんが、そのほうがソースコードが理解しやすくなりますので、そう心がけましょう。</p>
+      <p>このような方法でメンバ変数を初期化するのは、あくまでも、その値が定数であったり、<strong>外部からコンストラクタの引数として渡されるパラメータである場合</strong>（詳細は後述）に限られます。値を決めるのに何らかの処理が必要な場合は、あくまでもコンストラクタの処理の中で値を設定してもかまいません。</p>
+      <p>また、通常のメソッド同様、コンストラクタの中の処理は、<strong>{}</strong>の中に記述されます。実行結果からみてもわかるとおり、ここに記述された処理は、特に呼び出されなくても自動的に実行されることがわかります。ここでは、インスタンス生成時の様々な初期化処理が行われます。</p>
+      <h3>デストラクタ</h3>
+      <p>次に、デストラクタについて説明します。デストラクタとは、クラスのインスタンスが解放されるときに、解放の直前で自動的に呼び出されます（図4-1.参照）。解放されるタイミングは、そのインスタンスのスコープを抜けるときです。例えば、ある関数内でインスタンス化した場合、その関数を抜ける段階で解放されます。この例でも、main()の処理が終わるときにデストラクタが呼ばれていることがわかります。</p>
+      <p>デストラクタの名前は、<strong>クラス名の先頭に ~(チルダ) を付けたもの</strong>になります。したがって、このサンプルの場合、クラス名がCarですから、デストラクタの名前は、~Car()になります。また、これ以外の名前を使うことはできません。</p>
+      <p>デストラクタで行う処理は自由ですが、基本的には終了処理を行うことが一般的です。終了処理というのは、動的に確保されたメモリの解放や、オープンされたままのファイルをクローズすることなどです。デストラクタの処理の実行を終えた時点で、そのクラスのインスタンスはメモリから解放されて無くなってしまいます。</p>
+      <div class="figure-box">
+        <img src="img/fig4-1.svg" alt="コンストラクタとデストラクタのイメージ">
+        <p>図4-1：コンストラクタとデストラクタ</p>
+      </div>
+      <h3>コンストラクタ・デストラクタの省略</h3>
+      <p>コンストラクタやデストラクタは、必要がなければ作る必要はありません。省略した場合でも、コンパイラが自動的にコンストラクタおよびデストラクタを生成しています。ただ、そこで何をしているのかを知ることはできません。<a href="day1.html">1日目</a>、<a href="day2.html">2日目</a>で示していたサンプルにコンストラクタとデストラクタが省略されていても実行できたのはこのためです。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>newとdelete</h2>
+
+      <h3>インスタンスの生成と解放のタイミング</h3>
+      <p>ここでは、list4-1のサンプルでのインスタンスの生成と解放のタイミングを検証してみましょう。コンストラクタが呼び出されるのは、4行目のオブジェクトが宣言されたタイミング、デストラクタが呼び出されるのが、8行目の処理が終了し、main()の処理が終わった時です。</p>
+      <p>ところで、インスタンスの生成と消去のタイミングをコントロールできないのでしょうか？たとえば、画像データなど大量のメモリを消費するインスタンスの場合、生成と消去のタイミングが制御できないと、大変不便です。</p>
+      <p>実はその時に用いられるのが、<strong>new</strong>演算子および、<strong>delete</strong>演算子なのです。(図4-2.参照)</p>
+      <div class="figure-box">
+        <img src="img/fig4-2.svg" alt="newとdelete">
+        <p>図4-2：newとdelete</p>
+      </div>
+      <h3>サンプルプログラム</h3>
+      <p>newおよび、deleteのサンプルとして、以下のプログラムを実行してみてください。なお、list4-1のcar.hおよび、car.cppを、ここではそのまま利用します。</p>
+      <div class="code-label">list4-2:main.cpp</div>
+<pre>#include "car.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+int main() {
+    Car* pC = 0;
+    pC = new Car();    //    インスタンス生成
+    pC-&gt;supply(10);        //    燃料補給
+    pC-&gt;move();            //    移動
+    pC-&gt;move();            //    移動
+    delete pC;            //    インスタンスの消去
+    cout &lt;&lt; "インスタンスの消去終了" &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">Carオブジェクト生成   <span class="hint">← コンストラクタの処理(new演算子で呼び出される）</span><br>燃料10<br>移動距離:1<br>燃料9<br>移動距離:2<br>燃料8<br>Carオブジェクト破棄   <span class="hint">← デストラクタの処理(delete演算子で呼び出される）</span><br>インスタンスの消去終了</div>
+      <p>8行目のnew演算子で、Carクラスのインスタンスが生成され、アドレスがポインタpCに渡されます。なお、インスタンスへのポインタの操作の仕方の考え方は、C言語の構造体のものに似ています。pCでのアクセスは、<strong>-&gt;（アロー演算子）</strong>で行われます。なお、ポインタは、<strong>最初は0またはNULL（C++11以降はnullptr）で初期化しておく</strong>ように心がけましょう。</p>
+      <p>最後に、12行目のdeleteで、生成されたインスタンスが破棄されます。これを用いれば、必要なタイミングでインスタンスの生成と消去を行うことができます。</p>
+      <h3>演算子の書式</h3>
+      <p>なお、newおよびdelete演算子の書式は、以下の通りです。</p>
+      <div class="format-label">new演算子の書式</div>
+      <div class="format-box">new コンストラクタ名()</div>
+      <p>ここで注意してほしいのは、newの後に来るのは、クラス名ではなく、コンストラクタ名となっている点です。同じことではあるのですが、あくまでもnew演算子は、コンストラクタを呼び出し、インスタンスを生成するという役割を担っているのです。</p>
+      <div class="format-label">delete演算子の書式</div>
+      <div class="format-box">delete インスタンス名</div>
+      <p>deleteされたインスタンスは、デストラクタが実行され、消去されます。</p>
+      <h3>malloc、freeを使わない理由</h3>
+      <p>C++では通常、malloc関数（calloc、reallocも同様）および、free()関数を使いません。理由は、malloc関数ではコンストラクタを呼び出すことができないからです。同時に、free関数ではデストラクタが呼び出されません。そのため、C++言語では、メモリの生成および消去にはnewとdeleteが用いられます。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>newとdeleteを用いたメモリの生成・消去</h2>
+
+      <p>前述のように、C++言語では、mallocおよびfreeを使うことは推奨されません。それは一般の配列に関しても同様で、例えば、intのような基本データ型でも同様です。まずは、以下のサンプルを実行してみてください。</p>
+      <div class="code-label">list4-3:main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main()
+{
+    int *p = 0;
+    p = new int();  // int型の領域を動的確保
+    *p = 123;
+    cout &lt;&lt; *p &lt;&lt; endl;
+    delete p;       // 動的に確保した領域を解放
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">123</div>
+      <p>new演算子は、その直後に書いた型の領域を確保します。delete演算子の使い方は、インスタンスの場合と同様、newで確保した領域を指すポインタを、deleteの直後に記述するだけです。newで確保した領域でないと解放は行えません。従って、malloc関数で確保した領域をdeleteで解放してはいけません。</p>
+      <p>次に、配列を生成する場合を見てみましょう。</p>
+      <div class="code-label">list4-4:main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main()
+{
+    int *p = 0;
+    int i;
+    p = new int[10];  // int型10個分の領域を動的確保
+    for(i=0; i&lt;10; ++i)
+    {
+        p[i] = i;
+        cout &lt;&lt; p[i] &lt;&lt; endl;
+    }
+    delete [] p;       // 動的に確保した領域を解放
+    return 0;
+}</pre>
+      <p>new演算子を使って配列を確保するには、型指定の直後に[]を使って、配列に含まれる要素数を指定します。上の例を見て分かるように、配列を動的確保する場合に()はありません。</p>
+      <p>次にdelete演算子の使い方ですが、new演算子を使って配列を確保した場合、<strong>delete演算子にも[]をつけなければなりません。</strong>これを付けないと正しく解放できません。この[]の付け忘れは非常によくある間違いです。コンパイルは普通に成功してしまうので気をつけて下さい。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problem4.html">練習問題 4 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="day3.html">← 3日目へ</a>
+        <a href="day5.html">5日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

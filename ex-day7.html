@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++の演算子の多重定義（オペレータ・オーバーロード）について学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|応用編7日目：演算子の多重定義</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">応用編</div>
+  <h1>応用編7日目：演算子の多重定義</h1>
+  <p>演算子をオーバーロードして独自の演算を定義する</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  応用編7日目：演算子の多重定義
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>応用編：</span>
+  <a href="ex-day1.html">1</a>
+  <a href="ex-day2.html">2</a>
+  <a href="ex-day3.html">3</a>
+  <a href="ex-day4.html">4</a>
+  <a href="ex-day5.html">5</a>
+  <a href="ex-day6.html">6</a>
+  <a href="ex-day7.html" class="active">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>演算子のオーバーロード</h2>
+
+      <h3>演算子のオーバーロード</h3>
+      <p>応用編6日目までの知識があれば、C++プログラマーとしては、かなりのことができるでしょう。ただ、よりエレガントなプログラムを作成するという意味では、ここで紹介する<strong>演算子のオーバーロード</strong>は欠かせません。</p>
+      <p>通常、+や、=のような演算子は、数値や文字列などのような、ある特定のデータ型やクラスにしか利用できません。ところが、C++言語では、これらの演算子に<strong>機能を拡張して、さまざまなクラスに演算処理を実装したり、もともとある機能を変更できたりする</strong>のです。</p>
+      <h3>サンプルプログラム</h3>
+      <p>では、実際にサンプルを通して、演算子のオーバーロードとはどのようなものなのかを実際にみてみることにしましょう。少し長いですが、以下のサンプルコードを実行してみてください。</p>
+      <div class="code-label">listex7-1：Vector2.h</div>
+<pre>#ifndef VECTOR2_H
+#define VECTOR2_H
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+class Vector2{
+public:
+    double x;
+    double y;
+public:
+    //    =演算子のオーバーロード
+    Vector2&amp; operator=(const Vector2&amp; v);
+    //    +=演算子のオーバーロード
+    Vector2&amp; operator+=(const Vector2&amp; v);
+    //    -=演算子のオーバーロード
+    Vector2&amp; operator-=(const Vector2&amp; v);
+};
+
+//    +演算子のオーバーロード
+Vector2 operator+(const Vector2&amp;, const Vector2&amp;);
+//    -演算子のオーバーロード
+Vector2 operator+(const Vector2&amp;, const Vector2&amp;);
+//    *演算子のオーバーロード
+Vector2 operator*(const double,const Vector2&amp; v);
+
+#endif // VECTOR2_H</pre>
+      <div class="code-label">Vector2.cpp</div>
+<pre>#include "vector2.h"
+
+//    +演算子のオーバーロード
+Vector2 operator+(const Vector2&amp; v1,const Vector2&amp; v2)
+{
+    Vector2 v;
+    v.x = v1.x + v2.x;
+    v.y = v1.y + v2.y;
+    return v;
+}
+//    -演算子のオーバーロード
+Vector2 operator-(const Vector2&amp; v1,const Vector2&amp; v2)
+{
+    Vector2 v;
+    v.x = v1.x - v2.x;
+    v.y = v1.y - v2.y;
+    return v;
+}
+//    スカラー倍
+Vector2 operator*(const double d, const Vector2&amp; v)
+{
+    Vector2 r;
+    r.x = d * v.x;
+    r.y = d * v.y;
+    return r;
+}
+//    =演算子のオーバーロード
+Vector2&amp; Vector2::operator=(const Vector2&amp; v)
+{
+    x = v.x;
+    y = v.y;
+    return *this;
+}
+//    +=演算子のオーバーロード
+Vector2&amp; Vector2::operator+=(const Vector2&amp; v)
+{
+    x += v.x;
+    y += v.y;
+    return *this;
+}
+//    -=演算子のオーバーロード
+Vector2&amp; Vector2::operator-=(const Vector2&amp; v)
+{
+    x -= v.x;
+    y -= v.y;
+    return *this;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "vector2.h"
+
+using namespace std;
+
+void vec(string, Vector2&amp;);
+
+int main(){
+    Vector2 v1,v2,v3;
+    //    ベクトルに値を代入
+    v1.x = 1.0;
+    v1.y = 2.0;
+    v2 = v1;            //    値を代入
+    v3 = 4.0 * v1;        //    ベクトルのスカラー倍
+    vec("v1=", v1);
+    vec("v2=", v2);
+    vec("v1 + v2=", v1 + v2);
+    vec("v3=", v3);
+    v3 += v1;            //    代入演算子（+=）
+    vec("v3=",v3);
+    v1 -= v2;            //    代入演算子（-=）
+    vec("v1=", v1);
+    return 0;
+}
+
+void vec(string vecname,Vector2&amp; v)
+{
+    cout &lt;&lt; vecname &lt;&lt; "(" &lt;&lt; v.x &lt;&lt; "," &lt;&lt; v.y &lt;&lt; ")" &lt;&lt; endl;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">v1=(1,2)<br>v2=(1,2)<br>v1 + v2=(2,4)<br>v3=(4,8)<br>v1=(5,10)<br>v2=(0,0)</div>
+      <p>このサンプルは、簡単な2次元ベクトルクラス<strong>Vector2</strong>を作ったものです。C++には、もともとそういったクラスは存在しませんが、<strong>main.cpp</strong>を見ればわかるように、あたかもそういった演算をできるクラスがもともとあるような使い方が可能になっています。</p>
+      <h3>代入、および代入演算子のオーバーロード</h3>
+      <p>演算子のオーバーロードをするには、以下のように宣言を行います。</p>
+      <div class="format-label">演算子のオーバーロードの宣言</div>
+      <div class="format-box"><strong>戻り値の型</strong> operator<strong>演算子</strong>(引数…)</div>
+      <p>まず、クラス内に定義されている、代入関連の演算子、<strong>=</strong>および、<strong>+=</strong>、<strong>-=</strong>を見てみましょう。これらはいずれも、クラス内にメンバ関数として定義されています。</p>
+      <p>引数として与えられた、他のVector2クラスのインスタンスへの参照が渡され、このインスタンスから、値を取得し、代入、および何らかの計算をして、メンバ変数である、<strong>x</strong>、<strong>y</strong>の値を変更しています。</p>
+      <p>そして、最後に<strong>*this</strong>を返すことにより、自分自身への参照を戻り値として返しています。いったいなぜそのようなことをする必要があるのでしょうか？これは特に決められたことではありませんが、なるべく基本データ型の演算に近づけるためには、大変有効な方法です。なぜなら、</p>
+      <div class="format-label">複数回の代入演算子の使用</div>
+      <div class="format-box">v1 = v2 = v3</div>
+      <p>のように、複数回の代入を同時に行うような処理の場合、一回目の代入の結果が、そのまま2回目に代入されるため、このような処理を行うには、Vector2&amp;を返すことが有用なのです。</p>
+      <h3>+,-,*演算子</h3>
+      <p>続いて、+,-,*演算子のケースを見てみましょう。これらは、クラス内には記述されていません。理由は、これらの演算は、Vector2とVector2および、doubleとVector2の演算で、戻り値としてVector2クラスのインスタンスを得るものであることから、すでにあるインスタンスの値を変化させる代入演算子とは性質が違うことに由来します。</p>
+      <p>このように、演算子のオーバーロードには、クラス内に定義する方法と、クラス外に定義する方法が存在します。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>最後に</h2>
+
+      <h3>まとめ</h3>
+      <p>以上で、C++の基本の応用編を終わりにしたいと思います。C++に関する話題はこれですべてが終わりというわけではなく、ここで紹介しきれなかった機能も少なからず存在しますが、このサイトに紹介していることに関してしっかりと理解していれば、C++でかなり本格的なプログラミングをすることが可能です。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problemex7.html">練習問題（応用編）7 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="ex-day6.html">← 応用編6日目へ</a>
+        <a href="index.html">トップページへ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

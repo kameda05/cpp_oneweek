@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++言語のHelloWorldを通して、名前空間、cin・coutによるストリームの入出力、stringによる文字列の扱いを学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|1日目：名前空間</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>1日目：名前空間</h1>
+  <p>HelloWorld から学ぶ名前空間・ストリーム・string</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  1日目：名前空間
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>日数：</span>
+  <a href="day0.html">0</a>
+  <a href="day1.html" class="active">1</a>
+  <a href="day2.html">2</a>
+  <a href="day3.html">3</a>
+  <a href="day4.html">4</a>
+  <a href="day5.html">5</a>
+  <a href="day6.html">6</a>
+  <a href="day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>HelloWorld</h2>
+
+      <h3>C++言語版HelloWorld</h3>
+      <p>C言語の入門は、"HelloWorld."の表示から始まりました。C++も、C言語同様、HelloWorldの表示からはじめてみましょう。C++言語は、C言語の機能をそのまま受けつぎ拡張したものなので、C言語と同じく<strong>printf()</strong>関数を用いることができます。しかし、ここでは、あえてC++独自の表現方法を用いてプログラムを記述してみましょう。</p>
+      <h3>サンプルプログラム</h3>
+      <p>C++で同様のプログラムを書くと以下のようになります。なお、<strong>C++言語のソースファイルの拡張子は、.cppとなっています</strong>ので、間違えないようにしてください。</p>
+      <div class="code-label">list1-1：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(){
+    cout &lt;&lt; "HelloWorld." &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">HelloWorld.</div>
+      <p>実行結果からもわかるとおり、このプログラムを実行すると、"HelloWorld."という文字列が表示されます。見てみると、namespace,coutなど見慣れない記述が多いことがわかります。</p>
+      <p>すでに述べたとおり、C++言語は、あくまでもC言語を拡張したものであることから、printf()関数などを用いてコンソールに文字列を表示することが出来ます。しかし、ここではあえて、C++言語特有の方法で行ってみることにします。</p>
+      <h3>プログラムの仕組み</h3>
+      <p>では、一体、このプログラムはどのような仕組みになっているのでしょうか？ここでは、C言語との違いを中心に見てみましょう。</p>
+      <h3>ヘッダとiostream</h3>
+      <p>1行目に出てくる、<strong>#include</strong>は、C言語同様、ヘッダファイルと呼ばれるファイルを読み込むときに用いる宣言です。ここで読み込むファイルは、<strong>iostream</strong>というファイルです。これは、ヘッダファイルですが、C++の場合のものであり、C言語の時のように<strong>".h"</strong>は、必要ありません。そのため、C言語のヘッダファイルと一線を画すため、単に<strong>ヘッダ</strong>と呼ばれます。</p>
+      <p>C言語では、ヘッダファイルを呼び込むことにより、様々な関数を利用できるようになりましたが、C++の場合は、ヘッダを読み込むことにより、クラスを利用できるようになるといった違いがあります。(詳細は後述)</p>
+      <h3>名前空間</h3>
+      <p>3行目の<strong>using namespace std;</strong>の部分ですが、<strong>using namespace</strong>は、指定された名前の<strong>名前空間</strong>を使うことを意味しています。詳細は後述しますが、名前空間とは、C言語には存在せず、C++言語から用いられるようになった重要な概念です。</p>
+      <p>次に出てくる、<strong>cout</strong>は、ここで定義されているものです。したがって、利用するためには、「標準名前空間を利用する」という宣言としてこの一文が必要になるわけです。</p>
+      <h3>cout</h3>
+      <p>続いて、プログラムの中身に移ります。C++言語では、printf()関数と同じような働きをするものとして、<strong>cout</strong>が用意されています。</p>
+      <p><strong>cout</strong>は、<strong>C言語で用いた関数のようなものではありません。</strong>見た目は似ていますが、実は<strong>オブジェクト</strong>と呼ばれるもので、特に標準入出力の出力をつかさどるものなのです。</p>
+      <p>C++言語の入出力ストリームでは、<strong>&gt;&gt;</strong>および、<strong>&lt;&lt;</strong>を用いることにより、ストリームと呼ばれる対象に対するデータのやりとりを行います。ここでは、<strong>cout</strong>を通じて、出力ストリームに、文字列"HelloWorld."を送り出しているわけです。</p>
+      <p>最後の<strong>endl</strong>は改行を表します。C言語で用いた<strong>\n</strong>も利用可能ですが、C++で、coutを用いる場合は、こちらが一般的です。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>標準名前空間</h2>
+
+      <h3>名前空間とは</h3>
+      <p>ではここで、<strong>名前空間</strong>とは何か、という概念について説明しましょう。C++言語とC言語の大きな違いのひとつは、C++言語が、あらかじめ大規模開発を意識して作られている言語だという点があります。</p>
+      <p>大規模開発とは、大勢の人間がひとつのソフト・アプリケーションを開発することで、その場合問題になってくるのが名前の重複です。その場合、ひとつの単語が変数名などとして用いられると、ほかの開発者はそれを利用できなくなり、大変不便です。</p>
+      <p>そこで、名前空間という概念を用意し、名前空間が違えば、同じ名前を用いてもよい、というルールを作ったわけです。たとえば、ゲームの開発現場で、二人のプログラマーがたまたま<strong>power</strong>変数を使用していたとします。</p>
+      <p>このとき、プログラマーAが、この変数をプレイヤーの力として、プログラマーBがモンスターの力としてこの変数を用いていたならば、プレイヤー、モンスターのそれぞれの名前空間をあらかじめ別々に用意しておけば、こういった問題は発生しません。<strong>(図1-1)</strong></p>
+      <div class="figure-box">
+        <img src="img/fig1-1.svg" alt="C++言語で用いられる名前空間（ネームスペース:namespace）のイメージ①">
+        <p>図1-1：名前空間の概念①</p>
+      </div>
+      <p>また、当然ながら同一の名前空間には、同じ名前の存在は許されません。<strong>(図1-2)</strong></p>
+      <div class="figure-box">
+        <img src="img/fig1-2.svg" alt="C++言語で用いられる名前空間（ネームスペース:namespace）のイメージ②">
+        <p>図1-2：名前空間の概念②</p>
+      </div>
+      <h3>名前空間の利用</h3>
+      <p>名前空間には、ユーザーが独自に定義するものと、もともとC++言語に備わっているものがあります。後者のものを、<strong>標準名前空間</strong>と呼び、<strong>std</strong>と表記します。なお、名前空間を用いる場合は、以下のように行います。</p>
+      <div class="format-label">名前空間の利用①</div>
+      <div class="format-box">using namespace (名前空間名);</div>
+      <p>そのため、<strong>list1-1</strong>の3行目で、C++の標準名前空間が利用されていることがわかります。<strong>coutなどは、この標準名前空間で利用可能</strong>なのです。また、次のような使い方も可能です。</p>
+      <div class="format-label">名前空間の利用②</div>
+      <div class="format-box">(名前空間名)::(変数名・クラス名など）</div>
+      <p>この方法を用いると、<strong>using</strong>を使う必要がありません。なお、この方法を用いて<strong>list1-1</strong>を書き換えると、以下のようになります。</p>
+      <div class="code-label">list1-2：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+int main(){
+    std::cout &lt;&lt; "HelloWorld." &lt;&lt; std::endl;
+    return 0;
+}</pre>
+      <p>動作結果は同じなので省略します。<strong>cout</strong>、<strong>endl</strong>共に標準名前空間に含まれるので、先頭に<strong>std</strong>がつきます。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>コンソールからの入力</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>続いて、コンソールから数値を入力し表示するという簡単なサンプルを紹介しましょう。まずは、以下のプログラムを実行してください。</p>
+      <div class="code-label">list1-3：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(){
+    int a;
+    cin &gt;&gt; a;
+    cout &lt;&lt; "a=" &lt;&lt; a &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">5   <span class="hint">←キーボードから入力</span><br>a=5</div>
+      <h3>cin</h3>
+      <p>実行結果からわかるとおり、キーボードから入力した数値をそのまま出力しています。ここで出てくる、<strong>cin</strong>も、標準名前空間に含まれるものの一つです。C言語であれば、scanf()関数に相当する処理です。</p>
+      <p>7行目で、キーボードから数値の入力を受け付けています。値は整数型変数aに代入され、8行目で表示されています。<strong>cout</strong>では、連続していくつものものを表示する場合、間を<strong>&lt;&lt;</strong>ではさみます。そのため8行目では、"a="、変数aの値、改行(endl)の順で出力されるわけです。</p>
+      <p>このことからわかるとおり、C++においては、C言語のprintf()のように、<strong>%d</strong>や<strong>\n</strong>といった記述はほとんど必要ありません。利用することは皆無ではありませんが、C言語に比べればはるかに少なくなっています。</p>
+      <h3>ストリームの概念</h3>
+      <p>最後に、ストリームの概念について説明して終わることにしましょう。ここまで読むと、<strong>cout</strong>や、<strong>cin</strong>は、単純に、C言語のprintf()関数や、scanf()関数の代わりと思われるかも知れませんが、実は違います。</p>
+      <p>これらは、<strong>ストリーム</strong>と呼ばれるものに対し、データ（数値や文字列など）を送り込んだり、逆に受け取ったりするものなのです。ストリームとは、英語で渓流などを表す言葉で、「流れ」という意味で用いられています。</p>
+      <p>つまり、<strong>cin</strong>や、<strong>cout</strong>は、その”流れ”からデータを受け取ったり、送り込んだりするわけです<strong>(図1-3)</strong>。不等号の向きは、その流れの向きを表すわけです。そして、そのストリームの行き着く先は、今回のサンプルのようなコンソールだったり、ファイルシステムだったりするわけです。これにより、ファイルへの読み書きと、コンソールからの入力・出力の処理がほとんど同じような記述で行うことが出来るのです。</p>
+      <div class="figure-box">
+        <img src="img/fig1-3.svg" alt="C++言語でもC言語でも用いられるストリームのイメージ">
+        <p>図1-3：ストリームの概念</p>
+      </div>
+      <p>コンソールの概念自体は、C言語にも存在し、似たようなことも出来ますが、C++の場合は、よりその方法が洗練されているのです。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>stringと文字列</h2>
+
+      <h3>string</h3>
+      <p>C++言語では、文字列の操作を行う<strong>string</strong>という<strong>クラス</strong>が存在します。クラスとは何かという説明は後ほど出てくるので、ここでは省略します。ただ、これを<strong>cin</strong>および<strong>cout</strong>と合わせて使うと大変便利で、char型の配列を用いて文字列の操作を行っていたC言語に比べれば、大変楽なので、まずはそのことについて解説します。</p>
+      <h3>サンプルプログラム</h3>
+      <p><strong>string</strong>というクラスを用いて作った簡単なサンプルをまずは実行してみてください。</p>
+      <div class="code-label">list1-4：簡単な文字列の操作(main.cpp)</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+int main(){
+    string s,t;
+    t ="入力された文字は、";
+    cout &lt;&lt; "文字列を入力：";
+    cin &gt;&gt; s;
+    cout &lt;&lt; t+s &lt;&lt; "です。" &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">文字列を入力：Hello   <span class="hint">←キーボードから入力</span><br>入力された文字は、Helloです。</div>
+      <p>実行すると「文字列を入力：」と出力され、入力待ち状態になります。ここで、任意の文字列を入力し、Enterを押すと、「入力された文字は、○○です。」と出ます。見てわかるとおり、C言語で同様のプログラムを作るときよりも、数段簡単ですし、cin、coutの記述方法は、intのときとまったく変わりません。これが、C++のストリームを利用する際の魅力のひとつです。</p>
+      <h3>stringと演算子</h3>
+      <p>また、文字列を扱うには、まず2行目のように、ヘッダファイル<strong>string</strong>をインクルードする必要があります。これは、<strong>C言語のヘッダファイルであるstring.hとは違う</strong>ので、注意が必要です。値への代入は、8行目のように、<strong>=（イコール）</strong>演算子を用いて行うことができます。</p>
+      <p>また、11行目のように、<strong>+(プラス）</strong>演算子を用いて、文字列同士をつなげることが可能です。このように、C言語とは違い、文字列の操作が簡単にできることがC++言語の特徴です。stringでは、以下の表1-1のように演算子を用いて文字列を操作することが可能です。</p>
+      <table class="data-table">
+        <caption>表1-1：stringで用いられる主な演算子</caption>
+        <thead><tr><th>演算子</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td>+</td><td>文字列同士の足し算</td></tr>
+          <tr><td>+=</td><td>文字列同士の足し算（代入演算）</td></tr>
+          <tr><td>==</td><td>比較演算(内容が同等)</td></tr>
+          <tr><td>!=</td><td>比較演算(内容が異なる)</td></tr>
+          <tr><td>&gt;</td><td rowspan="2">比較演算(文字列の大きさ)</td></tr>
+          <tr><td>&lt;</td></tr>
+        </tbody>
+      </table>
+      <p>この表を見てもわかるとおり、文字列も、数値などと直感的に近い操作が出来るのが、C++言語の大きな特徴のひとつです。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problem1.html">練習問題 1 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="day0.html">← 0日目へ</a>
+        <a href="day2.html">2日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

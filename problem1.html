@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++言語の練習問題（基本編）1。名前空間に関する問題です。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|練習問題1：名前空間</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">練習問題</div>
+  <h1>練習問題1：名前空間</h1>
+  <p>基本編1日目「名前空間」の内容を確認する問題です</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  練習問題1：名前空間
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>練習問題：</span>
+  <a href="problem1.html" class="active">1</a>
+  <a href="problem2.html">2</a>
+  <a href="problem3.html">3</a>
+  <a href="problem4.html">4</a>
+  <a href="problem5.html">5</a>
+  <a href="problem6.html">6</a>
+  <a href="problem7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>名前空間（対応：基本編1日目）</h2>
+
+      <div class="info-box">この問題を解くためには… → <a href="day1.html">基本編1日目「名前空間」</a> を参照してください。</div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 1-1</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">coutによる文字列の表示</span>
+      </div>
+      <div class="prob-body">
+      <p>coutを用いて、コンソール画面に、「C++」と表示するプログラムを作りなさい。ただし、最後に、endlで改行を入れること。</p>
+      </div></div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 1-2</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">usingを使わない書き方</span>
+      </div>
+      <div class="prob-body">
+      <p>以下のプログラムの3行目の「using namespace std;」を削除しても同じ動作をするようにプログラムを作り変えなさい。</p>
+      <div class="code-label">prob1-2:main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(){
+    cout &lt;&lt; "programming in C++ Language" &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">programming in C++ Language</div>
+      </div></div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 1-3</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">coutを1つにまとめる</span>
+      </div>
+      <div class="prob-body">
+      <p>以下のプログラムと同じ出力結果を得られるプログラムを、cout一つだけ、1行の処理で記述しなさい。</p>
+      <div class="code-label">prob1-3:main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(){
+    cout &lt;&lt; "ONE TWO THREE" &lt;&lt; endl;
+    cout &lt;&lt; "FOUR FIVE SIX" &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">ONE TWO THREE<br>FOUR FIVE SIX</div>
+      </div></div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 1-4</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">入力した数値を2倍にする</span>
+      </div>
+      <div class="prob-body">
+      <p>以下の実行例にならい、cinおよび、coutを用いて、コンソールから数値を入力し、その数を２倍した結果を表示するプログラムを作りなさい。</p>
+      <div class="result-label">実行例</div>
+      <div class="result-box">数値を入力してください:5 <span class="hint">← キーボードから任意の数値を入力</span><br>5を2倍した数は、10です。 <span class="hint">← 入力した数値の2倍の値を表示</span></div>
+      </div></div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 1-5</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">2つの整数の和と差</span>
+      </div>
+      <div class="prob-body">
+      <p>C++のcinおよびcoutを使って、2つの整数をキーボードから入力させ、その二つの数の和・差を表示するプログラムを作りなさい。</p>
+      <div class="result-label">期待される実行結果</div>
+      <div class="result-box">1つ目の数:5 <span class="hint">← キーボードから任意の値を入力</span><br>2つ目の数:3 <span class="hint">← キーボードから任意の値を入力</span><br>5 + 3 = 8<br>5 - 3 = 2</div>
+      </div></div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 1-6</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">stringによる姓と名の結合</span>
+      </div>
+      <div class="prob-body">
+      <p>cinおよび、coutを用いて、実行例にならい、コンソールから姓と名を入力し、名前を表示するプログラムをつくりなさい。ただし、出力する名前は、姓と名を＋演算子で結合して出力すること。</p>
+      <div class="result-label">実行例</div>
+      <div class="result-box">姓を入力:山田 <span class="hint">← キーボードから任意の値を入力</span><br>名を入力:一郎 <span class="hint">← キーボードから任意の値を入力</span><br>名前は「山田一郎」です。 <span class="hint">← 姓と名を結合して表示</span></div>
+      </div></div>
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 1-7</span>
+        <span class="difficulty">★</span>
+      <span class="prob-title">ビルドエラーの修正</span>
+      </div>
+      <div class="prob-body">
+      <p>以下のプログラムはビルドエラーが発生し、実行できない。プログラムを修正し、期待される実行結果が得られるようにプログラムを直しなさい。</p>
+      <div class="code-label">prob1-7：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+int main(){
+    cout &lt;&lt; "HelloWorld." &lt;&lt; endl;
+}</pre>
+      <div class="result-label">期待される実行結果</div>
+      <div class="result-box">HelloWorld.</div>
+      </div></div>
+
+      <div class="page-nav">
+        <a href="index.html">← トップページへ</a>
+        <a href="problem2.html">練習問題2へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>練習問題（基本編）</h3>
+      <ul>
+        <li><a href="problem1.html">問題1：名前空間</a></li>
+        <li><a href="problem2.html">問題2：クラス</a></li>
+        <li><a href="problem3.html">問題3：アクセス指定子</a></li>
+        <li><a href="problem4.html">問題4：生成と消去</a></li>
+        <li><a href="problem5.html">問題5：静的メンバ</a></li>
+        <li><a href="problem6.html">問題6：継承</a></li>
+        <li><a href="problem7.html">問題7：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

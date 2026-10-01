@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++のアクセス指定子public・private・protectedと、カプセル化、セッター・ゲッターによるメンバへのアクセス方法を学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|3日目：アクセス指定子</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>3日目：アクセス指定子</h1>
+  <p>public・private とカプセル化、セッターとゲッター</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  3日目：アクセス指定子
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>日数：</span>
+  <a href="day0.html">0</a>
+  <a href="day1.html">1</a>
+  <a href="day2.html">2</a>
+  <a href="day3.html" class="active">3</a>
+  <a href="day4.html">4</a>
+  <a href="day5.html">5</a>
+  <a href="day6.html">6</a>
+  <a href="day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>アクセス指定子</h2>
+
+      <h3>アクセス指定子の種類</h3>
+      <p>前回は、C++言語におけるクラスの定義方法について学習しました。ここで、メンバ変数やメンバ関数の宣言部分に、<strong>public</strong>や<strong>private</strong>というキーワードを使いましたが、これらのキーワードについての説明は省略しました。</p>
+      <p>これらは、<strong>アクセス指定子</strong>と言い、メンバ変数やメンバ関数にアクセスできる範囲を指定することが出来ます。C++言語のアクセス指定子には、以下のようなものがあります。</p>
+      <table class="data-table">
+        <caption>表3-1：C++言語のアクセス指定子</caption>
+        <thead><tr><th>アクセス指定子</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td><strong>public</strong></td><td>すべての範囲から呼び出し・読み出し可能</td></tr>
+          <tr><td><strong>private</strong></td><td>同一クラスまたは同一インスタンス内でのみアクセス可能</td></tr>
+          <tr><td><strong>protected</strong></td><td>同一クラスまたは同一インスタンスおよび、サブクラスおよびそのインスタンス内でのみアクセス可能（<a href="day6.html">6日目</a>参照）</td></tr>
+        </tbody>
+      </table>
+      <h3>アクセス指定子の有効範囲</h3>
+      <p>では実際に、あらためてアクセス指定子の働きを見てみましょう。ここでは、<strong>private</strong>および、<strong>public</strong>修飾子の働きを見てみます。<strong>protected</strong>については、継承（<a href="day6.html">6日目</a>）の概念の理解が必要なので、ここでは省略します。</p>
+      <div class="code-label">list3-1:Sample.h</div>
+<pre>#ifndef SAMPLE_H
+#define SAMPLE_H
+
+class Sample{
+public:
+    int a;        //    publicなメンバ変数
+private:
+    int b;        //    privateなメンバ変数
+public:
+    void func1();
+private:
+    void func2();
+};
+
+#endif // SAMPLE_H</pre>
+      <div class="code-label">Sample.cpp</div>
+<pre>#include "Sample.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+void Sample::func1(){
+    cout &lt;&lt; "func1" &lt;&lt; endl;
+    a = 1;
+    b = 1;
+    func2();                    //    func2ないから、func1を呼び出す
+}
+void Sample::func2(){
+    a = 2;
+    b = 2;
+    cout &lt;&lt; "a=" &lt;&lt; a  &lt;&lt; "," &lt;&lt; "b=" &lt;&lt; b &lt;&lt; endl;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include "Sample.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(){
+    Sample s;
+    s.a = 1;
+    //s.b = 2;
+    s.func1();
+    //s.func2();
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">func1<br>a=2,b=2</div>
+      <p><strong>main.cpp</strong>を見てもわかる通り、<strong>public</strong>なメンバ変数、およびメンバ関数である、a、func1()は、<strong>クラスの外部であるmain.cppからアクセスすることが可能</strong>です。しかし、<strong>main.cpp</strong>の9行目、および、11行目のコメントをとってみてください。ビルドエラーが出るはずです。</p>
+      <p><strong>Sample.cpp</strong>の中で、これらにアクセスしているにもかかわらず、<strong>main.cpp</strong>からはできないのです。このように、<strong>private修飾子がついているメンバ変数、およびメンバ関数は、クラスの外からアクセスできません。</strong>(図3-1.参照)</p>
+      <div class="figure-box">
+        <img src="img/fig3-1.svg" alt="publicメンバとprivateメンバ">
+        <p>図3-1：publicメンバとprivateメンバ</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h2>カプセル化</h2>
+
+      <h3>カプセル化とアクセスメソッド</h3>
+      <p>メンバへのアクセスを、そのクラスのメンバ関数からだけしかできないように制限することを<strong>カプセル化（隠蔽）</strong>と言います。C++言語に限らず、オブジェクト指向言語ではよく使われる手法です。</p>
+      <p>前述の通り、private指定子を使えば実現可能です。C++言語では普通、メンバ変数は一部の例外を除き、カプセル化して隠蔽することが一般的です。しかし、それでは外からそのメンバ変数へアクセスすることが出来ません。そこで、そのメンバ変数の値を設定したり、取得したりするメンバ関数が必要になってきます。それを、<strong>アクセスメソッド</strong>などと呼びます。</p>
+      <p>では実際に、以下のソースコードで、実例で説明していきます。</p>
+      <div class="code-label">list3-2：sample.h</div>
+<pre>class Sample
+{
+public:
+    void setNum(int num);  // private指定されたメンバ変数に書き込む
+    int getNum();          // private指定されたメンバ変数を読み取る
+private:
+    int m_num;
+};</pre>
+      <div class="code-label">sample.cpp</div>
+<pre>#include "sample.h"
+
+void Sample::setNum(int num)
+{
+    m_num = num;
+}
+int Sample::getNum()
+{
+    return m_num;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "sample.h"
+
+using namespace std;
+
+int main(){
+    Sample s;
+    s.setNum(5);
+    cout &lt;&lt; s.getNum() &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">5</div>
+      <h3>セッターとゲッター</h3>
+      <p>クラスで、private指定されたメンバ変数<strong>m_num</strong>に、値を書き込むときには<strong>setNum()</strong>メンバ関数、読み取るときには<strong>getNum()</strong>メンバ関数を使っています。これで、読み書きともに行えますが、片方だけにしてしまえば、「読み取り専用」とか「書き込み専用」とかいった特殊なメンバ変数も作れます。これもアクセス指定子を使うことが可能にした大きな特徴の１つです。</p>
+      <p>一般に、メンバ変数に書き込みを行うメンバ関数は、<strong>セッター</strong>、読み込みを行うメンバ関数を、<strong>ゲッター</strong>と言います。また、それぞれの名前は、書き込み・読み込みを行う変数名に由来しています。（図3-2）</p>
+      <div class="figure-box">
+        <img src="img/fig3-2.svg" alt="セッターとゲッター">
+        <p>図3-2：セッターとゲッター</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h2>stringクラス再び</h2>
+
+      <h3>stringクラスのメソッド</h3>
+      <p>すでに紹介した、<strong>string</strong>クラスについて説明していくことにします。stringクラスもまた、ユーザ定義クラス同様、クラスの一つなので、メンバ変数、および、メンバ関数が存在します。しかし、メンバ変数は一般的にカプセル化によって隠ぺいされているので、ユーザーは利用できません。</p>
+      <p>そこで、ここでは、stringクラスの主要なメンバ関数とその使い方を紹介していきます。まずは、以下のプログラムを実行してみてください。</p>
+      <div class="code-label">list3-3:main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+int main(){
+    string s;
+    s = "This is a";    //    最初の文字列
+    s.append(" pen.");    //    文字列の追加
+    cout &lt;&lt; s &lt;&lt; endl;
+    cout &lt;&lt; "文字列の長さ：" &lt;&lt; s.length() &lt;&lt; endl;
+    //    printfで表示
+    printf("char*:%s\n",s.c_str());
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">This is a pen.<br>文字列の長さ：14<br>char*:This is a pen.</div>
+      <p>このプログラムでは、stringクラスの3つのメソッドが利用されています。1つ目が、<strong>append()</strong>で、文字列の後に更に文字列を追加できます。次が、<strong>length()</strong>で、文字列の長さを取得できます。</p>
+      <p>最後に出てくる<strong>c_str()</strong>で、これは少し変わっています。このサンプルの13行目で使われていますが、このメソッドで、文字列をC言語の形式（const char型）に変更しています。通常、C言語のchar*型と、stringクラスの間に互換性はありませんが、このメソッドを利用すれば、stringの文字列をchar型の配列に変換することが可能です。</p>
+      <p>string型には、このほかにもたくさんの便利なメソッドが存在しますが、ここでは以上にとどめておきます。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problem3.html">練習問題 3 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="day2.html">← 2日目へ</a>
+        <a href="day4.html">4日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

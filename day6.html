@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="オブジェクト指向の重要な概念である継承をC++で記述する方法と、親クラス・子クラスの関係について学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|6日目：継承</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>6日目：継承</h1>
+  <p>親クラスの性質を受け継ぐ子クラスを作ろう</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  6日目：継承
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>日数：</span>
+  <a href="day0.html">0</a>
+  <a href="day1.html">1</a>
+  <a href="day2.html">2</a>
+  <a href="day3.html">3</a>
+  <a href="day4.html">4</a>
+  <a href="day5.html">5</a>
+  <a href="day6.html" class="active">6</a>
+  <a href="day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>継承</h2>
+
+      <h3>継承の概念</h3>
+      <p>C++言語に限らず、オブジェクト指向言語に備わっている重要な特性の１つに<strong>継承（インヘリタンス）</strong>があります。継承は、あるクラスのメンバを、他のクラスに引継ぐ（継承させる）という効果があります。</p>
+      <p>では、実際に継承とはどういうものか、さらに詳しく説明しましょう。すでに述べたように、クラスは、インスタンス、およびオブジェクトの「設計図」です。自動車の例を出すのならば、自動車の設計図がクラス、実際に工場で生産された自動車本体が、インスタンス、およびオブジェクトということになります。</p>
+      <h3>親クラスと子クラス</h3>
+      <p>ところで、自動車といえば、通常は乗用車を想像してしまうかもしれませんが、実際、自動車と呼ばれるものは実に多種多様です。たとえば、警察車両であるパトロールカー、荷物を運ぶトラック、さらには緊急車両である救急車などなど、実に多種多様な種類が存在します。それらは、「自動車」でありながら、それぞれ機能に応じた独自の機能の拡張がなされています。</p>
+      <div class="figure-box">
+        <img src="img/fig6-1.svg" alt="継承のイメージ">
+        <p>図6-1：継承のイメージ</p>
+      </div>
+      <p>このように、基本となるクラスの性質を受け継ぎ、独自の拡張をすることを、オブジェクト指向では、<strong>継承（けいしょう）</strong>と呼びます。継承のもととなるクラスのことを、<strong>親クラス</strong>、<strong>スーパークラス</strong>などと呼びます。それにたいし、親クラスの機能を継承し、独自の機能を実装したクラスのことを、<strong>子クラス</strong>、もしくは、<strong>サブクラス</strong>と呼びます。</p>
+      <p>前述の自動車の例で言うのならば、車クラスが親クラス、トラックや救急車などが、サブクラスということになります。（図6-1.参照）</p>
+    </div>
+
+    <div class="content-card">
+      <h2>継承の実装</h2>
+
+      <p>では実際に、この継承を実装してみましょう。ここでは、前述の、自動車と、救急車の例をプログラムにしてみます。少し長いですが、以下のプログラムを実行してみてください。</p>
+      <div class="code-label">list6-1：car.h</div>
+<pre>#ifndef CAR_H
+#define CAR_H
+
+//  自動車クラス
+class Car{
+public:
+    //  コンストラクタ
+    Car();
+    //  デストラクタ
+    virtual ~Car();
+    //  移動メソッド
+    void move();
+    //  燃料補給メソッド
+    void supply(int fuel);
+private:
+    int m_fuel;         //  燃料
+    int m_migration;    //  移動距離
+};
+#endif // CAR_H</pre>
+      <div class="code-label">car.cpp</div>
+<pre>#include "car.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+//  コンストラクタ
+Car::Car() : m_fuel(0),m_migration(0)
+{
+    cout &lt;&lt; "Carオブジェクト生成" &lt;&lt; endl;
+}
+//  デストラクタ
+Car::~Car()
+{
+    cout &lt;&lt; "Carオブジェクト破棄" &lt;&lt; endl;
+}
+void Car::move()
+{
+    //  燃料があるなら移動
+    if(m_fuel &gt;= 0){
+        m_migration++;  //  距離移動
+        m_fuel--;       //  燃料消費
+    }
+    cout &lt;&lt; "移動距離:" &lt;&lt; m_migration &lt;&lt; endl;
+    cout &lt;&lt; "燃料" &lt;&lt; m_fuel &lt;&lt; endl;
+}
+//  燃料補給メソッド
+void Car::supply(int fuel)
+{
+    if(fuel &gt; 0){
+        m_fuel += fuel; //  燃料補給
+    }
+    cout &lt;&lt; "燃料" &lt;&lt; m_fuel &lt;&lt; endl;
+}</pre>
+      <div class="code-label">ambulance.h</div>
+<pre>#ifndef AMBULANCE_H
+#define AMBULANCE_H
+
+#include "car.h"
+
+class Ambulance : public Car{
+public:
+    //    コンストラクタ
+    Ambulance();
+    //  デストラクタ
+    virtual ~Ambulance();
+    //  救急救命活動
+    void sevePeople();
+private:
+    int m_number;
+};
+
+#endif // AMBULANCE_H</pre>
+      <div class="code-label">ambulance.cpp</div>
+<pre>#include "ambulance.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+
+//  コンストラクタ
+Ambulance::Ambulance() : m_number(119)
+{
+    cout &lt;&lt; "Ambulanceオブジェクト生成" &lt;&lt; endl;
+}
+//  デストラクタ
+Ambulance::~Ambulance()
+{
+    cout &lt;&lt; "Ambulanceオブジェクト破棄" &lt;&lt; endl;
+}
+//  救急救命活動
+void Ambulance::sevePeople(){
+    cout &lt;&lt; "救急救命活動" &lt;&lt; endl &lt;&lt; "呼び出しは" &lt;&lt; m_number &lt;&lt; "番" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include "car.h"
+#include "ambulance.h"
+
+int main() {
+    Car c;
+    c.supply(10);   //  燃料補給
+    c.move();   //  移動
+    c.move();   //  移動
+    Ambulance a;
+    a.supply(10);
+    a.move();
+    a.sevePeople();
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">Carオブジェクト生成<br>燃料10<br>移動距離:1<br>燃料9<br>移動距離:2<br>燃料8<br>Carオブジェクト生成<br>Ambulanceオブジェクト生成<br>燃料10<br>移動距離:1<br>燃料9<br>救急救命活動<br>呼び出しは119番<br>Ambulanceオブジェクト破棄<br>Carオブジェクト破棄<br>Carオブジェクト破棄</div>
+      <p>あるクラスが、別のクラスを親クラスとするときの定義は、</p>
+      <div class="format-label">親クラスを継承した、子クラスの定義の方法</div>
+      <div class="format-box">class 子クラス名 : public 親クラス名</div>
+      <p>のように定義します。つまり、Ambulanceクラスは、Carクラスを継承したクラスです。そのため、Carクラスが親クラス、Ambulanceクラスが、子クラスという組み合わせになります。なお、ambulanceとは、英語で救急車を表す言葉であり、このクラスは、「救急車クラス」ということになります。</p>
+      <p>このことから、<strong>public</strong>メンバである、move()メソッド、および、supply()メソッドを利用することができます。ただ、Carクラスの<strong>private</strong>メンバ変数である、m_fuelおよび、m_migrationには、直接アクセスすることはできません。</p>
+      <p>また、Ambulanceクラスは、さらに独自のメンバである、メンバ変数のm_number、および、savePeopleメソッドは、Ambulanceクラスで利用することができますが、Carクラスでは利用することはできません。</p>
+      <h3>サブクラスのコンストラクタとデストラクタ</h3>
+      <p>次に、子クラスのコンストラクタとデストラクタの組み合わせについて注目してみましょう。プログラムをみてもわかるとおり、この子クラスにも、親クラスと同様に、コンストラクタ(<strong>Ambulance</strong>)および、デストラクタ(<strong>~Ambulance</strong>)が定義されています。</p>
+      <p>また、実行結果からもわかるとおり、実はサブクラスが生成される際、<strong>子クラスのコンストラクタが実行される前に、親クラスのコンストラクタが実行</strong>され、逆にdeleteでインスタンスが破棄されるときは、<strong>子クラスのデストラクタが実行され、そのあと親クラスのデストラクタが実行される</strong>ことがわかります。</p>
+      <p>このように、継承が利用された場合、親クラスのコンストラクタ・デストラクタも利用されることがわかります。</p>
+      <div class="figure-box">
+        <img src="img/fig6-2.svg" alt="親クラスと子クラスのコンストラクタ・デストラクタの関係性">
+        <p>図6-2：CarクラスとAmbulanceクラスのコンストラクタ・デストラクタの呼び出し順</p>
+      </div>
+      <p>なお、<strong>Car</strong>および、<strong>Ambulance</strong>クラスについている、<strong>virtual(バーチャル)</strong>修飾子に関しては、必ずつけるようにしてください。通常、C++言語では、継承を用いる場合、<strong>virtual</strong>をデストラクタにつけるように推奨されています。理由は難しいのでここでは省略しますが、どのようなクラスでも、そのサブクラスが作られる可能性があるので、今後、基本的にクラスのデストラクタには、<strong>virtual</strong>をつけるようにしましょう。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>UML</h2>
+
+      <h3>UMLクラス図による表記</h3>
+      <p>なお、プログラムの動作には直接関係はありませんが、ここでC++に限らず、オブジェクト指向言語の設計に用いられる、<strong>UML</strong>というツールの中にある、クラス図を用いて、このクラスを表記してみることにします。</p>
+      <p>まず、クラス図ですが、クラスを以下のような方法で表記します。（図6-3.参照）</p>
+      <div class="figure-box">
+        <img src="img/fig6-3.svg" alt="UMLのクラス図の表記">
+        <p>図6-3：UMLのクラス図における、クラスの表記方法</p>
+      </div>
+      <p>このように、3つに区切られた四角形の中に、上から<strong>クラス名</strong>、<strong>メンバ変数（属性）</strong>、<strong>メンバ関数（操作）</strong>を記入します。（クラス名以外は省略可能)複数のクラスが存在する場合には、これにさらにクラス間の関係性が記入されます。また、メンバ変数およびメンバ関数の前には、<strong>+</strong>、<strong>-</strong>、<strong>#</strong>といった記号を記述します。これらはそれぞれ、<strong>public</strong>、<strong>private</strong>、<strong>protected</strong>を表します。</p>
+      <p>このようにして、クラスを表記し、さらに、クラス間の関係性を表記することも可能です。継承もその関係性の一つです。実際に<strong>Car</strong>クラスと、<strong>Ambulance</strong>クラスを用いて表記すると、以下のようになります。(図6-4.参照)</p>
+      <div class="figure-box">
+        <img src="img/fig6-4.svg" alt="UMLのクラス図における継承の表記">
+        <p>図6-4：CarクラスとAmbulanceクラスを例に、クラス図の継承を表記</p>
+      </div>
+      <p>図のように、UMLのクラス図で継承を表記する場合、親クラスと子クラスの間を△のついた線で結びます。△の上には親クラス（スーパークラス）、下には子クラス（サブクラス）がきます。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>protectedメンバ</h2>
+
+      <p>すでに学んだとおり、<strong>private</strong>メンバは、同一クラス内から、<strong>public</strong>メンバは、クラス内・外を問わず、アクセスすることができます。しかし、三つ目の<strong>protected</strong>については、詳しく説明してきませんでしたので、この場で詳しく説明します。</p>
+      <div class="code-label">list6-2：Vector2D.h</div>
+<pre>#ifndef VECTOR2D_H
+#define VECTOR2D_H
+
+//    二次元ベクトルクラス
+class Vector2D{
+protected:
+    int m_x;
+    int m_y;
+public:
+    //    コンストラクタ
+    Vector2D();
+    //    値の設定
+    void setValue(int x,int y);
+    //    Ｘ座標の取得
+    int getX();
+    //    Ｙ座標の取得
+    int getY();
+protected:
+    //    初期化
+    void init();
+};
+
+#endif // VECTOR2D_H</pre>
+      <div class="code-label">Vector2D.cpp</div>
+<pre>#include "Vector2D.h"
+
+//    コンストラクタ
+Vector2D::Vector2D()
+{
+    init();
+}
+//    値の設定
+void Vector2D::setValue(int x,int y)
+{
+    m_x = x; m_y = y;
+}
+//    Ｘ座標の取得
+int Vector2D::getX()
+{
+    return m_x;
+}
+//    Ｙ座標の取得
+int Vector2D::getY()
+{
+    return m_y;
+}
+void Vector2D::init()
+{
+    m_x = 0; m_y = 0;
+}</pre>
+      <div class="code-label">Position2D.h</div>
+<pre>#ifndef POSITION2D_H
+#define POSITION2D_H
+
+#include  "Vector2D.h"
+
+class Position2D : public Vector2D{
+public:
+    //    位置のリセット
+    void resetPosition();
+    //    移動
+    void move(int dx,int dy);
+};
+
+#endif // POSITION2D_H</pre>
+      <div class="code-label">Position2D.cpp</div>
+<pre>#include "Position2D.h"
+
+void Position2D::resetPosition(){
+    init();
+}
+void Position2D::move(int dx,int dy)
+{
+    m_x += dx;
+    m_y += dy;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include "Position2D.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(int argc,char** args) {
+    Position2D p;
+    p.setValue(1,1);
+    p.move(2,3);
+    cout &lt;&lt; "p:("  &lt;&lt; p.getX() &lt;&lt; "," &lt;&lt; p.getY() &lt;&lt; ")" &lt;&lt; endl;
+    p.resetPosition();
+    cout &lt;&lt; "p:("  &lt;&lt; p.getX() &lt;&lt; "," &lt;&lt; p.getY() &lt;&lt; ")" &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">p:(3,4)<br>p:(0,0)</div>
+      <p><strong>Position2D</strong>クラスは、<strong>Vector2D</strong>クラスを継承しています。そのため、親クラスの<strong>public</strong>なメンバである、<strong>setValue()</strong>,<strong>getX()</strong>,<strong>getY()</strong>関数を利用できます。また、<strong>Vector2D</strong>で定義されているメンバ変数の<strong>m_x</strong>、<strong>m_y</strong>および、メンバ関数<strong>init()</strong>にも、クラス内からアクセスすることが可能です。</p>
+      <p>ただ、<strong>protected</strong>メンバは、<strong>private</strong>メンバ同様、クラス外からのアクセスはできません。つまり、<strong>protected</strong>メンバは、子クラスから見れば<strong>public</strong>のように、クラス外から見れば<strong>private</strong>のようにふるまうことができるのです。このように、サブクラスのみにアクセスを許すメンバには、<strong>protected</strong>修飾子をつけます（図6-5.参照）。</p>
+      <div class="figure-box">
+        <img src="img/fig6-5.svg" alt="protectedメンバへのアクセス">
+        <p>図6-5：protectedメンバへのアクセス</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h2>多重継承</h2>
+
+      <h3>単一継承と多重継承</h3>
+      <p>ここまで、C++言語の継承について説明してきましたが、今までの例では、親クラスが一つしか存在しませんでした。このように、親クラスが一つしかないような継承の仕方を、<strong>単一継承(たんいつけいしょう)</strong>と言います。ただ、C++では、ひとつのクラスに複数の親クラスを設定することができます。これを、<strong>多重継承（たじゅうけいしょう）</strong>と言います。(図6-6.参照)</p>
+      <div class="figure-box">
+        <img src="img/fig6-6.svg" alt="単一継承と多重継承">
+        <p>図6-6：単一継承と多重継承(クラス図で表記)</p>
+      </div>
+      <p>現在用いられているオブジェクト指向言語は、Java,C#など様々ですが、基本的に多重継承を許しているのはC++のみです。</p>
+      <h3>多重継承の実装</h3>
+      <p>では、C++で多重継承を実装するにはどのようにすればよいのでしょうか？そのやり方は簡単で、以下のような記述方法になります。</p>
+      <div class="format-box">class Sub : public SupA,public SupB{<br>    …<br>}</div>
+      <p>このように、<strong>継承する親クラスの間を、,(コンマ)で区切れば、複数の親クラスを持つことが可能です。</strong>ただ、多重継承を用いるのは、技術的な問題点も多く、あまり推奨されていません。そのため現在では、純粋仮想関数だけを持つクラスのように、他の言語のインターフェースに類するような特殊なクラスの継承に用いられるのがほとんどです。継承を用いる際には、原則として、子クラスが持つ親クラスは一つだけにするよう心掛けましょう。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problem6.html">練習問題 6 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="day5.html">← 5日目へ</a>
+        <a href="day7.html">7日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

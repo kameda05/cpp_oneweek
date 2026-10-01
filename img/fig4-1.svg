@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="330" viewBox="0 0 560 330">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<rect x="20" y="50" width="130" height="220" rx="0" fill="#fafafa" stroke="#333" stroke-width="1.2"/>
+<line x1="85" y1="90" x2="85" y2="230" stroke="#333" stroke-width="1.2" stroke-dasharray="10 8" marker-end="url(#a)"/>
+<text x="85" y="295" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">プログラム</text>
+<text x="170" y="40" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">クラス名：Car</text>
+<circle cx="300" cy="170" r="115" fill="none" stroke="#999" stroke-width="1.2"/>
+<text x="300" y="108" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">Car()</text>
+<rect x="235" y="116" width="130" height="30" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="300" y="137" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">コンストラクタ</text>
+<text x="300" y="206" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">~Car()</text>
+<rect x="235" y="214" width="130" height="30" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="300" y="235" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">デストラクタ</text>
+<line x1="150" y1="131" x2="233" y2="131" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<text x="175" y="122" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">生成</text>
+<line x1="150" y1="229" x2="233" y2="229" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<text x="175" y="220" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">消去</text>
+<text x="300" y="310" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">インスタンス</text>
+<polygon points="465.0,96 485.0,96 367,120" fill="#fff" stroke="#777" stroke-width="1"/>
+<rect x="410" y="50" width="130" height="46" rx="10" fill="#fff" stroke="#777" stroke-width="1"/>
+<line x1="465.0" y1="96.0" x2="485.0" y2="96.0" stroke="#fff" stroke-width="2"/>
+<text x="475.0" y="69.7" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">生成時に</text>
+<text x="475.0" y="84.7" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">一度だけ呼ばれる</text>
+<polygon points="465.0,196 485.0,196 367,220" fill="#fff" stroke="#777" stroke-width="1"/>
+<rect x="410" y="150" width="130" height="46" rx="10" fill="#fff" stroke="#777" stroke-width="1"/>
+<line x1="465.0" y1="196.0" x2="485.0" y2="196.0" stroke="#fff" stroke-width="2"/>
+<text x="475.0" y="169.7" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">消去時に</text>
+<text x="475.0" y="184.7" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">一度だけ呼ばれる</text>
+</svg>

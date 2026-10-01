@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="240" viewBox="0 0 560 240">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<path d="M30,20 H230 V188 L218,200 H30 Z" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<path d="M230,188 H218 V200" fill="none" stroke="#333" stroke-width="1.2"/>
+<text x="38" y="44" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">#include "B.h"</text>
+<text x="38" y="64" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve"></text>
+<text x="38" y="84" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">class A{</text>
+<text x="38" y="104" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">    B* m_pB;</text>
+<text x="38" y="124" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">    …</text>
+<text x="38" y="144" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">}</text>
+<text x="130.0" y="218" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">A.h</text>
+<path d="M330,20 H530 V188 L518,200 H330 Z" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<path d="M530,188 H518 V200" fill="none" stroke="#333" stroke-width="1.2"/>
+<text x="338" y="44" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">#include "A.h"</text>
+<text x="338" y="64" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve"></text>
+<text x="338" y="84" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">class B{</text>
+<text x="338" y="104" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">    A* m_pA;</text>
+<text x="338" y="124" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">    …</text>
+<text x="338" y="144" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">}</text>
+<text x="430.0" y="218" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">B.h</text>
+<rect x="24" y="26" width="190" height="26" rx="0" fill="none" stroke="#3b5bdb" stroke-width="1.6"/>
+<rect x="324" y="26" width="190" height="26" rx="0" fill="none" stroke="#d93025" stroke-width="1.6"/>
+<path d="M214,39 L328,80" fill="none" stroke="#3b5bdb" stroke-width="1.6" marker-end="url(#ab)"/>
+<path d="M324,39 L218,80" fill="none" stroke="#d93025" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="250" y="30" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">①</text>
+<text x="300" y="30" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">②</text>
+</svg>

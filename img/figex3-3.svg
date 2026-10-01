@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="40" y="28" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">(1) 外部からの呼び出し</text>
+<rect x="60" y="50" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="72" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="94" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="116" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="138" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="160" width="24" height="22" rx="0" fill="#4dd0e1" stroke="#666" stroke-width="1"/>
+<rect x="60" y="182" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="204" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="226" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="248" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="270" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="292" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="314" width="24" height="22" rx="0" fill="#4dd0e1" stroke="#666" stroke-width="1"/>
+<rect x="60" y="336" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="358" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="60" y="380" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<text x="140" y="110" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">関数部分</text>
+<rect x="150" y="125" width="24" height="22" rx="0" fill="#f5c400" stroke="#666" stroke-width="1"/>
+<rect x="150" y="147" width="24" height="22" rx="0" fill="#f5c400" stroke="#666" stroke-width="1"/>
+<rect x="150" y="169" width="24" height="22" rx="0" fill="#f5c400" stroke="#666" stroke-width="1"/>
+<circle cx="72" cy="171" r="4.5" fill="#3b5bdb" stroke="#3b5bdb" stroke-width="1.2"/>
+<path d="M76,171 H124 V136 H146" fill="none" stroke="#3b5bdb" stroke-width="2" marker-end="url(#ab)"/>
+<circle cx="162" cy="180" r="4.5" fill="#3b5bdb" stroke="#3b5bdb" stroke-width="1.2"/>
+<path d="M162,184 V198 H118 V194 H90" fill="none" stroke="#3b5bdb" stroke-width="2" marker-end="url(#ab)"/>
+<circle cx="72" cy="325" r="5" fill="#d93025" stroke="#d93025" stroke-width="1.2"/>
+<path d="M77,325 H132 V148 H146" fill="none" stroke="#d93025" stroke-width="2" marker-end="url(#ar)"/>
+<circle cx="165" cy="194" r="5" fill="#d93025" stroke="#d93025" stroke-width="1.2"/>
+<path d="M165,199 V345 H90" fill="none" stroke="#d93025" stroke-width="2" marker-end="url(#ar)"/>
+<polygon points="240.0,280 260.0,280 175,240" fill="#fff" stroke="#777" stroke-width="1"/>
+<rect x="190" y="280" width="120" height="60" rx="10" fill="#fff" stroke="#777" stroke-width="1"/>
+<line x1="240.0" y1="280.0" x2="260.0" y2="280.0" stroke="#fff" stroke-width="2"/>
+<text x="250.0" y="299.2" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">呼び出すたびに</text>
+<text x="250.0" y="314.2" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">プログラムの流れ</text>
+<text x="250.0" y="329.2" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">が変わる</text>
+<text x="30" y="428" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">プログラムのサイズは小さいが、分岐の</text>
+<text x="30" y="444" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="13" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">オーバーヘッドが発生</text>
+<text x="360" y="28" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">(2) inline関数</text>
+<rect x="370" y="50" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="370" y="72" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="370" y="94" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="370" y="116" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="370" y="138" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="370" y="160" width="24" height="22" rx="0" fill="#f5c400" stroke="#666" stroke-width="1"/>
+<rect x="370" y="182" width="24" height="22" rx="0" fill="#f5c400" stroke="#666" stroke-width="1"/>
+<rect x="370" y="204" width="24" height="22" rx="0" fill="#f5c400" stroke="#666" stroke-width="1"/>
+<rect x="370" y="226" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="370" y="248" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="370" y="270" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="370" y="292" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<rect x="370" y="314" width="24" height="22" rx="0" fill="#f5c400" stroke="#666" stroke-width="1"/>
+<rect x="370" y="336" width="24" height="22" rx="0" fill="#f5c400" stroke="#666" stroke-width="1"/>
+<rect x="370" y="358" width="24" height="22" rx="0" fill="#f5c400" stroke="#666" stroke-width="1"/>
+<rect x="370" y="380" width="24" height="22" rx="0" fill="#fff" stroke="#666" stroke-width="1"/>
+<text x="410" y="165" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">関数部分</text>
+<text x="410" y="320" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">関数部分</text>
+<text x="404" y="230" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">分岐は発生しないが、</text>
+<text x="404" y="248" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">プログラムのサイズは大きくなる</text>
+<polygon points="490.0,360 510.0,360 420,340" fill="#fff" stroke="#777" stroke-width="1"/>
+<rect x="440" y="360" width="120" height="46" rx="10" fill="#fff" stroke="#777" stroke-width="1"/>
+<line x1="490.0" y1="360.0" x2="510.0" y2="360.0" stroke="#fff" stroke-width="2"/>
+<text x="500.0" y="379.7" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">関数部分が</text>
+<text x="500.0" y="394.7" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">埋め込まれる</text>
+</svg>

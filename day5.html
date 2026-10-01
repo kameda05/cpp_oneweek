@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="インスタンスを生成せずに利用できる、静的メンバ変数と静的メンバ関数（static）について学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|5日目：静的メンバ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>5日目：静的メンバ</h1>
+  <p>インスタンスを生成せずに使える static メンバ</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  5日目：静的メンバ
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>日数：</span>
+  <a href="day0.html">0</a>
+  <a href="day1.html">1</a>
+  <a href="day2.html">2</a>
+  <a href="day3.html">3</a>
+  <a href="day4.html">4</a>
+  <a href="day5.html" class="active">5</a>
+  <a href="day6.html">6</a>
+  <a href="day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>静的メンバ</h2>
+
+      <h3>静的メンバとインスタンスメンバ</h3>
+      <p>今まで説明してきたメンバ変数、およびメンバ関数は、すべてインスタンスを生成することによって初めて利用可能なものでした。しかし、こういった変数や関数の中には、必ずしもインスタンスを生成しなくてもいいような処理もあるはずです。では、このような処理を行いたい場合、どうすればよいのでしょうか？</p>
+      <p>その時便利なのが、<strong>静的メンバ</strong>と呼ばれるものです。静的メンバは、インスタンスを生成することなく利用できるメンバ変数、およびメンバ関数を意味します。これに対し、従来のようにインスタンスの生成を必要とするメンバのことを、<strong>インスタンスメンバ</strong>と呼びます。ここでは、<strong>静的メンバ</strong>の作り方と、その利用方法について説明します。</p>
+      <h3>静的メンバのサンプル</h3>
+      <p>メンバ変数、およびメンバ関数は、生成したインスタンスに依存し、同じ名前でもインスタンスが異なれば違うものであることはすでに説明しました。それに対し、ここから説明する<strong>静的メンバ</strong>は、クラスにただ一つしかありません。まずは、以下のサンプルを実行してみてください。</p>
+      <div class="code-label">list5-1：rat.h</div>
+<pre>#ifndef RAT_H
+#define RAT_H
+
+class Rat{
+public:
+    //  コンストラクタ
+    Rat();
+    //  デストラクタ
+    ~Rat();
+    //  ネズミの数の出力
+    static void showNum();
+    //  ネズミが鳴く
+    void squeak();
+private:
+    //  ネズミの番号
+    int m_id;
+    //  ネズミの数
+    static int m_count;
+};
+
+#endif /* RAT_H */</pre>
+      <div class="code-label">rat.cpp</div>
+<pre>#include "rat.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+//  ネズミの数の初期値を0に設定
+int Rat::m_count = 0;
+
+//  コンストラクタ
+Rat::Rat() : m_id(0){
+    m_id = m_count;    //  ネズミの数を、IDとする。
+    m_count++;        //  ネズミの数を一つ増やす
+}
+//  デストラクタ
+Rat::~Rat() {
+    cout &lt;&lt; "ネズミ:" &lt;&lt; m_id &lt;&lt; "消去" &lt;&lt; endl;
+    m_count--;        //  ネズミの数を一つ減らす
+}
+//  ネズミの数の出力
+void Rat::showNum()
+{
+    cout &lt;&lt; "現在のネズミの数は、" &lt;&lt; m_count &lt;&lt; " 匹です。" &lt;&lt; endl;
+}
+//  ネズミが鳴く
+void Rat::squeak()
+{
+    cout &lt;&lt; m_id &lt;&lt; ":" &lt;&lt; "チューチュー" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include "rat.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(){
+    Rat *r1,*r2,*r3;
+    r1 = new Rat();    //    一匹目のネズミ生成
+    r1-&gt;squeak();
+    Rat::showNum();    //    ネズミの数を表示
+    r2 = new Rat();    //    二匹目のネズミ生成
+    r3 = new Rat();    //    三匹目のネズミ生成
+    r2-&gt;squeak();
+    r3-&gt;squeak();
+    delete r1;            //    一匹目のネズミ消去
+    delete r2;            //    二匹目のネズミ消去
+    Rat::showNum();    //    ネズミの数を表示
+    delete r3;            //    三匹目のネズミ消去
+    Rat::showNum();    //    ネズミの数を表示
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">0:チューチュー<br>現在のネズミの数は、1 匹です。<br>1:チューチュー<br>2:チューチュー<br>ネズミ:0消去<br>ネズミ:1消去<br>現在のネズミの数は、1 匹です。<br>ネズミ:2消去<br>現在のネズミの数は、0 匹です。</div>
+      <p>プログラムをみるとわかるとおり、<strong>rat.h</strong>の中に、<strong>static</strong>がついたメンバ変数とメンバ関数があります。これらがそれぞれ、<strong>静的メンバ変数</strong>と<strong>静的メンバ関数</strong>になります。</p>
+      <h3>静的メンバ変数</h3>
+      <p>では、まずは静的メンバ変数について説明していきましょう。静的メンバ変数の定義は、以下のようになります。</p>
+      <div class="format-label">静的メンバ変数の定義</div>
+      <div class="format-box">static (型） (変数名);</div>
+      <p>このような定義は、ヘッダファイルで行います。それに対し、初期値の設定は、以下のように行います。</p>
+      <div class="format-label">静的メンバ変数の初期値の定義</div>
+      <div class="format-box">(型) (クラス名)::(変数名) = (初期値);</div>
+      <p>通常、<strong>メンバ変数の初期値の設定は、ソースファイルで行われる</strong>のが一般的です。そのため、<strong>list5-1</strong>においても</p>
+      <div class="format-label">rat.hにおける、メンバ変数の定義</div>
+      <div class="format-box">static int m_count;</div>
+      <p>となり、初期値の設定は、</p>
+      <div class="format-label">rat.cppにおける、メンバ変数の初期値の設定</div>
+      <div class="format-box">int Rat::m_count=0;</div>
+      <p>となっています。これにより、プログラム起動時にクラスRatのメンバ変数は、初期値0として使用可能になります。なお、静的メンバ変数は、インスタンスを生成しなくても呼び出すことができます。</p>
+      <h3>静的メンバ関数</h3>
+      <p>続いて、静的メンバ関数ですが、こちらもインスタンスを生成する前から存在します。そのため、インスタンスを生成しなくても、呼び出すことが可能です。静的メンバ関数の定義は、ヘッダファイルにある、<strong>メンバ関数の定義の先頭にstaticをつけるだけです。</strong>先頭にstaticがつくだけで、定義の方法は一般のメンバ関数と何ら変わりません。</p>
+      <div class="format-label">静的メンバ関数の定義</div>
+      <div class="format-box">static (戻り値の型） (関数名)(引数1,引数2,…);</div>
+      <p>このプログラムでは、<strong>rat.h</strong>の11行目で以下のようにして静的メンバ関数を定義しています。</p>
+      <div class="format-label">rat.hの静的メンバ関数</div>
+      <div class="format-box">static void showNum();</div>
+      <p>先頭にstaticがつくだけで、他の部分は特に変わりません。ただし呼び出し時は、<strong>main.cpp</strong>で記述されているように、以下のようにして呼び出します。</p>
+      <div class="format-label">ratクラスのメンバ関数showNumの呼び出し</div>
+      <div class="format-box">Rat::showNum();</div>
+      <p>これは、たとえば、「r1-&gt;showNum()」のように、インスタンスから呼び出してもかまわないのですが、静的メンバの性質上、インスタンスを生成しなくても利用できることから、このような使い方をするのが一般的です。</p>
+      <h3>静的メンバの利用</h3>
+      <p>なお、関数の実装方法は通常のメンバ関数と同じなので、ここでは省略します。ただ、注意しなくてはならないのは、静的なメンバ関数が利用できるメンバ変数は、静的メンバ変数に限られるということです。</p>
+      <p>これは、通常のメンバ変数（インスタンス変数）は、インスタンスを生成しないと利用できないからで、インスタンスを生成しなくても呼び出せる静的なメンバ関数からは利用できないのは、そのためです。同様の理由で、静的メンバ関数から、通常のメンバ関数は呼び出せません。</p>
+      <p>ただし、その逆に通常のメンバ関数から、静的メンバ変数を利用したり、静的メンバ関数を呼び出すことは可能です。この規則を表にまとめると、以下のようになります。（表5-1.）</p>
+      <table class="data-table">
+        <caption>表5-1：各メンバ関数から利用できるメンバの種類</caption>
+        <thead><tr><th></th><th>静的メンバ変数</th><th>静的メンバ関数</th><th>インスタンスメンバ変数</th><th>インスタンスメンバ関数</th></tr></thead>
+        <tbody>
+          <tr><td><strong>静的メンバ関数</strong></td><td>利用可</td><td>利用可</td><td>利用不可</td><td>利用不可</td></tr>
+          <tr><td><strong>インスタンスメンバ関数</strong></td><td>利用可</td><td>利用可</td><td>利用可</td><td>利用可</td></tr>
+        </tbody>
+      </table>
+      <h3>プログラムの仕組み</h3>
+      <p>では、以上を踏まえてプログラムの仕組みを説明していきましょう。Ratクラスのインスタンスは、<strong>main.cpp</strong>の8行目、11行目、12行目で生成されていますが、そのたびに、コンストラクタ内（<strong>rat.cpp</strong>内の12行目）で、<strong>count++</strong>が実行されます。この変数は静的なメンバ変数ですから、初期値0からインクリメントされていきます。インスタンスの数がいくら増えても、クラスメンバには影響がありません。そのため、<strong>m_count</strong>がインクリメントされて、<strong>Rat::showNum()</strong> メソッドを実行すると、現在生成されているRatクラスのインスタンスの数が取得できるのです。(図5-1.参照)</p>
+      <div class="figure-box">
+        <img src="img/fig5-1.svg" alt="Ratクラスと静的メンバの関係性（newしている段階で）">
+        <p>図5-1：Ratクラスと静的メンバの関係性（newしている段階で）</p>
+      </div>
+      <p>逆に、デストラクタ内（rat.cppの17行目）で、<strong>m_count--;</strong>されるので、そのたびに値は減っていきます。(図5-2.参照)</p>
+      <div class="figure-box">
+        <img src="img/fig5-2.svg" alt="Ratクラスと静的メンバの関係性（deleteしている段階で）">
+        <p>図5-2：Ratクラスと静的メンバの関係性（deleteしている段階で）</p>
+      </div>
+      <p>また、インスタンスメンバとは異なり、クラスメンバは、<strong>インスタンスを生成しなくても利用できる</strong>ことから、初期状態、もしくは、すべてのインスタンスが消去された状況では、<strong>m_count</strong>の値は0になることから、<strong>showNum()</strong>メソッドの実行結果は、0になります。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problem5.html">練習問題 5 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="day4.html">← 4日目へ</a>
+        <a href="day6.html">6日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

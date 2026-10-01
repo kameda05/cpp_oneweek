@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="virtualを用いた仮想関数、純粋仮想関数、抽象クラス、仮想デストラクタについて学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|応用編6日目：virtualと仮想関数</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">応用編</div>
+  <h1>応用編6日目：virtualと仮想関数</h1>
+  <p>仮想関数・純粋仮想関数・抽象クラス</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  応用編6日目：virtualと仮想関数
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>応用編：</span>
+  <a href="ex-day1.html">1</a>
+  <a href="ex-day2.html">2</a>
+  <a href="ex-day3.html">3</a>
+  <a href="ex-day4.html">4</a>
+  <a href="ex-day5.html">5</a>
+  <a href="ex-day6.html" class="active">6</a>
+  <a href="ex-day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>仮想関数</h2>
+
+      <h3>オーバーライド再び</h3>
+      <p>仮想関数について説明する前に、少し継承に関して復習をしてみましょう。<a href="day6.html">基本編の第6日目</a>で学んだとおり、クラスは、<strong>継承</strong>によって、あるクラスの機能を受け継いだ、新しいクラスを作ることができました。</p>
+      <p>このとき、元になるクラスのことを、<strong>親クラス</strong>および、<strong>スーパークラス</strong>、その機能を受け継いだクラスのことを、<strong>子クラス</strong>および、<strong>サブクラス</strong>と呼びました。このとき、サブクラスの中に、スーパークラスと同一の名前、同一の引数、同一の戻り値を持つメンバ関数があった場合、これを<strong>オーバーライド</strong>と言い、サブクラスでは、そちらで定義された処理が優先されました。</p>
+      <h3>仮想関数</h3>
+      <p>しかし、ここに一つの問題点があります。それは、スーパークラスからサブクラスのメンバ関数を呼び出すことができないという点です。例えば、鳥というクラスがあったとします。その場合、それを継承したサブクラスとして考えられるのは、「にわとり」や「カラス」、「はと」といったものでしょう。</p>
+      <p>さらに、「鳥」というクラスには、「鳴く」というメソッドが存在したとします。その時、「にわとり」は「コケコッコー」と、「カラス」は「カァカァ」、といった具合に、鳴き方が異なります。ところが、プログラムによっては、その「鳥」の種類とは無関係に、「鳴く」というメソッドを呼び出したい場合があるのです。</p>
+      <p>そういった場合、従来のオーバーライドでは不可能です。そこで、「鳴く」というクラスのメソッドを呼び出したとき、その鳥の種類によって、柔軟に結果が変わるようにしたいものです。そういった場合、役に立つのが、<strong>仮想関数</strong>という概念です。</p>
+      <h3>サンプルプログラム</h3>
+      <p>では、<strong>仮想関数</strong>について説明する前に、実際に以下のサンプルプログラムを実行してみて下さい。</p>
+      <div class="code-label">listex6-1：bird.h</div>
+<pre>#ifndef BIRD_H
+#define BIRD_H
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+class Bird{
+public:
+    //    「鳴く」関数（仮想関数）
+    virtual void sing(){ cout &lt;&lt; "鳥が鳴きます" &lt;&lt; endl; }
+    //    「飛ぶ」関数
+    void fly(){ cout &lt;&lt; "鳥が飛びます" &lt;&lt; endl; }
+};
+
+#endif // BIRD_H</pre>
+      <div class="code-label">chicken.h</div>
+<pre>#ifndef CHICKEN_H
+#define CHICKEN_H
+
+#include "bird.h"
+
+//    ニワトリクラス
+class Chicken : public Bird{
+public:
+    //    「鳴く」関数（仮想関数）
+    void sing(){ cout &lt;&lt; "コケコッコー" &lt;&lt; endl; }
+    //    「飛ぶ」関数
+    void fly(){ cout &lt;&lt; "にわとりは飛べません" &lt;&lt; endl; }
+};
+
+#endif // CHICKEN_H</pre>
+      <div class="code-label">crow.h</div>
+<pre>#ifndef CROW_H
+#define CROW_H
+
+#include "bird.h"
+
+//    カラスクラス
+class Crow : public Bird{
+public:
+    //    「鳴く」関数（仮想関数）
+    void sing(){ cout &lt;&lt; "カーカー" &lt;&lt; endl; }
+    //    「飛ぶ」関数
+    void fly(){ cout &lt;&lt; "カラスが飛びます" &lt;&lt; endl; }
+};
+
+#endif // CROW_H</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include "bird.h"
+#include "chicken.h"
+#include "crow.h"
+
+using namespace std;
+
+int main(){
+    Bird* b1, *b2;
+    b1 = new Crow();
+    b2 = new Chicken();
+    b1-&gt;sing();
+    b1-&gt;fly();
+    b2-&gt;sing();
+    b2-&gt;fly();
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">カーカー<br>鳥が飛びます<br>コケコッコー<br>鳥が飛びます</div>
+      <h3>virtual</h3>
+      <p><strong>Crow</strong>および、<strong>Chicken</strong>クラスの共通の親クラスである、<strong>Bird</strong>クラスは、<strong>sing()</strong>および、<strong>fly()</strong>というメソッドがあり、それらは共にオーバーライドされています。</p>
+      <p>しかし、<strong>sing()</strong>メソッドには、先頭に<strong>virtual（バーチャル）</strong>という修飾子がついています。これにより、実行結果に違いがでます。</p>
+      <p><strong>virtual</strong>がついたメソッドは、<strong>サブクラスに実装された、メンバ関数が実行されています</strong>。したがって、同じBirdクラスのポインタである、b1,b2で、同じメソッドを呼び出しても、実行結果が異なります。それに対し、<strong>virtual</strong>がついていない、<strong>fly()</strong>メソッドは、<strong>Bird</strong>クラスのものが呼び出され、それぞれの子クラスに実装されているものは呼び出されません。</p>
+      <p>このように、<strong>virtual</strong>がついたメンバ関数のことを、<strong>仮想関数（かそうかんすう）</strong>と呼びます。(図6-1.)</p>
+      <div class="figure-box">
+        <img src="img/figex6-1.svg" alt="仮想関数とvirtual">
+        <p>図6-1：仮想関数の働き</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h2>抽象クラスと純粋仮想関数</h2>
+
+      <h3>抽象的なクラスとメソッド</h3>
+      <p>前述の「鳥」の例について再び考えてみましょう。「鳥」をあらわすクラスとして、「Bird」というクラスを作りました。しかし、考えてみて下さい。「にわとり」という名の鳥、もしくは、「カラス」という鳥は実在しますが、「鳥」という名の鳥は存在するでしょうか？</p>
+      <p>もちろん、そういったものは実際には存在しません。そのため、Birdクラスに、<strong>sing</strong>というメソッドがあるのはわかりますが、そこに何らかの実装があるのは、なんだか変な感じがします。（図6-2.）</p>
+      <div class="figure-box">
+        <img src="img/figex6-2.svg" alt="抽象クラスの考え方">
+        <p>図6-2：抽象クラスの考え方</p>
+      </div>
+      <h3>サンプルプログラム</h3>
+      <p>そこで、C++言語では、そういった概念に対応できるような方法も用意されています。まずは、<strong>listex6-1</strong>の、<strong>bird.h</strong>を、以下のように変えてみてください。</p>
+      <div class="code-label">listex6-1：bird.h(改)</div>
+<pre>#ifndef BIRD_H
+#define BIRD_H
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+class Bird{
+public:
+    //    「鳴く」関数（仮想関数）
+    virtual void sing()=0;
+    //    「飛ぶ」関数
+    void fly(){ cout &lt;&lt; "鳥が飛びます" &lt;&lt; endl; }
+};
+
+#endif // BIRD_H</pre>
+      <p>実行結果は、まったく変わらないはずです。</p>
+      <h3>純粋仮想関数</h3>
+      <p>12行目の仮想関数に注目してみてください。後ろに「=0」がついており、同時に実装が省略されています。こういった仮想関数のことを、<strong>純粋仮想関数(じゅんすいかそうかんすう)</strong>と言います。</p>
+      <div class="format-label">純粋仮想関数</div>
+      <div class="format-box">virtual void sing()=0;</div>
+      <p>純粋仮想関数は、メソッドそのものは存在するけれども、実装がない関数です。実装は、このクラスを継承した子クラスにされることが前提となっています。</p>
+      <h3>抽象クラス</h3>
+      <p>このような、純粋仮想関数を一つでも持つクラスのことを、<strong>抽象クラス（ちゅうしょうくらす）</strong>と言います。「にわとり」や「カラス」と違い、「鳥」という概念が抽象的な概念であったのと同じことです。</p>
+      <p>抽象クラスの最大の特徴は、<strong>インスタンスを作ることが出来ない</strong>ということです。ためしに、更に<strong>main.cpp</strong>を、以下のように変えてみてください。</p>
+      <div class="code-label">listex6-1:main.cpp(改)</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include "bird.h"
+#include "chicken.h"
+#include "crow.h"
+
+using namespace std;
+
+int main(){
+    Bird* b1, *b2, *b3;
+    b1 = new Crow();
+    b2 = new Chicken();
+    b3 = new Bird();
+    b1-&gt;sing();
+    b1-&gt;fly();
+    b2-&gt;sing();
+    b2-&gt;fly();
+    return 0;
+}</pre>
+      <p>このプログラムは、１３行目でエラーが発生するはずです。なぜなら、純粋仮想関数を持つBirdクラスは、抽象クラスとなるため、インスタンスを生成できないからです。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>仮想デストラクタ</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p><a href="day6.html">基本編第6日目</a>で、<strong>デストラクタには、virtualをつけるようにする必要がある</strong>、ということを説明しました。ここでは、改めてその理由を説明しましょう。まずは、以下のサンプルを実行してみてください。</p>
+      <div class="code-label">listex6-2:sup1.h</div>
+<pre>#ifndef SUP1_H
+#define SUP1_H
+
+#include &lt;iostream&gt;
+
+using namespace std;
+
+class Sup1{
+public:
+    Sup1(){ cout &lt;&lt; "Sup1のコンストラクタ" &lt;&lt; endl; }
+    ~Sup1(){ cout &lt;&lt; "Sup1のデストラクタ" &lt;&lt; endl; }
+};
+
+#endif // SUP1_H</pre>
+      <div class="code-label">sup2.h</div>
+<pre>#ifndef SUP2_H
+#define SUP2_H
+
+#include &lt;iostream&gt;
+
+using namespace std;
+
+class Sup2{
+public:
+    Sup2(){ cout &lt;&lt; "Sup2のコンストラクタ" &lt;&lt; endl; }
+    virtual ~Sup2(){ cout &lt;&lt; "Sup2のデストラクタ" &lt;&lt; endl; }
+};
+
+#endif // SUP2_H</pre>
+      <div class="code-label">sub1.h</div>
+<pre>#ifndef SUB1_H
+#define SUB1_H
+
+#include "sup1.h"
+
+class Sub1 : public Sup1{
+public:
+    Sub1(){ cout &lt;&lt; "Sub1のコンストラクタ" &lt;&lt; endl; }
+    ~Sub1(){ cout &lt;&lt; "Sub1のデストラクタ" &lt;&lt; endl; }
+};
+
+#endif // SUB1_H</pre>
+      <div class="code-label">sub2.h</div>
+<pre>#ifndef SUB2_H
+#define SUB2_H
+
+#include "sup2.h"
+
+class Sub2 : public Sup2{
+public:
+    Sub2(){ cout &lt;&lt; "Sub2のコンストラクタ" &lt;&lt; endl; }
+    ~Sub2(){ cout &lt;&lt; "Sub2のデストラクタ" &lt;&lt; endl; }
+};
+
+#endif // SUB2_H</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "sup1.h"
+#include "sub2.h"
+#include "sub1.h"
+#include "sub2.h"
+
+using namespace std;
+
+int main(){
+    Sup1 *s1 = new Sub1();
+    Sup2 *s2 = new Sub2();
+    delete s1;
+    delete s2;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">Sup1のコンストラクタ<br>Sub1のコンストラクタ<br>Sup2のコンストラクタ<br>Sub2のコンストラクタ<br>Sup1のデストラクタ<br>Sub2のデストラクタ<br>Sup2のデストラクタ</div>
+      <p>Sub1、Sub2は、それぞれSup1、Sup2を親クラスとして持つ子クラスです。<strong>main.cpp</strong>の10行目、11行目のような形で、インスタンスを生成し、消去した場合、Sub1はデストラクタが呼ばれないのに対し、Sub2はデストラクタが呼ばれています。</p>
+      <p>では、このような違いは何に由来するのでしょうか。それは、<strong>Sub2の親クラスである、Sup2のデストラクタには、virtualが付いている</strong>ことに関係しています。</p>
+      <h3>仮想デストラクタ</h3>
+      <p>すでに説明したとおり、<strong>virtual</strong>をつけたメソッドは、仮想関数となることから、親クラスからメンバ関数が呼ばれた場合は、子クラスの処理が実行されます。実は、これはデストラクタについても同様です。</p>
+      <p><strong>Sup1</strong>のデストラクタに<strong>virtual</strong>がついていないので、delete時には<strong>Sup1</strong>クラスのデストラクタのみが実行されるため、<strong>Sub1</strong>のデストラクタは実行されません。</p>
+      <p>このような場合、もしも子クラスのデストラクタに、生成した<strong>メモリの解放などといった重要な処理がある場合、それが実行されず</strong>、システムに致命的な不具合が発生する可能性があります。それに対し、<strong>virtual</strong>をつければ、<strong>サブクラスのデストラクタが実行されたのちに、親クラスのデストラクタが実行される</strong>ので、そのような心配はなくなります。</p>
+      <p>このように仮想関数にしたデストラクタのことを、<strong>仮想デストラクタ</strong>と言います。継承して利用される可能性のあるクラスのデストラクタは、必ず仮想デストラクタにしましょう。（図6-3.）</p>
+      <div class="figure-box">
+        <img src="img/figex6-3.svg" alt="仮想デストラクタ">
+        <p>図6-3：仮想デストラクタ</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h2>インターフェース</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>クラスの中には、<strong>純粋仮想関数のみからなるクラス</strong>が存在します。そういったクラスを、一般に<strong>インターフェース</strong>などと呼びます。まずは、実際にそれを利用した以下のサンプルを見てください。</p>
+      <div class="code-label">listex6-3：IInf1.h</div>
+<pre>#ifndef IINF1_H
+#define IINF1_H
+
+//    インターフェースクラス1
+class IInf1{
+public:
+    virtual void func1() = 0;
+    virtual void func2() = 0;
+};
+
+#endif // IINF1_H</pre>
+      <div class="code-label">IInf2.h</div>
+<pre>#ifndef IINF2_H
+#define IINF2_H
+
+//    インターフェースクラス2
+class IInf2{
+public:
+    virtual void func3() = 0;
+    virtual void func4() = 0;
+};
+
+#endif // IINF2_H</pre>
+      <div class="code-label">Sample.h</div>
+<pre>#ifndef SAMPLE_H
+#define SAMPLE_H
+
+#include &lt;iostream&gt;
+#include "IInf1.h"
+#include "IInf2.h"
+
+using namespace std;
+
+class Sample : public IInf1, public IInf2{
+public:
+    void func1(){ cout &lt;&lt; "func1" &lt;&lt; endl; }
+    void func2(){ cout &lt;&lt; "func2" &lt;&lt; endl; }
+    void func3(){ cout &lt;&lt; "func3" &lt;&lt; endl; }
+    void func4(){ cout &lt;&lt; "func4" &lt;&lt; endl; }
+};
+
+#endif // SAMPLE_H</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "IInf1.h"
+#include "IInf2.h"
+#include "Sample.h"
+
+//    IInf1のみが使える関数
+void foo(IInf1*);
+//    IInf2のみが使える関数
+void bar(IInf2*);
+
+int main(){
+    Sample * s = new Sample();
+    foo((IInf1*)s);
+    bar((IInf2*)s);
+    return 0;
+}
+
+//    IInf1のみが使える関数
+void foo(IInf1* p)
+{
+    p-&gt;func1();
+    p-&gt;func2();
+    //p-&gt;func3();
+    //p-&gt;func4();
+}
+//    IInf2のみが使える関数
+void bar(IInf2* p)
+{
+    //p-&gt;func1();
+    //p-&gt;func2();
+    p-&gt;func3();
+    p-&gt;func4();
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">func1<br>func2<br>func3<br>func4</div>
+      <p><strong>IInf1</strong>および、<strong>IInf2</strong>は、ともに純粋仮想関数しか存在しないクラスで、それ自体には特に意味がありません。しかし、それらはともに<strong>Sample</strong>クラスで多重継承されています。いったいなぜこのような面倒なことをしているのでしょうか。</p>
+      <h3>インターフェース</h3>
+      <p>このようなことをする効果として、<strong>main.cpp</strong>に記述されている、foo()、bar()関数を見てください。前者は引数として、<strong>IInf1</strong>後者は、<strong>IInf2</strong>のポインタを引数としています。これにより、foo()内では、<strong>IInf1</strong>のメンバ関数、bar()内では、<strong>IInf2</strong>の関数しか利用できません。</p>
+      <p>ためしに、<strong>main.cpp</strong>の23～24行目、および29～30行目のコメントをとってみてください。コンパイルエラーが出ます。もともとは、すべての関数を備えている<strong>Sample</strong>のインスタンスですが、13行目、および14行目でそれぞれのインターフェースでキャストすることにより、<strong>それぞれの純粋仮想関数が記述されている関数しか利用できない</strong>ようになっているのです。</p>
+      <p>このような純粋仮想関数の使い方を、<strong>インターフェース</strong>などと呼びます。<strong>インターフェース</strong>という用語は、言語としてのC++の概念ではありませんが、オブジェクト指向言語の重要な概念の一つです。(図6-4.)</p>
+      <div class="figure-box">
+        <img src="img/figex6-4.svg" alt="インターフェース">
+        <p>図6-4：インターフェース</p>
+      </div>
+      <h3>インターフェースの効能</h3>
+      <p>インターフェースを利用することのメリットは、このように、ポインタを渡す相手のクラスに対して、機能を制限したい場合などに有効です。</p>
+      <p><a href="day6.html">基本編の第6日目</a>の継承で述べたとおり、通常、多重継承を用いることはあまり好ましいこととはされていません。しかし、例外はこのインターフェースです。JavaやC#など、現在主流のオブジェクト指向言語は、多重継承を許していません。</p>
+      <p>しかし、独自にインターフェースの機能を持っており、このサンプルのように、ひとつのクラスに対し、多数のインターフェースをつけるような使い方をしています。そのような利用方法は、現在のオブジェクト指向プログラミングにおいて、主流の考え方になっています。</p>
+      <p>そのため、C++でも、このような利用方法の場合に限っては、多重継承を用いることは有効であるといえるでしょう。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problemex6.html">練習問題（応用編）6 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="ex-day5.html">← 応用編5日目へ</a>
+        <a href="ex-day7.html">応用編7日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

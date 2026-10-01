@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="310" viewBox="0 0 560 310">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="270" y="28" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">メンバ変数</text>
+<text x="270" y="50" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">privateなので、外部からアクセスできない。</text>
+<circle cx="330" cy="205" r="92" fill="none" stroke="#999" stroke-width="1.2"/>
+<ellipse cx="330" cy="150" rx="48" ry="22" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="8 6"/>
+<text x="330" y="156" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="16" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">m_num</text>
+<path d="M300,60 C300,90 320,100 322,124" fill="none" stroke="#333" stroke-width="2" marker-end="url(#a)"/>
+<text x="330" y="210" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="15" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">void setNum()</text>
+<text x="330" y="250" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="15" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">int getNum()</text>
+<text x="20" y="210" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">セッター：値の設定</text>
+<line x1="185" y1="205" x2="252" y2="205" stroke="#333" stroke-width="2" marker-end="url(#a)"/>
+<text x="20" y="250" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="15" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">ゲッター：値の取得</text>
+<line x1="258" y1="245" x2="185" y2="245" stroke="#333" stroke-width="2" marker-end="url(#a)"/>
+<path d="M412,205 H445 V160 H382" fill="none" stroke="#333" stroke-width="2" marker-end="url(#a)"/>
+<path d="M378,140 H460 V245 H412" fill="none" stroke="#333" stroke-width="2" marker-end="url(#a)"/>
+</svg>

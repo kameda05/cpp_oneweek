@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C言語との違いとして、変数の宣言位置、参照渡し、bool型、C++の構造体など、C++独自の機能を学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|応用編1日目：C言語との違い</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">応用編</div>
+  <h1>応用編1日目：C言語との違い</h1>
+  <p>変数の宣言位置・参照渡し・bool型など、C++独自の機能</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  応用編1日目：C言語との違い
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>応用編：</span>
+  <a href="ex-day1.html" class="active">1</a>
+  <a href="ex-day2.html">2</a>
+  <a href="ex-day3.html">3</a>
+  <a href="ex-day4.html">4</a>
+  <a href="ex-day5.html">5</a>
+  <a href="ex-day6.html">6</a>
+  <a href="ex-day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>C++言語特有の処理</h2>
+
+      <h3>C++言語の特徴</h3>
+      <p>基本編では、C++言語の基本について説明してきました。その知識だけでも、ある程度実用的なプログラムを作ることは不可能ではありません。しかし、C++言語をオブジェクト指向言語として使いこなすにはまだまだ不十分です。そこで、ここからは、応用編として、C++言語をより使いこなす方法について説明してみることにします。</p>
+      <p>そこで、手始めに、C++言語とC言語の基本的な違いや、関連に関する部分について説明していくことにします。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>引数の参照渡し</h2>
+
+      <h3>サンプルコード</h3>
+      <p>C言語では、関数の引数として、<strong>値渡し</strong>と、<strong>ポインタ渡し</strong>を選ぶことができました。C++言語には、これに加えて、<strong>参照渡し</strong>と呼ばれる方法もあります。</p>
+      <div class="code-label">listex1-1：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+void ref(int&amp;);
+void print(int);
+
+int main(){
+    //    整数の値を代入
+    int n = 5;
+    print(n);
+    //    参照渡し
+    ref(n);
+    print(n);
+    return 0;
+}
+
+void ref(int&amp; n){
+    n = 1;
+}
+void print(int n){
+    cout &lt;&lt; "n=" &lt;&lt; n &lt;&lt; endl;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">n=5<br>n=1</div>
+      <p>13行目で、関数<strong>ref</strong>を呼び出すと、10行目で、5で初期化していた変数nの値が1に変わったことがわかります。その理由は、<strong>ref</strong>関数の引数が、<strong>参照渡し</strong>であることに由来します。では、参照渡しとは何でしょうか。18行目の、関数<strong>ref</strong>の定義を見てください。</p>
+      <div class="format-label">参照渡しによる引数の定義</div>
+      <div class="format-box">void ref(int&amp; n)</div>
+      <p>見てわかるとおり、intの次に<strong>&amp;</strong>がついています。これは、<strong>変数を引数として渡すと、そのアドレスへの参照が渡される（図1-1.①参照）</strong>ことを意味します。これにより、<strong>ref</strong>関数内では、<strong>参照渡しされた変数の値を変更（図1-1.②参照）</strong>したりすることが可能になります。</p>
+      <div class="figure-box">
+        <img src="img/figex1-1.svg" alt="参照渡しの構造">
+        <p>図1-1：参照渡しの構造</p>
+      </div>
+      <h3>ポインタ渡しと参照渡しの違い</h3>
+      <p>この処理は、C言語における、引数のポインタ渡しと同じことができるということがわかります。しかし、ポインタ渡しと参照渡しの最大の違いは、ポインタ渡しは、呼び出す際に引数もポインタ、もしくは変数のアドレスを与えなくてはならないのに対し、参照渡しの場合、<strong>変数の名前をそのまま記入すればよい</strong>という点にあります。(表1-1.参照)</p>
+      <table class="data-table">
+        <caption>表1-1.ポインタ渡しと、参照渡しの違い</caption>
+        <thead><tr><th></th><th>引数として渡す値</th><th>関数定義の例</th><th>関数呼び出しの例</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ポインタ渡し</strong></td><td>変数のアドレスか、ポインタ</td><td>void func1(int* a)</td><td>func1(&amp;a);  //a:int型変数<br>func1(p);  // p:int型ポインタ</td></tr>
+          <tr><td><strong>参照渡し</strong></td><td>変数の値</td><td>void func2(int&amp; n)</td><td>func2(a);  //a:int型変数<br>func2(*p);  // p:int型ポインタ</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-card">
+      <h2>ローカル変数の定義</h2>
+
+      <h3>サンプルコード</h3>
+      <p>C言語と、C++言語では、ローカル変数の扱い方も微妙に違います。C言語では、ローカル変数は関数の処理の先頭で宣言しなくてはなりませんでしたが、<strong>C++言語では、どこで宣言してもかまいません</strong>。まずは、以下のサンプルコードを実行してみて下さい。</p>
+      <div class="code-label">listex1-2：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(){
+    cout &lt;&lt; "ABC" &lt;&lt; endl;
+    //    処理の途中で変数を宣言
+    int i;
+    for (i = 0; i &lt; 10; i++){
+        cout &lt;&lt; ":" &lt;&lt; i;
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">ABC<br>:0:1:2:3:4:5:6:7:8:9</div>
+      <h3>C++における、ローカル変数の定義位置</h3>
+      <p>listex1-2.の8行目を見てください。C言語の場合、このようにすでに何らかの処理を行った後に変数を定義するとエラーになりますが、C++に関しては全く問題ありません。通常、ローカル変数が定義されると、メモリ空間がその変数の分使用されます。</p>
+      <h3>for文での変数の定義</h3>
+      <p>また、このプログラムは以下のように変更することができます。</p>
+      <div class="code-label">listex1-2：main.cpp（変更後）</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(){
+    cout &lt;&lt; "ABC" &lt;&lt; endl;
+    //  処理の途中で変数を宣言
+    for (int i = 0; i &lt; 10; i++){
+        cout &lt;&lt; ":" &lt;&lt; i;
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}</pre>
+      <p>8行目を見てわかる通り、for文の中で変数iが宣言されています。このように、C++では、関数のスコープ以外の場所でも変数を定義することが可能です。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>構造体</h2>
+
+      <h3>サンプルコード</h3>
+      <p>C++ではクラスが使えるため、C言語と違い、構造体を使う頻度は少ないと言えます。しかし、この構造体も、C++言語では、変化が加えられています。まずは、以下のサンプルを実行してみてください。</p>
+      <div class="code-label">listex1-3：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+struct Data{
+    int n;
+    double d;
+};
+
+int main(){
+    Data dt;
+    dt.n = 100;
+    dt.d = 12.34;
+    cout &lt;&lt; "dt.n = " &lt;&lt; dt.n &lt;&lt; endl &lt;&lt; "dt.d = " &lt;&lt; dt.d &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">dt.n = 100<br>dt.d = 12.34</div>
+      <p>5行目で構造体を宣言しています。しかし、11行目を見ればわかる通り、C++言語では、構造体を宣言すれば、使用時に先頭に<strong>struct</strong>をつける必要はありません。通常、C言語で同様の処理を行うには、</p>
+      <div class="format-label">C言語で同様の処理を行う際の構造体の宣言</div>
+      <div class="format-box">typedef struct{<br>    int n;<br>    double d;<br>}Data;</div>
+      <p>のようにする必要がありますが、C++ではこの処理は簡素化されています。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>C++言語特有のデータ型</h2>
+
+      <h3>bool型</h3>
+      <p>C++には、Cにはない新たなデータ型が追加されました。それが、<strong>bool（ブール）</strong>型です。その名のとおり、bool代数を表すための型で、値は<strong>true</strong>および<strong>false</strong>しか存在しません。それぞれ真、および偽を表し、以下のサンプルのようにif文とともに使用可能です。</p>
+      <div class="code-label">listex1-4：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+bool judge(int);
+
+int main(){
+    int n;
+    cout &lt;&lt; "整数を入力：";
+    cin &gt;&gt; n;
+    if(judge(n)){
+        cout &lt;&lt; "この数は0以上です。" &lt;&lt; endl;
+    }else{
+        cout &lt;&lt; "この数は0未満です。" &lt;&lt; endl;
+    }
+    return 0;
+}
+
+bool judge(int n){
+    if(n &gt;= 0){
+        return true;
+    }else{
+        return false;
+    }
+}</pre>
+      <div class="result-label">実行結果の例</div>
+      <div class="result-box">整数を入力：5<br>この数は0以上です。</div>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problemex1.html">練習問題（応用編）1 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="day7.html">← 基本編7日目へ</a>
+        <a href="ex-day2.html">応用編2日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

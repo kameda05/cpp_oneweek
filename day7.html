@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="オーバーロードとオーバーライドという、C++のポリモーフィズムに関する概念を学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|7日目：ポリモーフィズム</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>7日目：ポリモーフィズム</h1>
+  <p>オーバーロードとオーバーライド</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  7日目：ポリモーフィズム
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>日数：</span>
+  <a href="day0.html">0</a>
+  <a href="day1.html">1</a>
+  <a href="day2.html">2</a>
+  <a href="day3.html">3</a>
+  <a href="day4.html">4</a>
+  <a href="day5.html">5</a>
+  <a href="day6.html">6</a>
+  <a href="day7.html" class="active">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>ポリモーフィズム</h2>
+
+      <h3>オーバーライドとオーバーロード</h3>
+      <p>第6日目までで、C++言語に関する知識はかなり豊富になってきました。極端な話、そこまでの話だけで十分に実用的なプログラムを組むことも不可能ではありません。しかし、C++という言語を、あるいはオブジェクト指向という考え方を十二分に活用するには、まだまだ不十分と言わざるを得ません。</p>
+      <p>ここで紹介する、<strong>ポリモーフィズム</strong>は、C++に限らずそのようなオブジェクト指向言語における、最も大事な概念の一つです。この概念には、<strong>オーバーロード</strong>と、<strong>オーバーライド</strong>と呼ばれるものがあります。ここでは、それらの概念について説明していきます。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>オーバーロード</h2>
+
+      <h3>オーバーロードのサンプル</h3>
+      <p>では、実際のプログラムで<strong>オーバーロード</strong>の例を見てみましょう。</p>
+      <div class="code-label">list7-1：calc.h</div>
+<pre>#ifndef CALC_H
+#define CALC_H
+
+class Calc{
+private:
+    int m_a, m_b;
+public:
+    //    デフォルトコンストラクタ
+    Calc();
+    //    コンストラクタ（引数つき）
+    Calc(int a, int b);
+    //    足し算処理その１
+    int add();
+    //    足し算処理その２
+    int add(int a,int b);
+    //    値の設定
+    void setValue(int a, int b);
+    //    値の取得(m_a)
+    int getA();
+    //    値の取得(m_b)
+    int getB();
+};
+
+#endif // CALC_H</pre>
+      <div class="code-label">calc.cpp</div>
+<pre>#include "calc.h"
+
+//    デフォルトコンストラクタ
+Calc::Calc() : m_a(0), m_b(0)
+{
+}
+//    コンストラクタ（引数つき）
+Calc::Calc(int a, int b) : m_a(a), m_b(b)
+{
+
+}
+//    足し算処理その１
+int Calc::add()
+{
+    return m_a + m_b;
+}
+//    足し算処理その２
+int Calc::add(int a, int b)
+{
+    return a + b;
+}
+//    値の設定
+void Calc::setValue(int a, int b)
+{
+    m_a = a; m_b = b;
+}
+//    値の取得(m_a)
+int Calc::getA()
+{
+    return m_a;
+}
+//    値の取得(m_b)
+int Calc::getB()
+{
+    return m_b;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "calc.h"
+
+using namespace std;
+
+int main(){
+    Calc *pC1, *pC2;
+    pC1 = new Calc();        //    デフォルトコンストラクタ
+    pC2 = new Calc(1, 2);    //    コンストラクタ（引数あり）
+    cout &lt;&lt; 3 &lt;&lt; " + " &lt;&lt; 4 &lt;&lt; " = " &lt;&lt; pC1-&gt;add(3, 4) &lt;&lt; endl;
+    cout &lt;&lt; pC2-&gt;getA() &lt;&lt; " + " &lt;&lt; pC2-&gt;getB() &lt;&lt; " = " &lt;&lt; pC2-&gt;add() &lt;&lt; endl;
+    delete pC1;
+    delete pC2;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">3 + 4 = 7<br>1 + 2 = 3</div>
+      <h3>オーバーロードの概念</h3>
+      <p>見るとわかるとおり、コンストラクタである、<strong>Calc</strong>および、<strong>add()</strong>関数が複数定義されていることがわかります。違うのは、引数の型だけです。</p>
+      <p>このように、C++言語では、コンストラクタを含め、すべてのメンバ関数で、引数の型や数が違っていれば、同じ名前を持つ複数のメソッドを定義することができます。これを、<strong>オーバーロード</strong>と言います。</p>
+      <h3>オーバーロードのメンバ関数の使い分け</h3>
+      <p>では、同一の名前のメソッドをどのようにして使い分けるのでしょうか。まずは、このプログラム内の<strong>add()</strong>メソッドの例で見てみます。<strong>main.cpp</strong>の10行目と11行目に着目してみてください。</p>
+      <p>10行目の<strong>add()</strong>の呼び出しは、整数型の2つの引数があります。したがって、<strong>calc.h</strong>の15行目で定義されている方の関数が呼びだされます。11行目の<strong>add()</strong>関数には、引数がありません。したがって、<strong>calc.h</strong>の13行目の関数が呼び出されるわけです。このように、<strong>オーバーロードされたメンバ関数は、引数の与えられ方などによって、区別</strong>されています(図7-1.)。</p>
+      <div class="figure-box">
+        <img src="img/fig7-1.svg" alt="オーバーライド">
+        <p>図7-1：オーバーロード</p>
+      </div>
+      <p>なお、オーバーロードできるメンバ関数の数には制限がありません。このサンプルでは2つしか定義していませんが、引数の型や数さえ異なれば、何個でも同じ名前のメンバ関数を定義することは可能です。</p>
+      <h3>コンストラクタのオーバーロード</h3>
+      <p>このような考え方は、コンストラクタに関してもまったく同じです。<strong>main.cpp</strong>の8行目の<strong>new</strong>で呼び出されるコンストラクタには、引数がありませんから、引数なしのコンストラクタが、9行目の場合は、整数の引数が2つあるので、引数のあるほうのコンストラクタが呼び出されます。</p>
+      <p>コンストラクタの場合、特に引数が付いていないコンストラクタのことを、<strong>デフォルトコンストラクタ</strong>と呼びます。</p>
+      <p>クラスを定義したとき、コンストラクタのオーバーロードがなければ、デフォルトコンストラクタを省略することが可能です。ただし、<strong>引数のあるコンストラクタを一つでも作った場合</strong>は注意が必要です。ためしに、以下のプログラム（<strong>list7-2</strong>）をビルドしてみてください。</p>
+      <div class="code-label">list7-2：Sample.h</div>
+<pre>#ifndef SAMPLE_H
+#define SAMPLE_H
+
+class Sample{
+public:
+    //    引数のあるコンストラクタ
+    Sample(int a);
+};
+
+#endif // SAMPLE_H</pre>
+      <div class="code-label">Sample.cpp</div>
+<pre>#include "Sample.h"
+
+Sample::Sample(int a){}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include "Sample.h"
+
+int main(){
+    Sample* p1, *p2;
+    p1 = new Sample(1);    //    引数のあるコンストラクタ
+    p2 = new Sample();    //    デフォルトコンストラクタの呼び出し（エラー）
+    return 0;
+}</pre>
+      <p>ビルドしてみると、<strong>main.cpp</strong>の6行目がエラーになることがわかります。このように、<strong>引数つきのコンストラクタを定義した場合、デフォルトコンストラクタは省略できない</strong>ので注意が必要です。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>オーバーライド</h2>
+
+      <h3>オーバーライドのサンプル</h3>
+      <p>続いて、ポリモーフィズムのもう一つの例である、<strong>オーバーライド</strong>のサンプルを見てみましょう。まずは、以下のプログラム(list7-3)を実行してみてください。</p>
+      <div class="code-label">list7-3：Sup1.h</div>
+<pre>#ifndef SUP1_H
+#define SUP1_H
+
+class Sup1{
+public:
+    void func();
+};
+
+#endif // SUP1_H</pre>
+      <div class="code-label">Sub1.h</div>
+<pre>#ifndef SUB1_H
+#define SUB1_H
+
+#include "Sup1.h"
+
+class Sub1 : public Sup1{
+public:
+    //    オーバーライドされた関数
+    void func();
+};
+
+#endif // SUB1_H</pre>
+      <div class="code-label">Sup1.cpp</div>
+<pre>#include "Sup1.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+void Sup1::func(){
+    cout &lt;&lt; "Sup1" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">Sub1.cpp</div>
+<pre>#include "Sub1.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+void Sub1::func(){
+    cout &lt;&lt; "Sub1" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include "Sup1.h"
+#include "Sub1.h"
+
+int main(){
+    Sup1 *sp1;
+    Sub1 *sp2;
+    sp1 = new Sup1();
+    sp2 = new Sub1();
+    sp1-&gt;func();
+    sp2-&gt;func();
+    delete sp1;
+    delete sp2;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">Sup1<br>Sub1</div>
+      <h3>オーバーライドの概念</h3>
+      <p>プログラムを見てわかるとおり、親子関係にあるクラス、<strong>Sup1</strong>と、<strong>Sub1</strong>に、<strong>func1()</strong>関数が定義されています。その上この二つは、<strong>戻り値の型、および引数はまったく同じ</strong>です。このように、親クラス、子クラスに<strong>同じ名前、同じ戻り値の型、同じ引数をとるメンバ関数が存在</strong>する場合、子クラスのメソッドは、親クラスのメソッドを<strong>オーバーライド</strong>すると言います。</p>
+      <p>実行結果からわかるとおり、<strong>Sup1</strong>の場合は、<strong>Sup1</strong>、<strong>Sub1</strong>の場合は、<strong>Sub1</strong>と表示されます。オーバーライドされたメソッドは、親クラスが同じメソッドを持っていても、<strong>原則的に子クラスに定義されたものを実行</strong>します。(図7-2.)</p>
+      <div class="figure-box">
+        <img src="img/fig7-2.svg" alt="ヘッダファイルとソースファイルの関係">
+        <p>図7-2：オーバーライド</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <h2>再びポリモーフィズム</h2>
+
+      <p>以上のような、<strong>オーバーライド</strong>、<strong>オーバーロード</strong>のことを、総称して、<strong>ポリモーフィズム(Polymorphism)</strong>と言います。日本語では、「<strong>多態性（たたいせい）</strong>」「<strong>多様性（たようせい）</strong>」などと訳されます。</p>
+      <p>ポリモーフィズムを利用する利点は、メンバ関数の名前が統一されることにより、名前を覚える必要がなくなることや、記述ミスを減らせることなどが挙げられます。特に、オブジェクト指向では、原則的に同じ機能には同じ名前をつけることが好ましいので、このように、同じような処理でも少しずつふるまいの違うメンバ関数に同じ名前をつけることにより、処理に統一感を持たせることが可能になるのです。</p>
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problem7.html">練習問題 7 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="day6.html">← 6日目へ</a>
+        <a href="ex-day1.html">応用編1日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="470" viewBox="0 0 560 470">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d93025"/></marker><marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b5bdb"/></marker><marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#333" stroke-width="1"/></marker></defs>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="20" y="24" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">④ delete r1;</text>
+<rect x="20" y="36" width="120" height="92" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="28" y="76" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#d93025" text-anchor="start" font-weight="bold" xml:space="preserve">m_count = 2;</text>
+<text x="28" y="100" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">showNum();</text>
+<text x="80" y="148" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">Rat</text>
+<line x1="160" y1="106" x2="230" y2="106" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<text x="195" y="96" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">消去</text>
+<circle cx="290" cy="82" r="40" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="290" y="32" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">r1</text>
+<text x="290" y="76" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">m_id = 0;</text>
+<text x="290" y="100" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">squeak();</text>
+<circle cx="251.3" cy="72" r="3.5" fill="#333"/>
+<line x1="251.3" y1="72" x2="142" y2="72" stroke="#333" stroke-width="1.2" stroke-dasharray="2 3" marker-end="url(#a)"/>
+<circle cx="382" cy="82" r="40" fill="none" stroke="#888" stroke-width="1.2"/>
+<text x="382" y="32" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">r2</text>
+<text x="382" y="76" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">m_id = 1;</text>
+<text x="382" y="100" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">squeak();</text>
+<circle cx="474" cy="82" r="40" fill="none" stroke="#888" stroke-width="1.2"/>
+<text x="474" y="32" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">r3</text>
+<text x="474" y="76" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">m_id = 2;</text>
+<text x="474" y="100" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">squeak();</text>
+<text x="20" y="179" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">⑤ delete r2;</text>
+<rect x="20" y="191" width="120" height="92" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="28" y="231" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#d93025" text-anchor="start" font-weight="bold" xml:space="preserve">m_count = 1;</text>
+<text x="28" y="255" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">showNum();</text>
+<text x="80" y="303" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">Rat</text>
+<line x1="160" y1="261" x2="230" y2="261" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<text x="195" y="251" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">消去</text>
+<circle cx="290" cy="237" r="40" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="290" y="187" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">r2</text>
+<text x="290" y="231" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">m_id = 1;</text>
+<text x="290" y="255" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">squeak();</text>
+<circle cx="251.3" cy="227" r="3.5" fill="#333"/>
+<line x1="251.3" y1="227" x2="142" y2="227" stroke="#333" stroke-width="1.2" stroke-dasharray="2 3" marker-end="url(#a)"/>
+<circle cx="382" cy="237" r="40" fill="none" stroke="#888" stroke-width="1.2"/>
+<text x="382" y="187" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">r3</text>
+<text x="382" y="231" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">m_id = 2;</text>
+<text x="382" y="255" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">squeak();</text>
+<text x="20" y="334" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="14" fill="#333" text-anchor="start" font-weight="bold" xml:space="preserve">⑥ delete r3;</text>
+<rect x="20" y="346" width="120" height="92" rx="0" fill="#fff" stroke="#333" stroke-width="1.2"/>
+<text x="28" y="386" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#d93025" text-anchor="start" font-weight="bold" xml:space="preserve">m_count = 0;</text>
+<text x="28" y="410" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="start" font-weight="normal" xml:space="preserve">showNum();</text>
+<text x="80" y="458" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" xml:space="preserve">Rat</text>
+<line x1="160" y1="416" x2="230" y2="416" stroke="#333" stroke-width="1.2" marker-end="url(#a)"/>
+<text x="195" y="406" font-family="'Noto Sans JP','Hiragino Sans','Meiryo',sans-serif" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">消去</text>
+<circle cx="290" cy="392" r="40" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="290" y="342" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="13" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">r3</text>
+<text x="290" y="386" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">m_id = 2;</text>
+<text x="290" y="410" font-family="'Source Code Pro','Consolas','Menlo',monospace" font-size="12" fill="#333" text-anchor="middle" font-weight="normal" xml:space="preserve">squeak();</text>
+<circle cx="251.3" cy="382" r="3.5" fill="#333"/>
+<line x1="251.3" y1="382" x2="142" y2="382" stroke="#333" stroke-width="1.2" stroke-dasharray="2 3" marker-end="url(#a)"/>
+</svg>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="STLのコンテナのうち、map・setおよびその他のクラスの使い方を学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|応用編5日目：STL②</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">応用編</div>
+  <h1>応用編5日目：STL②</h1>
+  <p>map・set およびその他のコンテナ</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  応用編5日目：STL②
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>応用編：</span>
+  <a href="ex-day1.html">1</a>
+  <a href="ex-day2.html">2</a>
+  <a href="ex-day3.html">3</a>
+  <a href="ex-day4.html">4</a>
+  <a href="ex-day5.html" class="active">5</a>
+  <a href="ex-day6.html">6</a>
+  <a href="ex-day7.html">7</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>map</h2>
+
+      <h3>連想配列</h3>
+      <p>STLの第三弾として、ここでは、<strong>map（マップ）</strong>の使い方について説明します。<strong>map</strong>は、<strong>vector</strong>同様、配列の一種です。ただ、<strong>vector</strong>が、要素へのアクセスを、0,1,2…といった、インデックスで行うのに対し、<strong>map</strong>は、同じ配列ではあっても、数値のインデックスによるアクセスを行うわけではありません。</p>
+      <p><strong>map</strong>のイメージとして、最もわかりやすい例としてあげられるのが、辞書でしょう。辞書では、調べたい単語のページを調べると、その意味が得られます。この、調べたい単語にあたる部分を、<strong>キー</strong>と言い、意味にあたるものが、要素になります。</p>
+      <p>このような記憶方法を、<strong>連想記憶（れんそうきおく）</strong>と言い、そのため、<strong>map</strong>は<strong>連想配列（れんそうはいれつ）</strong>とも呼ばれます。</p>
+      <h3>サンプルプログラム</h3>
+      <p>では実際に、<strong>map</strong>を使ったサンプルを見てみましょう。</p>
+      <div class="code-label">listex5-1：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;map&gt;
+
+using namespace std;
+
+int main() {
+    map &lt;string, int&gt; score;  // map のデータ構造を用意する。
+    string names[] = { "Tom","Bob","Mike" };
+    score[names[0]] = 100;            //    キーと値の関連付け① Tom : 100
+    score[names[1]] = 80;            //    キーと値の関連付け② Bob : 80
+    score[names[2]] = 120;            //    キーと値の関連付け③ Mike : 120
+    int i;
+    for(i = 0; i &lt; 3; i++){
+        cout &lt;&lt; names[i] &lt;&lt; ":" &lt;&lt; score[names[i]]  &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">Tom:100<br>Bob:80<br>Mike:120</div>
+      <p>このプログラムは名前と点数を関連付けるプログラムです。<strong>map</strong>も、他のSTL同様、クラス名と同じヘッダファイルのインクルード（3行目）と、標準名前空間の使用が必要（5行目）です。では、実際にプログラムの中身はどうなっているのでしょうか。詳しく見ていきましょう。</p>
+      <h3>mapクラスの利用</h3>
+      <p><strong>vector</strong>や<strong>list</strong>の場合と同様に、<strong>map</strong>も使用前に、宣言が必要になります。mapの型の宣言は、以下のようになります。</p>
+      <div class="format-label">mapの型の宣言</div>
+      <div class="format-box">map &lt;キーの型, 値の型&gt;</div>
+      <p>つまり、最初の型をキーとして、値の型のデータを格納するわけです。このサンプルの場合、8行目の処理がそれにあたります。ここでは、<strong>string</strong>をキーとして、<strong>int</strong>型の値を格納することを意味しています。あとに続く<strong>score</strong>がこのテンプレートクラスのインスタンスとなり、<strong>string</strong>と<strong>int</strong>のマップとして使用できることになります。では引き続き、値の代入を見てみましょう。</p>
+      <div class="format-label">mapへの値の代入</div>
+      <div class="format-box">score[names[0]] = 100;<br>score[names[1]] = 80;<br>score[names[2]] = 120;</div>
+      <p>10行目から12行目で、値を代入しています。9行目で初期化されているとおり、names[0]～names[2]にはそれぞれ、Tom,Bob,Mikeという値が入っていますから、これにより「Tom → 100」、「Bob → 80」、「Mike → 120」というデータの関連付けがなされます（図5-1.）。</p>
+      <p>結果は最終的に、14行目～16行目で表示されます。値を出力するときも、[]内に、キーとなる文字列を入れます。要するに、配列のインデックスの数値の代わりに文字列が入っていると思えばわかりやすいでしょう。</p>
+      <div class="figure-box">
+        <img src="img/figex5-1.svg" alt="STLのmapの仕組み">
+        <p>図5-1：mapの仕組み</p>
+      </div>
+      <h3>mapクラスの主なメソッド</h3>
+      <p>最後に、<strong>map</strong>クラスの主なメンバ関数を紹介しておきます(表5-1)。</p>
+      <table class="data-table">
+        <caption>表5-1.<strong>map</strong>の主なメンバ関数</caption>
+        <thead><tr><th>関数名</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td><strong>clear()</strong></td><td>全ての要素をクリアする。</td></tr>
+          <tr><td><strong>empty()</strong></td><td>マップが空であるときに true を返し、そうでないときに false を返す。</td></tr>
+          <tr><td><strong>erase()</strong></td><td>指定した要素をクリアする。</td></tr>
+          <tr><td><strong>size()</strong></td><td>マップの中の要素数を返す。</td></tr>
+          <tr><td><strong>find()</strong></td><td>マップから指定したキーが一致する要素を探し、イテレータを返す。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-card">
+      <h2>set</h2>
+
+      <h3>集合</h3>
+      <p>続いて、<strong>集合</strong>を扱うSTLクラス、<strong>set(セット)</strong>について説明します。集合とは、「ものの集まり」という意味で、<strong>set</strong>では、なかに様々なデータを格納することができます。ここには、要素が重複なく登録されるため、同じデータを複数回登録しても、一度登録されていれば二度と登録されません。つまり、<strong>同じデータは、必ずひとつしか登録できない</strong>のが、特徴です。</p>
+      <p>したがって、データの中から、重複をなくし、純粋にどのような要素から構成されているかを調べる際などには有効なクラスです。</p>
+      <h3>サンプルプログラム</h3>
+      <p>では実際に、以下のプログラムを実行してみてください。</p>
+      <div class="code-label">listex5-2：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;set&gt;
+
+using namespace std;
+
+int main() {
+    set&lt;string&gt; names;  // set のデータ構造を用意する。
+    //    値を代入
+    names.insert("Tom");
+    names.insert("Mike");
+    names.insert("Mike");    //    同じ名前をダブって代入させる
+    names.insert("Bob");
+    //    登録されている全データを表示
+    set&lt;string&gt;::iterator it;    //    イテレータを用意
+    for(it = names.begin() ; it != names.end(); it++){
+        cout &lt;&lt; *it &lt;&lt; endl;
+    }
+    //    Bob,Steveがデータ内に存在するか調べる
+    string n[] = {"Bob","Steve"};
+    int i;
+    for(i = 0; i &lt; 2;i++){
+        it = names.find(n[i]);
+        if(it == names.end()){
+            //    データが、set内に存在しなしい
+            cout &lt;&lt; n[i] &lt;&lt; " is not in a set." &lt;&lt; endl;
+        }else{
+            //    データがset内に存在する。
+            cout &lt;&lt; n[i] &lt;&lt; " is in a set." &lt;&lt; endl;
+        }
+    }
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">Bob<br>Mike<br>Tom<br>Bob is in a set.<br>Steve is not in a set.</div>
+      <p>このプログラムは、Tom,Mike,Bobという複数の名前を登録し、登録されているデータをすべて出力したり、あるデータがその中に含まれているかいないかを調べるプログラムです。</p>
+      <h3>setの宣言と利用</h3>
+      <p>では実際に、プログラムの流れを見てみましょう。いままでのSTLのクラスと同様、<strong>set</strong>クラスは、対応するヘッダファイルのインクルードおよび標準名前空間の利用を必要とします（3行目、5行目参照）。</p>
+      <p><strong>set</strong>の宣言が行われているのが、8行目です。</p>
+      <div class="format-label">setクラスの宣言</div>
+      <div class="format-box">set&lt;型名&gt; インスタンス名;</div>
+      <p>8行目では、string型のデータを登録する、namesというインスタンスが宣言されています。これにより、ここにはstringの文字列を登録することが可能になります。実際に値を登録しているところが、10行目～13行目です。</p>
+      <div class="format-label">データの登録</div>
+      <div class="format-box">names.insert("Tom");<br>names.insert("Mike");<br>names.insert("Mike");<br>names.insert("Bob");</div>
+      <p>見てわかるとおり、11行目および12行目で、Mikeという文字列が二回登録されています。しかし、前述のとおり、この場合、同じデータが複数登録されることはありません。それがわかるのが、15行目から18行目のデータの出力です。</p>
+      <p><strong>set</strong>は、他のSTLクラス同様、イテレータで要素にアクセスすることが可能です。ここでは、全ての要素が出力されていますが、出力された名前は、Bob,Mike,Tomとなっており、重複して登録したMikeも一度しか出力されていません。このことから、<strong>setは、データの重複をしない</strong>ことがわかります。(図5-2.参照)</p>
+      <div class="figure-box">
+        <img src="img/figex5-2.svg" alt="STLのsetの仕組み">
+        <p>図5-2：setの仕組み</p>
+      </div>
+      <h3>データの有無を調べる</h3>
+      <p>さらにこのサンプルでは、あるデータが集合の中に存在するか、しないかを調べています。この例では、Bob,Steveというデータの有無が調べられています。まず、データの有無を調べているのが、23行目のfind関数による処理です。</p>
+      <div class="format-label">データの有無の調査</div>
+      <div class="format-box">it = names.find(n[i]);</div>
+      <p>()内に記入したデータの有無を調べるのが、この関数の働きですが、戻り値としてイテレータが返ってきます。もしも、()内のデータが既に登録されていれば、そのデータに該当するイテレータが、そうでなければ、集合クラスのend()メソッドが戻り値として取得できます。</p>
+      <p>そこで、このプログラムでは、24行目で、戻り値のイテレータによって、値の有無を調べています。その結果、Bobは登録されているので、「Bob is in a set.」と、Steveは登録されていないので、「Steve is not in a set.」と出力されるのです。</p>
+      <h3>setの主なメソッド</h3>
+      <p>最後に、<strong>set</strong>クラスの主なメソッドを表にまとめておきます。</p>
+      <table class="data-table">
+        <caption>表5-2.<strong>set</strong>の主なメンバ関数</caption>
+        <thead><tr><th>関数名</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td><strong>clear()</strong></td><td>全ての要素をクリアする。</td></tr>
+          <tr><td><strong>empty()</strong></td><td>集合が空であるときに true を返し、そうでないときに false を返す。</td></tr>
+          <tr><td><strong>erase()</strong></td><td>指定した要素をクリアする。</td></tr>
+          <tr><td><strong>size()</strong></td><td>集合の中の要素数を返す。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-card">
+      <h2>その他のSTLクラス</h2>
+
+      <h3>まだまだたくさんあるSTLクラス</h3>
+      <p>今まで、STLの主要なクラスである、<strong>vector</strong>、<strong>list</strong>、<strong>map</strong>、<strong>set</strong>について説明してきました。この4つを知っていれば、かなりの処理を行うことができます。しかし、実はSTLはこの他にもまだまだたくさんのクラスが存在します。すべてを紹介するのは不可能ですが、ここでは、その中でも特に利用価値が高い、<strong>stack</strong>と、<strong>queue</strong>について、簡単に説明することにしましょう。</p>
+      <p>これらは、データ構造のうち、特に大事な、<strong>スタック</strong>と、<strong>キュー</strong>を表すものです。サンプルプログラムを見る前に、まずそれらの概念を説明しましょう。</p>
+      <h3>スタックとLIFO</h3>
+      <p>まず、<strong>スタック</strong>の概念について説明しましょう。<strong>スタック</strong>とは、英語で「積み重ねる」という意味で、最後に入力したデータが先に出力されるデータ構造です。STLでは<strong>stack</strong>クラスがこれにあたります。イメージとしては、積み重ねてある本を探す場合を連想するとわかりやすいでしょう。</p>
+      <p>積み重ねた本は、最初の方の本は下に、最後の方は上になります。したがって、この中から、目的の本にたどり着くには、まず上の本、つまりあとから積み重ねたものから探すことになります。このようなデータの検索方法を、<strong>LIFO</strong>(Last in First out)と呼びます。</p>
+      <h3>キューとFIFO</h3>
+      <p>それに対し、<strong>キュー</strong>は、<strong>FIFO</strong>(First In,First out)と呼ばれ、最初に登録したデータから、順に検索していくデータ形式です。キュー(queue)とは、英語で行列を表す単語です。STLでは<strong>queue</strong>クラスがこれに該当します。</p>
+      <p>商品を購入する際に行列を作れば、当然ながら、最初に行列に並んだものが、最初に商品を買えるように、<strong>キュー</strong>では、登録した古いデータを優先的に取り出します。つまり、<strong>スタック</strong>とは正反対の概念だということがわかります。</p>
+      <h3>サンプルプログラム</h3>
+      <p>以上を踏まえて実際に<strong>stack</strong>と、<strong>queue</strong>を用いたクラスのサンプルをみてみましょう。以下のプログラムを実行してみてください。</p>
+      <p>、</p>
+      <div class="code-label">listex5-3：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;stack&gt;
+#include &lt;queue&gt;
+
+using namespace std;
+
+int main() {
+    stack&lt;int&gt; stk;    // スタックのデータを宣言
+    queue&lt;int&gt; que;    // キューのクラス宣言
+    int data[] = { 1, 2, 3 };    //    登録するデータ
+    int i;
+    //    データの登録
+    for(i = 0; i &lt; 3;i++){
+        stk.push(data[i]);
+        que.push(data[i]);
+    }
+    //    データの出力(stack)
+    cout &lt;&lt; "stack : ";
+    while (!stk.empty()) {
+        // topで要素を取得し、popでその要素をstkから取り除く(2段階の作業が必要)
+        cout &lt;&lt; stk.top() &lt;&lt; " ";
+        stk.pop();
+    }
+    cout &lt;&lt; endl;
+    //    データの出力(queue)
+    cout &lt;&lt; "queue : ";
+    while (!que.empty()) {
+        // frontで要素を取得し、popでその要素をqueから取り除く(2段階の作業が必要)
+        cout &lt;&lt; que.front() &lt;&lt; " ";
+        que.pop();
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">stack : 3 2 1<br>queue : 1 2 3</div>
+      <h3>stack,queueの宣言</h3>
+      <p>他のSTL関連クラス同様、8行目および9行目で、テンプレートクラス<strong>stack</strong>,および<strong>queue</strong>の宣言をしています。この場合、型の指定が&lt;int&gt;となっているので、扱われるデータは整数となります。</p>
+      <p>なお、<strong>stack</strong>は、ヘッダファイル、<strong>stack</strong>（2行目）、<strong>queue</strong>は、<strong>queue</strong>(3行目）が必要になります。標準名前空間で使うという点も他のSTLクラスと同様です。</p>
+      <h3>pushによるデータの登録</h3>
+      <p><strong>stack</strong>,および<strong>queue</strong>は、ともに、<strong>push()</strong>関数によってデータを挿入します。（13行目～16行目）このサンプルでは、1,2,3という数値が登録されます。</p>
+      <h3>データの取り出し</h3>
+      <p>データ登録のメソッドは同一だった<strong>stack</strong>と<strong>queue</strong>ですが、データの取り出し方法は異なります。<strong>stack</strong>では、<strong>top()</strong>関数を用いて、<strong>queue</strong>では、<strong>front()</strong>関数を用いてデータを取得します。</p>
+      <p><strong>top</strong>は、スタックに最後に登録された要素を得るメソッドであり、<strong>front</strong>では、キューの最初の要素を得るメソッドです。それぞれ、積み重ねたデータの一番上（top）、行列の先頭(front)を表す言葉を意味するわけです(図5-3.参照)。</p>
+      <div class="figure-box">
+        <img src="img/figex5-3.svg" alt="STLのstackとqueueの仕組み">
+        <p>図5-3：stackとqueueの仕組み</p>
+      </div>
+      <h3>データの削除</h3>
+      <p>データの削除は<strong>pop</strong>メソッドを用います。ただし、メソッド名は同一でも、実行結果は異なります。<strong>stack</strong>は、<strong>LIFO</strong>なので、最後に登録されたデータが、<strong>queue</strong>は、<strong>FIFO</strong>なので、最初のデータがそれぞれ削除されます。これらは、それぞれ、<strong>top()</strong>関数および、<strong>front()</strong>関数によって得られるデータに該当します。</p>
+      <p>また、<strong>empty()</strong>メソッドは、データが空であればtrue、そうでなければfalseを返す関数です。したがって、どちらのループでも、中身がカラになるまで、データの出力・削除がおこなわれる仕組みになっています。</p>
+      
+
+      <p style="margin-top:20px;">
+        <a class="exercise-link" href="problemex5.html">練習問題（応用編）5 へ →</a>
+      </p>
+
+      <div class="page-nav">
+        <a href="ex-day4.html">← 応用編4日目へ</a>
+        <a href="ex-day6.html">応用編6日目へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>
