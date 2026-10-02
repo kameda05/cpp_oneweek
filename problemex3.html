@@ -66,7 +66,7 @@
       <span class="prob-title">テンプレート関数による統合</span>
       </div>
       <div class="prob-body">
-      <p>以下のプログラムで型に応じて複数定義されている関数maxを、テンプレートを用いて一つの関数にしなさい。</p>
+      <p>以下のプログラムで型に応じて複数定義されている関数biggerを、テンプレートを用いて一つの関数にしなさい。</p>
       <div class="code-label">main.cpp</div>
 <pre>#include &lt;iostream&gt;
 #include &lt;string&gt;
@@ -74,35 +74,35 @@
 using namespace std;
 
 //    整数値を比較し、大きいほうを返す関数
-int max(int,int);
+int bigger(int,int);
 //    実数を比較し、大きいほうを返す関数
-double max(double,double);
+double bigger(double,double);
 //    文字列を比較し、辞書順で後ろのほうを返す関数
-string max(string,string);
+string bigger(string,string);
 
 int main(){
-    cout &lt;&lt; max(1,2) &lt;&lt; endl;
-    cout &lt;&lt; max(1.75,3.12) &lt;&lt; endl;
+    cout &lt;&lt; bigger(1,2) &lt;&lt; endl;
+    cout &lt;&lt; bigger(1.75,3.12) &lt;&lt; endl;
     string s1 = "aiu",s2 = "eo";
-    cout &lt;&lt; max(s1,s2) &lt;&lt; endl;
+    cout &lt;&lt; bigger(s1,s2) &lt;&lt; endl;
     return 0;
 }
 
-int max(int a,int b)
+int bigger(int a,int b)
 {
     if(a &gt; b){
         return a;
     }
     return b;
 }
-double max(double a,double b)
+double bigger(double a,double b)
 {
     if(a &gt; b){
         return a;
     }
     return b;
 }
-string max(string a,string b)
+string bigger(string a,string b)
 {
     if(a &gt; b){
         return a;
@@ -119,7 +119,7 @@ string max(string a,string b)
       <span class="prob-title">テンプレートクラスへの書き換え</span>
       </div>
       <div class="prob-body">
-      <p>以下のプログラムでのクラスCollectionIntは、整数型の配列を保持し、その中から最大値と最小値を取得できるクラスである。このクラスをテンプレートを使って、double,stringなど、あらゆる型で同じ処理ができるクラス、collectionを作り、処理を書き換えなさい。</p>
+      <p>以下のプログラムでのクラスCollectionIntは、整数型の配列を保持し、その中から最大値と最小値を取得できるクラスである。このクラスを、テンプレートを使って、double・stringなど、あらゆる型で同じ処理ができるクラスCollectionに作り変えなさい。また、main.cppを書き換えて、実数の配列 { 1.2, 3.5, 8.1, 4.9, 2.6, 2.2 } と、整数の配列 { 1, 5, 4, 2, 3 } の両方で、期待される実行結果のように動作することを確かめなさい。（ヒント：テンプレートクラスの処理は、ヘッダファイルに記述する。応用編3日目参照）</p>
       <div class="code-label">main.cpp</div>
 <pre>#include &lt;iostream&gt;
 #include "collectionint.h"
@@ -210,7 +210,7 @@ void CollectionInt::showArray(){
       <div class="result-label">実行結果</div>
       <div class="result-box">1 5 4 2 3<br>最大値 : 5<br>最小値 : 1</div>
       <div class="result-label">期待される実行結果</div>
-      <div class="result-box">実数の場合<br>1.2 3.5 8.1 4.9 2.0 2.2<br>最大値 : 8.1<br>最小値 : 1.2<br><br>整数の場合<br>1 5 4 2 3<br>最大値 : 5<br>最小値 : 1</div>
+      <div class="result-box">実数の場合<br>1.2 3.5 8.1 4.9 2.6 2.2<br>最大値 : 8.1<br>最小値 : 1.2<br><br>整数の場合<br>1 5 4 2 3<br>最大値 : 5<br>最小値 : 1</div>
       </div></div>
 
       <div class="page-nav">
@@ -252,6 +252,16 @@ void CollectionInt::showArray(){
         <li><a href="ex-day5.html">5日目：STL②</a></li>
         <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
         <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>補講</h3>
+      <ul>
+        <li><a href="supplement1.html">補講1：例外処理</a></li>
+        <li><a href="supplement2.html">補講2：ファイル入出力</a></li>
+        <li><a href="supplement3.html">補講3：コピーと代入</a></li>
+        <li><a href="supplement4.html">補講4：C++のキャスト</a></li>
       </ul>
     </div>
 

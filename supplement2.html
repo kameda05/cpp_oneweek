@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++のファイルストリーム（ifstream・ofstream）を使ったテキストファイルの読み書き、getlineによる1行ずつの読み込み、追記モードを学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|補講2：ファイル入出力</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">補講</div>
+  <h1>補講2：ファイル入出力</h1>
+  <p>ifstream・ofstream でファイルを読み書きする</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  補講2：ファイル入出力
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>補講：</span>
+  <a href="supplement1.html">1</a>
+  <a href="supplement2.html" class="active">2</a>
+  <a href="supplement3.html">3</a>
+  <a href="supplement4.html">4</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>ファイルとストリーム</h2>
+
+      <h3>ファイルストリーム</h3>
+      <p>基本編1日目で、cout や cin は<strong>ストリーム</strong>にデータを送り込んだり、受け取ったりするものだと説明しました。そして、ストリームの先はコンソールだけでなく、ファイルの場合もあると述べました（図1-3）。</p>
+      <p>C++ では、ファイルを読み書きするためのストリームとして、次のクラスが用意されています。いずれも、ヘッダ <strong>fstream</strong> をインクルードすると使えます。</p>
+      <table class="data-table">
+        <caption>表S2-1：ファイルを扱うストリームのクラス</caption>
+        <thead><tr><th>クラス名</th><th>用途</th><th>コンソールで言えば</th></tr></thead>
+        <tbody>
+          <tr><td>ofstream</td><td>ファイルへの書き込み（output file stream）</td><td>cout</td></tr>
+          <tr><td>ifstream</td><td>ファイルからの読み込み（input file stream）</td><td>cin</td></tr>
+          <tr><td>fstream</td><td>ファイルの読み書きの両方</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p>これらのクラスは、cout や cin と同じように <strong>&lt;&lt;</strong> や <strong>&gt;&gt;</strong> で読み書きできます。コンソールでの入出力を覚えていれば、ほとんど同じ書き方でファイルを扱えるのが、C++ のストリームの利点です。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>ファイルへの書き込み</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>まずは、テキストファイルに文字列を書き込んでみましょう。</p>
+      <div class="code-label">lists2-1：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+
+using namespace std;
+
+int main(){
+    //    書き込み用にファイルを開く
+    ofstream ofs("memo.txt");
+    if (!ofs){
+        cout &lt;&lt; "ファイルを開けませんでした" &lt;&lt; endl;
+        return 1;
+    }
+    //    coutと同じように &lt;&lt; で書き込む
+    ofs &lt;&lt; "C++のファイル入出力" &lt;&lt; endl;
+    ofs &lt;&lt; "1 + 2 = " &lt;&lt; 1 + 2 &lt;&lt; endl;
+    cout &lt;&lt; "memo.txtに書き込みました" &lt;&lt; endl;
+    return 0;
+}    //    ofsのデストラクタで、ファイルは自動的に閉じられる</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">memo.txtに書き込みました</div>
+      <div class="result-label">memo.txt の内容</div>
+      <div class="result-box">C++のファイル入出力<br>1 + 2 = 3</div>
+      <p>プログラムを実行すると、実行したフォルダ（Visual Studio の場合はプロジェクトのフォルダ）に <strong>memo.txt</strong> が作られます。</p>
+
+      <h3>ファイルを開く</h3>
+      <p>8行目で、ofstream クラスのオブジェクト ofs を作っています。コンストラクタにファイル名を渡すと、そのファイルが書き込み用に開かれます。ファイルがなければ新しく作られ、すでにある場合は中身が消去されてから書き込まれます。</p>
+      <div class="format-label">書き込み用にファイルを開く</div>
+      <div class="format-box">ofstream 変数名("ファイル名");</div>
+      <p>フォルダが存在しないなどの理由でファイルを開けなかった場合に備えて、9行目で確認しています。ストリームのオブジェクトは、正常な状態なら true、エラーの状態なら false として扱えるので、<code>!ofs</code> が true ならファイルを開けなかったことがわかります。</p>
+
+      <h3>書き込みとファイルを閉じる処理</h3>
+      <p>14行目・15行目のように、cout と同じく <strong>&lt;&lt;</strong> でファイルに書き込めます。endl で改行できる点も同じです。</p>
+      <p>C言語では、最後に fclose() でファイルを閉じる必要がありました。C++ の ofstream は、<strong>デストラクタ</strong>でファイルを自動的に閉じます。このサンプルでは、main() を抜けて ofs が消去されるときに、ファイルが閉じられます。補講1で学んだように、例外が起きた場合もデストラクタは呼ばれるので、ファイルの閉じ忘れが起きません。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>ファイルからの読み込み</h2>
+
+      <h3>1行ずつ読み込む</h3>
+      <p>続いて、先ほど作った memo.txt を読み込んで、1行ずつ表示してみましょう。lists2-1 と同じフォルダで実行してください。</p>
+      <div class="code-label">lists2-2：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+int main(){
+    //    読み込み用にファイルを開く
+    ifstream ifs("memo.txt");
+    if (!ifs){
+        cout &lt;&lt; "ファイルを開けませんでした" &lt;&lt; endl;
+        return 1;
+    }
+    //    1行ずつ読み込んで表示する
+    string line;
+    int count = 0;
+    while (getline(ifs, line)){
+        count++;
+        cout &lt;&lt; count &lt;&lt; "行目：" &lt;&lt; line &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">1行目：C++のファイル入出力<br>2行目：1 + 2 = 3</div>
+      <p>9行目で、ifstream クラスのオブジェクトを作り、memo.txt を読み込み用に開いています。</p>
+      <p>17行目の <strong>getline()</strong> は、ストリームから1行分の文字列を読み込み、第2引数の string に入れる関数です。行末の改行文字は含まれません。読み込みに成功すると、getline() の戻り値（ストリーム）は true として扱われ、ファイルの終わりに達して読み込めなくなると false になります。そのため、このように while 文の条件に書くと、ファイルの最後の行まで順に処理できます。</p>
+      <div class="format-label">ファイルを1行ずつ読み込む</div>
+      <div class="format-box">string line;<br>while (getline(ifs, line)) {<br>    1行分の処理<br>}</div>
+
+      <h3>データを区切って読み込む</h3>
+      <p>cin と同じように <strong>&gt;&gt;</strong> を使うと、空白や改行で区切られたデータを1つずつ読み込めます。次のような内容のファイル score.txt を用意して、サンプルを実行してみてください。</p>
+      <div class="result-label">score.txt の内容</div>
+      <div class="result-box">Tom 80<br>Bob 66<br>Mike 92</div>
+      <div class="code-label">lists2-3：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+int main(){
+    ifstream ifs("score.txt");
+    if (!ifs){
+        cout &lt;&lt; "ファイルを開けませんでした" &lt;&lt; endl;
+        return 1;
+    }
+    string name;
+    int score;
+    int total = 0, count = 0;
+    //    「名前 点数」の形式で、1件ずつ読み込む
+    while (ifs &gt;&gt; name &gt;&gt; score){
+        cout &lt;&lt; name &lt;&lt; "：" &lt;&lt; score &lt;&lt; "点" &lt;&lt; endl;
+        total += score;
+        count++;
+    }
+    if (count &gt; 0){
+        cout &lt;&lt; "平均：" &lt;&lt; static_cast&lt;double&gt;(total) / count &lt;&lt; "点" &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">Tom：80点<br>Bob：66点<br>Mike：92点<br>平均：79.3333点</div>
+      <p>17行目の <code>ifs &gt;&gt; name &gt;&gt; score</code> で、名前（文字列）と点数（整数）を1件分読み込んでいます。読み込む変数の型に合わせて自動的に変換されるのは、cin の場合と同じです。ファイルの終わりに達するか、点数の位置に数値以外が書かれていると読み込みに失敗し、ループが終わります。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>ファイルを開くモード</h2>
+
+      <h3>追記モード</h3>
+      <p>ofstream でファイルを開くと、通常は元の内容が消去されます。元の内容を残したまま、後ろに書き足したい場合は、<strong>追記モード</strong>で開きます。</p>
+      <div class="code-label">lists2-4：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+int main(){
+    string text;
+    cout &lt;&lt; "記録する文字列を入力：";
+    cin &gt;&gt; text;
+    //    追記モードで開く（元の内容の後ろに書き足す）
+    ofstream ofs("log.txt", ios::app);
+    if (!ofs){
+        cout &lt;&lt; "ファイルを開けませんでした" &lt;&lt; endl;
+        return 1;
+    }
+    ofs &lt;&lt; text &lt;&lt; endl;
+    ofs.close();    //    明示的に閉じることもできる
+    //    ファイルの中身を確認する
+    ifstream ifs("log.txt");
+    string line;
+    cout &lt;&lt; "--- log.txtの内容 ---" &lt;&lt; endl;
+    while (getline(ifs, line)){
+        cout &lt;&lt; line &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+      <div class="result-label">実行結果（1回目）</div>
+      <div class="result-box">記録する文字列を入力：apple<span class="hint">← キーボードから入力</span><br>--- log.txtの内容 ---<br>apple</div>
+      <div class="result-label">実行結果（2回目）</div>
+      <div class="result-box">記録する文字列を入力：banana<span class="hint">← キーボードから入力</span><br>--- log.txtの内容 ---<br>apple<br>banana</div>
+      <p>12行目のように、ファイル名の後ろに <strong>ios::app</strong> を指定すると、追記モードでファイルが開かれます。実行するたびに、入力した文字列が log.txt の末尾に追加されていきます。</p>
+      <p>また、18行目のように <strong>close()</strong> メンバ関数を呼ぶと、デストラクタを待たずにファイルを閉じられます。ここでは、書き込んだ内容をすぐに読み込んで確認するために、先に閉じています。</p>
+
+      <h3>主なモード</h3>
+      <p>ファイルを開くときに指定できる主なモードは、次のとおりです。<strong>|</strong> でつなげて、複数指定することもできます（例：<code>ios::out | ios::app</code>）。</p>
+      <table class="data-table">
+        <caption>表S2-2：ファイルを開く主なモード</caption>
+        <thead><tr><th>モード</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td>ios::in</td><td>読み込み用に開く（ifstream の標準）</td></tr>
+          <tr><td>ios::out</td><td>書き込み用に開く（ofstream の標準）</td></tr>
+          <tr><td>ios::app</td><td>追記モード。書き込みは常にファイルの末尾に行われる</td></tr>
+          <tr><td>ios::trunc</td><td>開くときに、元の内容を消去する</td></tr>
+          <tr><td>ios::binary</td><td>バイナリモード。改行文字の変換などを行わない</td></tr>
+        </tbody>
+      </table>
+
+      <div class="note-box">⚠️ Windows で日本語を含むファイルを読み書きする場合、ソースファイルやテキストファイルの文字コード（UTF-8 か Shift_JIS か）がそろっていないと、文字化けすることがあります。文字化けしたときは、まず文字コードを確認してください。</div>
+
+      <div class="page-nav">
+        <a href="supplement1.html">← 補講1へ</a>
+        <a href="supplement3.html">補講3へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>補講</h3>
+      <ul>
+        <li><a href="supplement1.html">補講1：例外処理</a></li>
+        <li><a href="supplement2.html">補講2：ファイル入出力</a></li>
+        <li><a href="supplement3.html">補講3：コピーと代入</a></li>
+        <li><a href="supplement4.html">補講4：C++のキャスト</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

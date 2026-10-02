@@ -364,8 +364,8 @@ void bar(IInf2*);
 
 int main(){
     Sample * s = new Sample();
-    foo((IInf1*)s);
-    bar((IInf2*)s);
+    foo(s);
+    bar(s);
     return 0;
 }
 
@@ -390,7 +390,7 @@ void bar(IInf2* p)
       <p><strong>IInf1</strong>および、<strong>IInf2</strong>は、ともに純粋仮想関数しか存在しないクラスで、それ自体には特に意味がありません。しかし、それらはともに<strong>Sample</strong>クラスで多重継承されています。いったいなぜこのような面倒なことをしているのでしょうか。</p>
       <h3>インターフェース</h3>
       <p>このようなことをする効果として、<strong>main.cpp</strong>に記述されている、foo()、bar()関数を見てください。前者は引数として、<strong>IInf1</strong>後者は、<strong>IInf2</strong>のポインタを引数としています。これにより、foo()内では、<strong>IInf1</strong>のメンバ関数、bar()内では、<strong>IInf2</strong>の関数しか利用できません。</p>
-      <p>ためしに、<strong>main.cpp</strong>の23～24行目、および29～30行目のコメントをとってみてください。コンパイルエラーが出ます。もともとは、すべての関数を備えている<strong>Sample</strong>のインスタンスですが、13行目、および14行目でそれぞれのインターフェースでキャストすることにより、<strong>それぞれの純粋仮想関数が記述されている関数しか利用できない</strong>ようになっているのです。</p>
+      <p>ためしに、<strong>main.cpp</strong>の23～24行目、および29～30行目のコメントをとってみてください。コンパイルエラーが出ます。もともとは、すべての関数を備えている<strong>Sample</strong>のインスタンスですが、13行目、および14行目でそれぞれのインターフェースのポインタとして関数に渡すことにより、<strong>それぞれの純粋仮想関数が記述されている関数しか利用できない</strong>ようになっているのです。なお、子クラスのポインタは親クラスのポインタに自動的に変換されるので、このようにキャストを書かずにそのまま渡せます（補講4参照）。</p>
       <p>このような純粋仮想関数の使い方を、<strong>インターフェース</strong>などと呼びます。<strong>インターフェース</strong>という用語は、言語としてのC++の概念ではありませんが、オブジェクト指向言語の重要な概念の一つです。(図6-4.)</p>
       <div class="figure-box">
         <img src="img/figex6-4.svg" alt="インターフェース">
@@ -432,6 +432,16 @@ void bar(IInf2* p)
         <li><a href="ex-day5.html">5日目：STL②</a></li>
         <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
         <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>補講</h3>
+      <ul>
+        <li><a href="supplement1.html">補講1：例外処理</a></li>
+        <li><a href="supplement2.html">補講2：ファイル入出力</a></li>
+        <li><a href="supplement3.html">補講3：コピーと代入</a></li>
+        <li><a href="supplement4.html">補講4：C++のキャスト</a></li>
       </ul>
     </div>
 

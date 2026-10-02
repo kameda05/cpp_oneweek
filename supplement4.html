@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C言語のキャストの問題点と、C++のキャスト演算子（static_cast・dynamic_cast・const_cast・reinterpret_cast）の使い分けを学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|補講4：C++のキャスト</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">補講</div>
+  <h1>補講4：C++のキャスト</h1>
+  <p>static_cast と dynamic_cast による型の変換</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  補講4：C++のキャスト
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>補講：</span>
+  <a href="supplement1.html">1</a>
+  <a href="supplement2.html">2</a>
+  <a href="supplement3.html">3</a>
+  <a href="supplement4.html" class="active">4</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>型の変換とキャスト</h2>
+
+      <h3>C言語のキャスト</h3>
+      <p>ある型の値を別の型に変換することを<strong>キャスト</strong>（型変換）と言います。C言語では、<code>(double)a</code> のように、変換したい型を () で囲んで値の前に書きました。この書き方は C++ でも使えますが、次のような問題があります。</p>
+      <ul>
+        <li><strong>何でも変換できてしまう</strong>：数値の変換のような安全な変換も、ポインタを無関係な型に変えるような危険な変換も、同じ書き方でできてしまいます。誤った変換をしても、コンパイラはエラーにしません。</li>
+        <li><strong>目立たない</strong>：() は式の中によく出てくるので、プログラムのどこでキャストしているのかを探しにくくなります。</li>
+      </ul>
+
+      <h3>C++のキャスト</h3>
+      <p>そこで C++ では、目的ごとに分けた4種類のキャスト演算子が用意されています。</p>
+      <div class="format-label">C++のキャストの書式</div>
+      <div class="format-box">static_cast&lt;変換後の型&gt;(値)</div>
+      <table class="data-table">
+        <caption>表S4-1：C++のキャスト演算子</caption>
+        <thead><tr><th>キャスト</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>static_cast</td><td>数値の型の変換など、一般的で安全な変換</td></tr>
+          <tr><td>dynamic_cast</td><td>継承関係にあるクラスのポインタ・参照の変換（実行時に確認する）</td></tr>
+          <tr><td>const_cast</td><td>const を外す変換</td></tr>
+          <tr><td>reinterpret_cast</td><td>ポインタを無関係な型に変換するなど、危険な変換</td></tr>
+        </tbody>
+      </table>
+      <p>目的を指定して変換するので、意図しない危険な変換はコンパイラがエラーにしてくれます。また、名前が長く目立つので、プログラムのどこでキャストしているかがすぐにわかります。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>static_cast</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>最もよく使うのが <strong>static_cast</strong> です。数値の型どうしの変換などに使います。</p>
+      <div class="code-label">lists4-1：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main(){
+    int total = 238;
+    int count = 3;
+    //    整数どうしの割り算は、小数点以下が切り捨てられる
+    cout &lt;&lt; "int / int    ：" &lt;&lt; total / count &lt;&lt; endl;
+    //    static_castでdouble型に変換してから割る
+    cout &lt;&lt; "static_cast  ：" &lt;&lt; static_cast&lt;double&gt;(total) / count &lt;&lt; endl;
+    //    小数を整数に変換する（小数点以下は切り捨て）
+    double price = 1980.75;
+    int yen = static_cast&lt;int&gt;(price);
+    cout &lt;&lt; "整数への変換 ：" &lt;&lt; yen &lt;&lt; endl;
+    //    文字と文字コードの変換
+    char c = 'A';
+    cout &lt;&lt; "'A'の文字コード：" &lt;&lt; static_cast&lt;int&gt;(c) &lt;&lt; endl;
+    cout &lt;&lt; "66番の文字  ：" &lt;&lt; static_cast&lt;char&gt;(66) &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">int / int    ：79<br>static_cast  ：79.3333<br>整数への変換 ：1980<br>'A'の文字コード：65<br>66番の文字  ：B</div>
+
+      <h3>数値の型の変換</h3>
+      <p>9行目のように int 型どうしで割り算をすると、結果も int 型になり、小数点以下が切り捨てられます。11行目では、total を static_cast で double 型に変換してから割っているので、小数点以下まで計算されます。平均値を求めるときによく使う書き方です（補講2の lists2-3 でも使っています）。</p>
+      <p>14行目は、double 型を int 型に変換しています。小数点以下は切り捨てられます。このような、情報が失われる可能性のある変換は、キャストを書かなくても行われることがありますが、コンパイラが警告を出すことがあります。static_cast で明示すれば、「意図して変換している」ことがはっきりします。</p>
+      <p>18行目・19行目は、文字（char 型）と文字コード（int 型）の変換です。'A' の文字コードは 65 で、66 は 'B' に対応します。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>dynamic_cast</h2>
+
+      <h3>親クラスのポインタから子クラスへ</h3>
+      <p>応用編6日目で学んだように、親クラスのポインタには、子クラスのオブジェクトのアドレスを入れられます。仮想関数を使えば、親クラスのポインタのままで、子クラスごとに異なる処理を呼び出せました。</p>
+      <p>しかし、子クラスにしかないメンバ関数は、親クラスのポインタからは呼び出せません。そのような場合に、親クラスのポインタを子クラスのポインタに変換するのが <strong>dynamic_cast</strong> です。</p>
+
+      <h3>サンプルプログラム</h3>
+      <p>応用編6日目の鳥のクラスを使った例です。Chicken（ニワトリ）クラスにだけ、卵を産む layEgg() があります。</p>
+      <div class="code-label">lists4-2：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+
+using namespace std;
+
+//    鳥クラス（仮想関数を持つ）
+class Bird{
+public:
+    virtual ~Bird(){}
+    virtual void sing() = 0;
+};
+
+//    カラスクラス
+class Crow : public Bird{
+public:
+    void sing(){ cout &lt;&lt; "カーカー" &lt;&lt; endl; }
+};
+
+//    ニワトリクラス（卵を産む機能を持つ）
+class Chicken : public Bird{
+public:
+    void sing(){ cout &lt;&lt; "コケコッコー" &lt;&lt; endl; }
+    void layEgg(){ cout &lt;&lt; "卵を産みました" &lt;&lt; endl; }
+};
+
+int main(){
+    Bird* birds[] = { new Crow(), new Chicken(), new Crow() };
+    for (int i = 0; i &lt; 3; i++){
+        birds[i]-&gt;sing();
+        //    Chickenのときだけ、layEgg()を呼び出す
+        Chicken* ch = dynamic_cast&lt;Chicken*&gt;(birds[i]);
+        if (ch != nullptr){
+            ch-&gt;layEgg();
+        }
+    }
+    for (int i = 0; i &lt; 3; i++){
+        delete birds[i];
+    }
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">カーカー<br>コケコッコー<br>卵を産みました<br>カーカー</div>
+
+      <h3>dynamic_cast の働き</h3>
+      <p>30行目で、Bird 型のポインタ birds[i] を、dynamic_cast で Chicken 型のポインタに変換しています。dynamic_cast は、<strong>実行時に</strong>、ポインタが指しているオブジェクトの本当の型を調べます。</p>
+      <ul>
+        <li>指しているのが Chicken のオブジェクトなら、Chicken 型のポインタが返されます。</li>
+        <li>指しているのが Crow のオブジェクトなら、変換できないので、<strong>nullptr</strong>（どこも指していないことを表すポインタ。NULL と同じ意味）が返されます。</li>
+      </ul>
+      <p>そのため、31行目のように結果が nullptr でないことを確認してから使えば、Chicken のときだけ layEgg() を呼び出せます。</p>
+      <div class="format-label">dynamic_cast によるポインタの変換</div>
+      <div class="format-box">子クラス名* 変数名 = dynamic_cast&lt;子クラス名*&gt;(親クラスのポインタ);</div>
+      <div class="note-box">⚠️ dynamic_cast は、<strong>仮想関数を1つ以上持つクラス</strong>でしか使えません。このサンプルの Bird クラスは、仮想デストラクタ（8行目）と純粋仮想関数（9行目）を持っているので使えます。</div>
+      <div class="info-box">💡 dynamic_cast を何度も使って型ごとに処理を分けるのは、あまりよい設計ではありません。本来は、各クラスに共通の仮想関数を用意して、ポリモーフィズムで処理を切り替えるのが基本です。dynamic_cast は、どうしても子クラス特有の機能が必要な場合に使いましょう。</div>
+
+      <h3>子クラスから親クラスへの変換</h3>
+      <p>逆に、子クラスのポインタを親クラスのポインタに変換する場合は、キャストは必要ありません。26行目で、new Crow() の結果（Crow 型のポインタ）を Bird 型のポインタの配列にそのまま入れているように、自動的に変換されます。応用編6日目の listex6-3 でも、Sample のポインタを <code>foo(s);</code> のようにそのまま渡すだけで、インターフェース IInf1 のポインタとして受け取れています。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>その他のキャスト</h2>
+
+      <h3>const_cast と reinterpret_cast</h3>
+      <p><strong>const_cast</strong> は、const 修飾子を外すためのキャストです。const 修飾子は「値を変更しない」ことを保証するものなので（応用編2日目参照）、それを外すのは本来避けるべきことです。const に対応していない古い関数に値を渡すときなど、限られた場面でしか使いません。</p>
+      <p><strong>reinterpret_cast</strong> は、ポインタを無関係な型のポインタや整数に変換するなど、メモリの中身の「解釈」を変える危険なキャストです。ハードウェアを直接扱うような特殊なプログラム以外では、使うことはほとんどありません。</p>
+
+      <h3>キャストのまとめ</h3>
+      <ul>
+        <li>C言語のキャスト <code>(型)値</code> は使わず、目的に合った C++ のキャストを使う。</li>
+        <li>数値の変換など、普段の変換には <strong>static_cast</strong> を使う。</li>
+        <li>親クラスのポインタを子クラスのポインタに変換するときは、<strong>dynamic_cast</strong> を使い、結果が nullptr でないかを確認する。</li>
+        <li>const_cast と reinterpret_cast は、できるだけ使わない。キャストが必要になったら、まず設計を見直せないかを考える。</li>
+      </ul>
+
+      <div class="page-nav">
+        <a href="supplement3.html">← 補講3へ</a>
+        <a href="index.html">トップページへ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>補講</h3>
+      <ul>
+        <li><a href="supplement1.html">補講1：例外処理</a></li>
+        <li><a href="supplement2.html">補講2：ファイル入出力</a></li>
+        <li><a href="supplement3.html">補講3：コピーと代入</a></li>
+        <li><a href="supplement4.html">補講4：C++のキャスト</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

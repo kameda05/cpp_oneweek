@@ -640,9 +640,43 @@ def figex6_2():
     s.save('figex6-2')
 
 
+# ---------------------------------------------------------------- 補講3
+def figs3_1():
+    """浅いコピーと深いコピー。"""
+    s = Svg(600, 300)
+    def obj(x, y, name):
+        s.text(x + 60, y - 8, name, 14, 'middle', mono=True, weight='bold')
+        s.rect(x, y, 120, 56, rx=6)
+        s.text(x + 10, y + 22, 'm_data', 13, mono=True)
+        s.text(x + 10, y + 44, 'm_size = 3', 13, mono=True)
+        s.add(f'<circle cx="{x + 100}" cy="{y + 17}" r="4" fill="{INK}"/>')
+    def array(x, y, vals, red=False):
+        for i, v in enumerate(vals):
+            s.rect(x + i * 34, y, 34, 30, stroke=RED if red else '#666', sw=1.6 if red else 1.2)
+            s.text(x + i * 34 + 17, y + 20, str(v), 13, 'middle', mono=True)
+    s.text(150, 24, '浅いコピー（シャローコピー）', 15, 'middle', weight='bold')
+    obj(30, 60, 'a')
+    obj(30, 180, 'b')
+    array(170, 135, [999, 0, 0])
+    s.path('M130,77 C160,77 160,120 180,133', arrow='a')
+    s.path('M130,197 C160,197 160,175 180,167', arrow='a')
+    s.text(150, 280, '同じ配列を指してしまう', 13, 'middle', color=RED, weight='bold')
+    s.line(300, 40, 300, 280, color='#ccc', dash='4 4')
+    s.text(450, 24, '深いコピー（ディープコピー）', 15, 'middle', weight='bold')
+    obj(330, 60, 'a')
+    obj(330, 180, 'b')
+    array(470, 62, [100, 0, 0])
+    array(470, 182, [999, 0, 0], red=True)
+    s.line(430, 77, 468, 77, arrow='a')
+    s.line(430, 197, 468, 197, arrow='a')
+    s.text(450, 280, 'それぞれ別の配列を持つ', 13, 'middle', color=BLUE, weight='bold')
+    s.save('figs3-1')
+
+
 ALL = [fig0_1, fig0_2, fig1_1, fig1_2, fig1_3, fig2_2, fig2_3, fig3_1, fig3_2, fig4_1, fig4_2,
        fig6_1, fig6_3, fig6_6, fig7_1, fig7_2, figex1_1, figex2_1, figex2_2, figex3_1, figex3_3,
-       figex4_1, figex4_2, figex4_3, figex5_1, figex5_2, figex5_3, figex6_2]
+       figex4_1, figex4_2, figex4_3, figex5_1, figex5_2, figex5_3, figex6_2,
+       figs3_1]
 
 if __name__ == '__main__':
     for f in ALL:

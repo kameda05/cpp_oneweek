@@ -89,10 +89,10 @@
       <span class="prob-title">漢数字への変換（map）</span>
       </div>
       <div class="prob-body">
-      <p>実行結果にならい、キーボードから整数の値を入力すると、その値が漢数字で出力されるプログラムを作りなさい。このとき、用いられるのは、１から9に対応するのが、一から九までの漢字で、ゼロは、〇と表示するようにしなさい。また、この数字と漢字の対応は、mapを用いて作りなさい。また、結果を出力する際には、3桁ごとに「,」(コンマ)を出力すること。</p>
+      <p>実行結果にならい、キーボードから整数の値を入力すると、その値が漢数字で出力されるプログラムを作りなさい。このとき、用いられるのは、1から9に対応するのが、一から九までの漢字で、ゼロは、〇と表示するようにしなさい。また、この数字と漢字の対応は、mapを用いて作りなさい。また、結果を出力する際には、3桁ごとに「,」(コンマ)を出力すること。</p>
       <p>※ヒント：入力は、数値としてではなく、文字列として受け付け、その中身が妥当かどうか調べるとよい。</p>
       <div class="result-label">期待される実行結果（整数の値が入力された場合)</div>
-      <div class="result-box">整数の値を入力してください:1198000 <span class="hint">← コンソールから整数の値を入力</span><br><br>変換結果:一,一九八,○○○</div>
+      <div class="result-box">整数の値を入力してください:1198000 <span class="hint">← コンソールから整数の値を入力</span><br><br>変換結果:一,一九八,〇〇〇</div>
       <div class="result-label">期待される実行結果（整数以外の値が入力された場合)</div>
       <div class="result-box">整数の値を入力してください:hello<br><br>整数の値を入力してください。</div>
       </div></div>
@@ -103,9 +103,10 @@
       <span class="prob-title">出現した数の種類（set）</span>
       </div>
       <div class="prob-body">
-      <p>1から10までの乱数を10回発生させ、その結果を表示し、そのあとに、そこで出力された数の種類を表示するプログラムを作りなさい。数値はsetに登録し、１つの数が複数出現しても、一つとしてカウントするものとする。</p>
-      <div class="result-label">期待される実行結果</div>
-      <div class="result-box">乱数: 1 2 1 10 8 7 5 4 2 9<br>出現した数: 1 4 5 7 9 10</div>
+      <p>1から10までの乱数を10回発生させ、その結果を表示し、そのあとに、そこで出力された数の種類を表示するプログラムを作りなさい。数値はsetに登録し、1つの数が複数出現しても、一つとしてカウントするものとする。</p>
+      <p>（ヒント：1から10までの乱数は、ヘッダ <strong>cstdlib</strong> の <code>rand() % 10 + 1</code> で得られる。プログラムの最初で、ヘッダ <strong>ctime</strong> の <code>time()</code> を使って <code>srand(static_cast&lt;unsigned int&gt;(time(nullptr)));</code> と書いておくと、実行するたびに異なる乱数が得られる）</p>
+      <div class="result-label">期待される実行結果の例（乱数なので、実行するたびに変わる）</div>
+      <div class="result-box">乱数: 1 2 1 10 8 7 5 4 2 9<br>出現した数: 1 2 4 5 7 8 9 10</div>
       </div></div>
       <div class="prob-item">
       <div class="prob-header">
@@ -167,8 +168,10 @@
       <span class="prob-title">しりとり（map）</span>
       </div>
       <div class="prob-body">
-      <p>以下の単語を、「しりとり」になるように並べ替えなさい。(※ヒント：mapを使うこと)</p>
+      <p>以下の単語を、「しりとり」（前の単語の最後の文字と、次の単語の最初の文字が同じになる並び）になるように並べ替えて表示するプログラムを作りなさい。最初の単語は apple とし、すべての単語を1回ずつ使うこと。(※ヒント：単語の最初の文字をキーにしたmapを使うこと)</p>
       <p><strong>room wonderful pork trap kind money dog given yellow eat apple neighbor</strong></p>
+      <div class="result-label">期待される実行結果</div>
+      <div class="result-box">apple eat trap pork kind dog given neighbor room money yellow wonderful</div>
       </div></div>
 
       <div class="page-nav">
@@ -210,6 +213,16 @@
         <li><a href="ex-day5.html">5日目：STL②</a></li>
         <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
         <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>補講</h3>
+      <ul>
+        <li><a href="supplement1.html">補講1：例外処理</a></li>
+        <li><a href="supplement2.html">補講2：ファイル入出力</a></li>
+        <li><a href="supplement3.html">補講3：コピーと代入</a></li>
+        <li><a href="supplement4.html">補講4：C++のキャスト</a></li>
       </ul>
     </div>
 

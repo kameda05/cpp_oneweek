@@ -88,7 +88,7 @@ public:
 //    +演算子のオーバーロード
 Vector2 operator+(const Vector2&amp;, const Vector2&amp;);
 //    -演算子のオーバーロード
-Vector2 operator+(const Vector2&amp;, const Vector2&amp;);
+Vector2 operator-(const Vector2&amp;, const Vector2&amp;);
 //    *演算子のオーバーロード
 Vector2 operator*(const double,const Vector2&amp; v);
 
@@ -147,7 +147,7 @@ Vector2&amp; Vector2::operator-=(const Vector2&amp; v)
 
 using namespace std;
 
-void vec(string, Vector2&amp;);
+void vec(string, const Vector2&amp;);
 
 int main(){
     Vector2 v1,v2,v3;
@@ -167,12 +167,12 @@ int main(){
     return 0;
 }
 
-void vec(string vecname,Vector2&amp; v)
+void vec(string vecname,const Vector2&amp; v)
 {
     cout &lt;&lt; vecname &lt;&lt; "(" &lt;&lt; v.x &lt;&lt; "," &lt;&lt; v.y &lt;&lt; ")" &lt;&lt; endl;
 }</pre>
       <div class="result-label">実行結果</div>
-      <div class="result-box">v1=(1,2)<br>v2=(1,2)<br>v1 + v2=(2,4)<br>v3=(4,8)<br>v1=(5,10)<br>v2=(0,0)</div>
+      <div class="result-box">v1=(1,2)<br>v2=(1,2)<br>v1 + v2=(2,4)<br>v3=(4,8)<br>v3=(5,10)<br>v1=(0,0)</div>
       <p>このサンプルは、簡単な2次元ベクトルクラス<strong>Vector2</strong>を作ったものです。C++には、もともとそういったクラスは存在しませんが、<strong>main.cpp</strong>を見ればわかるように、あたかもそういった演算をできるクラスがもともとあるような使い方が可能になっています。</p>
       <h3>代入、および代入演算子のオーバーロード</h3>
       <p>演算子のオーバーロードをするには、以下のように宣言を行います。</p>
@@ -201,7 +201,7 @@ void vec(string vecname,Vector2&amp; v)
 
       <div class="page-nav">
         <a href="ex-day6.html">← 応用編6日目へ</a>
-        <a href="index.html">トップページへ →</a>
+        <a href="supplement1.html">補講1へ →</a>
       </div>
     </div>
 
@@ -225,6 +225,16 @@ void vec(string vecname,Vector2&amp; v)
         <li><a href="ex-day5.html">5日目：STL②</a></li>
         <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
         <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>補講</h3>
+      <ul>
+        <li><a href="supplement1.html">補講1：例外処理</a></li>
+        <li><a href="supplement2.html">補講2：ファイル入出力</a></li>
+        <li><a href="supplement3.html">補講3：コピーと代入</a></li>
+        <li><a href="supplement4.html">補講4：C++のキャスト</a></li>
       </ul>
     </div>
 

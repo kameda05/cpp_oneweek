@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="C++の例外処理（try・catch・throw）と標準の例外クラス、独自の例外クラスの作り方、例外とデストラクタの関係を学びます。">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
+<title>一週間で身につくC++言語の基本|補講1：例外処理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a class="site-title" href="index.html">一週間で身につくC++言語の基本</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://sevendays-study.com/privacypolicy.html">About</a></li>
+      <li><a href="https://shift-system.jp">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-ex">補講</div>
+  <h1>補講1：例外処理</h1>
+  <p>try・catch・throw でエラーに対処する</p>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">トップページ</a>
+  <span>›</span>
+  補講1：例外処理
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav-bar">
+  <span>補講：</span>
+  <a href="supplement1.html" class="active">1</a>
+  <a href="supplement2.html">2</a>
+  <a href="supplement3.html">3</a>
+  <a href="supplement4.html">4</a>
+</div>
+
+<!-- BODY -->
+<div class="layout">
+  <main>
+    <div class="content-card">
+      <h2>例外とは</h2>
+
+      <h3>エラーを知らせる方法</h3>
+      <p>プログラムの実行中には、「0で割ろうとした」「存在しないファイルを開こうとした」「配列の範囲外にアクセスした」など、想定外のことが起こります。C言語では、このようなエラーを関数の<strong>戻り値</strong>で知らせるのが一般的でした。たとえば、失敗したら -1 や NULL を返す、といった方法です。</p>
+      <p>しかし、この方法には問題があります。戻り値を確認し忘れるとエラーに気づけませんし、本来の計算結果とエラーを同じ戻り値で表さなければならないこともあります。また、関数の呼び出しが何段にも重なっていると、エラーを一段ずつ呼び出し元へ返していく必要があり、プログラムが複雑になります。</p>
+
+      <h3>例外処理</h3>
+      <p>そこで C++ には、<strong>例外処理</strong>という仕組みが用意されています。エラーが起きた場所で<strong>例外</strong>を<strong>投げ</strong>（throw）、それを、エラーに対処できる場所で<strong>受け取る</strong>（catch）という考え方です。例外が投げられると、それ以降の処理は飛ばされ、例外を受け取る場所まで処理が一気に移ります。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>例外の基本</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>まずは、0で割ろうとしたときに例外を投げるプログラムを見てみましょう。</p>
+      <div class="code-label">lists1-1：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;
+
+using namespace std;
+
+//    割り算をする関数（0で割ろうとしたら例外を投げる）
+double divide(int a, int b){
+    if (b == 0){
+        throw runtime_error("0で割ることはできません");
+    }
+    return static_cast&lt;double&gt;(a) / b;
+}
+
+int main(){
+    try {
+        cout &lt;&lt; divide(10, 4) &lt;&lt; endl;
+        cout &lt;&lt; divide(5, 0) &lt;&lt; endl;
+        cout &lt;&lt; "この行は実行されません" &lt;&lt; endl;
+    }
+    catch (const runtime_error&amp; e) {
+        cout &lt;&lt; "エラー：" &lt;&lt; e.what() &lt;&lt; endl;
+    }
+    cout &lt;&lt; "プログラムを終了します" &lt;&lt; endl;
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">2.5<br>エラー：0で割ることはできません<br>プログラムを終了します</div>
+
+      <h3>throw：例外を投げる</h3>
+      <p>関数 <strong>divide()</strong> の中の9行目で、割る数 b が 0 のときに例外を投げています。例外を投げるには <strong>throw</strong> を使います。</p>
+      <div class="format-label">例外を投げる</div>
+      <div class="format-box">throw 例外オブジェクト;</div>
+      <p>ここでは、標準ライブラリに用意されている <strong>runtime_error</strong> クラスのオブジェクトを、エラーの説明文を付けて投げています。runtime_error を使うには、ヘッダ <strong>stdexcept</strong> をインクルードします（2行目）。</p>
+
+      <h3>try と catch：例外を受け取る</h3>
+      <p>例外が投げられる可能性のある処理は、<strong>try</strong> ブロックの中に書きます。その直後に <strong>catch</strong> ブロックを書き、受け取る例外の型と、例外が起きたときの処理を記述します。</p>
+      <div class="format-label">try と catch</div>
+      <div class="format-box">try {<br>    例外が投げられる可能性のある処理<br>}<br>catch (例外の型 変数名) {<br>    例外が起きたときの処理<br>}</div>
+      <p>16行目の <code>divide(10, 4)</code> は正常に計算され、2.5 が表示されます。一方、17行目の <code>divide(5, 0)</code> では例外が投げられるため、処理はすぐに20行目の catch ブロックへ移ります。そのため、18行目は実行されません。catch ブロックの処理が終わると、try〜catch の後ろ（23行目）から処理が続きます。</p>
+      <p>受け取った例外オブジェクトの <strong>what()</strong> メンバ関数を呼び出すと、例外を投げたときに渡した説明文を取り出せます。</p>
+
+      <div class="info-box">💡 catch では、例外を <code>const runtime_error&amp; e</code> のように <strong>const 参照</strong>で受け取るのが基本です。値で受け取るとオブジェクトのコピーが作られるうえ、子クラスの例外を親クラスの型で受け取ったときに、子クラスの情報が失われてしまいます。</div>
+
+      <h3>例外が受け取られなかった場合</h3>
+      <p>投げられた例外をどこでも受け取らなかった場合、プログラムはその時点で強制終了します。例外が投げられる可能性がある処理は、必ずどこかで受け取るようにしましょう。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>標準の例外クラス</h2>
+
+      <h3>例外クラスの種類</h3>
+      <p>C++ の標準ライブラリには、エラーの種類に応じた例外クラスが用意されています。いずれも <strong>exception</strong> クラスを親とする継承関係にあります（表S1-1）。</p>
+      <table class="data-table">
+        <caption>表S1-1：主な標準の例外クラス</caption>
+        <thead><tr><th>クラス名</th><th>親クラス</th><th>意味</th></tr></thead>
+        <tbody>
+          <tr><td>exception</td><td>なし</td><td>すべての標準の例外クラスの親クラス</td></tr>
+          <tr><td>logic_error</td><td>exception</td><td>プログラムの論理的な誤り</td></tr>
+          <tr><td>invalid_argument</td><td>logic_error</td><td>関数に不正な引数が渡された</td></tr>
+          <tr><td>out_of_range</td><td>logic_error</td><td>範囲外の値やインデックスが使われた</td></tr>
+          <tr><td>runtime_error</td><td>exception</td><td>実行してみないとわからないエラー</td></tr>
+          <tr><td>bad_alloc</td><td>exception</td><td>new でメモリを確保できなかった</td></tr>
+        </tbody>
+      </table>
+
+      <h3>標準ライブラリが投げる例外</h3>
+      <p>標準ライブラリの関数の中にも、エラーのときに例外を投げるものがあります。次のサンプルを実行してみてください。</p>
+      <div class="code-label">lists1-2：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;stdexcept&gt;
+
+using namespace std;
+
+int main(){
+    vector&lt;int&gt; v;
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+    //    範囲外の要素へのアクセス
+    try {
+        int a = v.at(1);
+        cout &lt;&lt; "v.at(1) = " &lt;&lt; a &lt;&lt; endl;
+        int b = v.at(5);
+        cout &lt;&lt; "v.at(5) = " &lt;&lt; b &lt;&lt; endl;
+    }
+    catch (const out_of_range&amp; e) {
+        cout &lt;&lt; "範囲外のアクセス：" &lt;&lt; e.what() &lt;&lt; endl;
+    }
+    //    数値に変換できない文字列
+    try {
+        int n = stoi("123");
+        cout &lt;&lt; "n = " &lt;&lt; n &lt;&lt; endl;
+        int m = stoi("abc");
+        cout &lt;&lt; "m = " &lt;&lt; m &lt;&lt; endl;
+    }
+    catch (const invalid_argument&amp; e) {
+        cout &lt;&lt; "数値に変換できません：" &lt;&lt; e.what() &lt;&lt; endl;
+    }
+    catch (const exception&amp; e) {
+        cout &lt;&lt; "その他の例外：" &lt;&lt; e.what() &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">v.at(1) = 20<br>範囲外のアクセス：invalid vector subscript<br>n = 123<br>数値に変換できません：invalid stoi argument</div>
+      <p>vector の <strong>at()</strong> メンバ関数は、[] と同じように要素を取り出しますが、範囲外のインデックスを指定すると <strong>out_of_range</strong> を投げます。[] の場合は範囲のチェックをしないため、範囲外にアクセスしても例外は投げられず、プログラムが予期しない動きをします。</p>
+      <p><strong>stoi()</strong> は、文字列を int 型の整数に変換する関数です。"abc" のように数値として読めない文字列を渡すと、<strong>invalid_argument</strong> を投げます。</p>
+      <div class="note-box">⚠️ what() が返す説明文の内容は、コンパイラによって異なります。実行結果は Visual Studio の場合の例です。</div>
+
+      <h3>複数の catch</h3>
+      <p>2つ目の try ブロックのように、catch ブロックは複数並べることができます。例外は、上から順に型が合うかどうかを調べられ、最初に合った catch ブロックで受け取られます。</p>
+      <p>親クラスの型の catch は、子クラスの例外も受け取ります。そのため、<code>catch (const exception&amp; e)</code> は、標準の例外をすべて受け取ることができます。このような親クラスの catch は、子クラスの catch より<strong>後ろ</strong>に書くようにしましょう。前に書くと、すべての例外がそこで受け取られてしまい、後ろの catch が使われなくなります。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>独自の例外クラス</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>標準の例外クラスを継承すれば、独自の例外クラスを作ることもできます。次のサンプルは、銀行口座から残高より多い金額を引き出そうとしたときに、独自の例外を投げるものです。</p>
+      <div class="code-label">lists1-3：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;stdexcept&gt;
+
+using namespace std;
+
+//    残高不足を表す例外クラス
+class InsufficientFunds : public runtime_error{
+private:
+    int m_shortage;    //    不足している金額
+public:
+    InsufficientFunds(int shortage)
+        : runtime_error("残高が不足しています"), m_shortage(shortage){}
+    int getShortage() const { return m_shortage; }
+};
+
+//    銀行口座クラス
+class BankAccount{
+private:
+    int m_balance;    //    残高
+public:
+    BankAccount(int balance) : m_balance(balance){}
+    //    お金を引き出す
+    void withdraw(int amount){
+        if (amount &gt; m_balance){
+            throw InsufficientFunds(amount - m_balance);
+        }
+        m_balance -= amount;
+    }
+    int getBalance() const { return m_balance; }
+};
+
+int main(){
+    BankAccount account(1000);
+    try {
+        account.withdraw(300);
+        cout &lt;&lt; "残高：" &lt;&lt; account.getBalance() &lt;&lt; "円" &lt;&lt; endl;
+        account.withdraw(1500);
+        cout &lt;&lt; "残高：" &lt;&lt; account.getBalance() &lt;&lt; "円" &lt;&lt; endl;
+    }
+    catch (const InsufficientFunds&amp; e) {
+        cout &lt;&lt; e.what() &lt;&lt; "（不足額：" &lt;&lt; e.getShortage() &lt;&lt; "円）" &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">残高：700円<br>残高が不足しています（不足額：800円）</div>
+
+      <h3>例外クラスの作り方</h3>
+      <p><strong>InsufficientFunds</strong> クラスは、runtime_error を継承した例外クラスです（8行目）。コンストラクタでは、親クラス runtime_error のコンストラクタに説明文を渡しています（13行目）。こうしておくと、what() でその説明文を取り出せます。</p>
+      <p>さらに、不足している金額をメンバ変数 m_shortage に記録し、getShortage() で取り出せるようにしています。このように、エラーの詳しい情報を例外オブジェクトに持たせられるのが、独自の例外クラスを作る利点です。</p>
+      <p>BankAccount クラスの withdraw() は、残高が足りないときに InsufficientFunds を投げます（26行目）。main() では、その例外を受け取って、説明文と不足額を表示しています。</p>
+    </div>
+
+    <div class="content-card">
+      <h2>例外とデストラクタ</h2>
+
+      <h3>サンプルプログラム</h3>
+      <p>例外が投げられて処理が飛んだとき、それまでに作られていたオブジェクトはどうなるのでしょうか。次のサンプルで確かめてみましょう。</p>
+      <div class="code-label">lists1-4：main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;stdexcept&gt;
+
+using namespace std;
+
+//    生成と消去を表示するだけのクラス
+class Logger{
+private:
+    string m_name;
+public:
+    Logger(string name) : m_name(name){
+        cout &lt;&lt; m_name &lt;&lt; "：コンストラクタ" &lt;&lt; endl;
+    }
+    ~Logger(){
+        cout &lt;&lt; m_name &lt;&lt; "：デストラクタ" &lt;&lt; endl;
+    }
+};
+
+void func(){
+    Logger lg("func内のオブジェクト");
+    throw runtime_error("func()で例外が発生");
+}
+
+int main(){
+    try {
+        Logger lg("try内のオブジェクト");
+        func();
+    }
+    catch (const exception&amp; e) {
+        cout &lt;&lt; "例外を受け取りました：" &lt;&lt; e.what() &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+      <div class="result-label">実行結果</div>
+      <div class="result-box">try内のオブジェクト：コンストラクタ<br>func内のオブジェクト：コンストラクタ<br>func内のオブジェクト：デストラクタ<br>try内のオブジェクト：デストラクタ<br>例外を受け取りました：func()で例外が発生</div>
+
+      <h3>スタックの巻き戻し</h3>
+      <p>実行結果を見ると、func() の中で例外が投げられたあと、catch ブロックの処理が始まる<strong>前に</strong>、func() の中のオブジェクトと、try ブロックの中のオブジェクトのデストラクタが、作られたのと逆の順に呼ばれていることがわかります。</p>
+      <p>このように、例外によって関数やブロックを抜けるときにも、その中で作られたオブジェクトのデストラクタは必ず呼ばれます。これを<strong>スタックの巻き戻し</strong>と言います。</p>
+      <p>この性質を利用すると、「デストラクタで後始末をするクラス」を使うことで、例外が起きても確実にメモリの解放やファイルのクローズを行えます。この考え方は <strong>RAII</strong> と呼ばれ、C++ のプログラミングでとても重要です。補講2で扱うファイルのクラスも、このしくみでファイルを自動的に閉じています。</p>
+      <div class="note-box">⚠️ 一方、new で確保したメモリは、スタックの巻き戻しでは解放されません。new の後、delete までの間で例外が起きると、メモリが解放されずに残ってしまいます。このような問題を防ぐ方法は、モダンC++のスマートポインタで学びます。</div>
+
+      <h3>例外を使ううえでの注意</h3>
+      <ul>
+        <li>例外は、<strong>本当に例外的な状況</strong>（めったに起きないエラー）に使います。通常の処理の分岐に使うと、プログラムがわかりにくくなります。</li>
+        <li>デストラクタの中から例外を投げてはいけません。スタックの巻き戻しの最中にさらに例外が投げられると、プログラムは強制終了します。</li>
+        <li><code>catch (...)</code> と書くと、どんな型の例外でも受け取れます。ただし、どんな例外かを調べられないので、使う場面は限られます。</li>
+      </ul>
+
+      <div class="page-nav">
+        <a href="ex-day7.html">← 応用編7日目へ</a>
+        <a href="supplement2.html">補講2へ →</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-banner">
+      <p style="font-size:14px;font-weight:700;margin-bottom:8px;">Udemyでも学びましょう！</p>
+      <p>動画と音声によってさらにわかりやすくなりました！</p>
+      <a href="https://www.udemy.com/course/cc-lubmn/?referralCode=2908165580C9767F5A55" target="_blank">詳細を見る →</a>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>補講</h3>
+      <ul>
+        <li><a href="supplement1.html">補講1：例外処理</a></li>
+        <li><a href="supplement2.html">補講2：ファイル入出力</a></li>
+        <li><a href="supplement3.html">補講3：コピーと代入</a></li>
+        <li><a href="supplement4.html">補講4：C++のキャスト</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>応用編</h3>
+      <ul>
+        <li><a href="ex-day1.html">1日目：C言語との違い</a></li>
+        <li><a href="ex-day2.html">2日目：クラス間の相互参照</a></li>
+        <li><a href="ex-day3.html">3日目：テンプレートとSTL</a></li>
+        <li><a href="ex-day4.html">4日目：STL①</a></li>
+        <li><a href="ex-day5.html">5日目：STL②</a></li>
+        <li><a href="ex-day6.html">6日目：virtualと仮想関数</a></li>
+        <li><a href="ex-day7.html">7日目：演算子の多重定義</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>基本編</h3>
+      <ul>
+        <li><a href="day0.html">0日目：C++言語とは</a></li>
+        <li><a href="day1.html">1日目：名前空間</a></li>
+        <li><a href="day2.html">2日目：クラス</a></li>
+        <li><a href="day3.html">3日目：アクセス指定子</a></li>
+        <li><a href="day4.html">4日目：生成と消去</a></li>
+        <li><a href="day5.html">5日目：静的メンバ</a></li>
+        <li><a href="day6.html">6日目：継承</a></li>
+        <li><a href="day7.html">7日目：ポリモーフィズム</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>参考資料</h3>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+        <li><a href="development1.html">開発環境：Visual Studio 2026</a></li>
+        <li><a href="development2.html">開発環境：Visual Studio Code</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h3>リンク</h3>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="company-card">
+      <p class="company-name">シフトシステム株式会社</p>
+      <p>研修・著述・コンテンツ作成などのご依頼を受け付けています。</p>
+      <a href="https://shift-system.jp" target="_blank">詳しくはこちら →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>プログラミング</h4>
+      <ul>
+        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Web関連</h4>
+      <ul>
+        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>開発環境 (IDE)</h4>
+      <ul>
+        <li><a href="development1.html">Visual Studio 2026</a></li>
+        <li><a href="development2.html">Visual Studio Code</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>参考資料</h4>
+      <ul>
+        <li><a href="appendix1.html">C++言語の学習に役立つ書籍</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>リンク</h4>
+      <ul>
+        <li><a href="link.html">相互リンク</a></li>
+        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">
+    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+  </div>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>
