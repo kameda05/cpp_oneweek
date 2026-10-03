@@ -1,0 +1,172 @@
+================================================================
+練習問題6：継承　解答と解説
+================================================================
+
+
+問題 6-1　戦闘機クラスの作成
+------------------------------------------------------------------
+【解答】
+// fighter.h
+#ifndef FIGHTER_H
+#define FIGHTER_H
+
+#include "airplane.h"
+
+//    戦闘機クラス（飛行機クラスを継承）
+class Fighter : public Airplane{
+public:
+    //    戦闘する
+    void fight();
+};
+
+#endif // FIGHTER_H
+
+// fighter.cpp
+#include "fighter.h"
+#include <iostream>
+
+using namespace std;
+
+//    戦闘する
+void Fighter::fight(){
+    cout << "戦闘する" << endl;
+}
+
+（airplane.h、airplane.cpp、main.cpp は問題文のまま。変更なし）
+
+【解説】
+継承は「class 子クラス名 : public 親クラス名」と書きます。
+Fighter は Airplane を継承しているので、Fighter に fly() を書かなくても、
+親クラスの fly() をそのまま呼び出すことができます。Fighter には、追加する fight() だけを書きます。
+fighter.h では、親クラスの定義が必要なので airplane.h をインクルードします。
+main.cpp は fighter.h だけをインクルードしていますが、fighter.h の中で airplane.h が
+インクルードされているので、Airplane クラスも使うことができます。
+
+
+================================================================
+問題 6-2　計算クラスの拡張
+------------------------------------------------------------------
+【解答】
+// fundcalc.h
+#ifndef FUNDCALC_H
+#define FUNDCALC_H
+
+class FundCalc{
+protected:
+    double m_number1;    //    一つ目の数
+    double m_number2;    //    二つ目の数
+public:
+    //    コンストラクタ
+    FundCalc();
+    //    一つ目の数を設定
+    void setNumber1(double number);
+    //    二つ目の数を設定
+    void setNumber2(double number);
+    //    一つ目の数を取得
+    double getNumber1();
+    //    二つ目の数を取得
+    double getNumber2();
+    //    二つの数の和を出力
+    double add();
+    //    二つの数の差を出力
+    double sub();
+};
+
+#endif // FUNDCALC_H
+
+// newcalc.h
+#ifndef NEWCALC_H
+#define NEWCALC_H
+
+#include "fundcalc.h"
+
+//    新計算クラス（基本計算クラスを継承）
+class NewCalc : public FundCalc{
+public:
+    //    二つの数の積を出力
+    double mul();
+    //    二つの数の商を出力
+    double div();
+};
+
+#endif // NEWCALC_H
+
+// newcalc.cpp
+#include "newcalc.h"
+
+//    二つの数の積を出力
+double NewCalc::mul()
+{
+    return m_number1 * m_number2;
+}
+//    二つの数の商を出力
+double NewCalc::div()
+{
+    return m_number1 / m_number2;
+}
+
+（fundcalc.cpp、main.cpp は問題文のまま。変更なし）
+
+【解説】
+FundCalc のメンバ変数 m_number1、m_number2 は private になっているため、
+そのままでは子クラスの NewCalc からもアクセスできません。
+そこで、fundcalc.h のアクセス指定子を private から protected に書き換えます。
+protected のメンバは、クラスの外からは見えませんが、継承した子クラスからは使えます。
+（FundCalc を書き換えずに、mul() の中で getNumber1() * getNumber2() のように
+ゲッターを使って計算する方法もあります）
+fundcalc.cpp と main.cpp は変更する必要はありません。
+
+
+================================================================
+問題 6-3　スマートフォンクラスの作成（多重継承）
+------------------------------------------------------------------
+【解答】
+// smartphone.h
+#ifndef SMARTPHONE_H
+#define SMARTPHONE_H
+
+#include "phone.h"
+#include "camera.h"
+
+//    スマートフォンクラス（電話クラスとカメラクラスを継承）
+class SmartPhone : public Phone, public Camera{
+public:
+    //    インターネットを閲覧する
+    void browse();
+    //    仕様を表示する
+    void showSpec();
+};
+
+#endif // SMARTPHONE_H
+
+// smartphone.cpp
+#include "smartphone.h"
+#include <iostream>
+
+using namespace std;
+
+//    インターネットを閲覧する
+void SmartPhone::browse()
+{
+    cout << "インターネットを閲覧する" << endl;
+}
+//    仕様を表示する
+void SmartPhone::showSpec()
+{
+    //    親クラスのprotectedメンバは、子クラスから直接使える
+    cout << "電話番号:" << m_phoneNumber << " 画素数:" << m_pixels << "万画素" << endl;
+}
+
+（phone.h、phone.cpp、camera.h、camera.cpp、main.cpp は問題文のまま。変更なし）
+
+【解説】
+複数のクラスを継承するには、「class 子クラス名 : public 親クラス1, public 親クラス2」のように、
+親クラスをコンマで区切って並べます（多重継承）。
+SmartPhone は Phone と Camera の両方を継承しているので、call() と takePicture() の
+どちらもそのまま呼び出せます。smartphone.h では、両方の親クラスのヘッダファイルを
+インクルードします。
+m_phoneNumber と m_pixels は protected なので、クラスの外からは使えませんが、
+子クラスである SmartPhone のメンバ関数 showSpec() の中では直接使うことができます。
+（private だった場合は、子クラスからもアクセスできずにビルドエラーになります）
+SmartPhone のインスタンスを生成すると、親クラスのコンストラクタ Phone()・Camera() が
+継承した順に自動的に呼ばれ、それぞれのメンバ変数が初期化されます。

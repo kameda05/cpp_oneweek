@@ -1,0 +1,233 @@
+================================================================
+練習問題（応用編）7：演算子の多重定義　解答と解説
+================================================================
+
+
+問題 7-1　三次元ベクトルクラス
+------------------------------------------------------------------
+【解答】
+// vector3.h
+#ifndef VECTOR3_H
+#define VECTOR3_H
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//    三次元ベクトルクラス
+class Vector3{
+public:
+    double x;
+    double y;
+    double z;
+public:
+    //    =演算子のオーバーロード
+    Vector3& operator=(const Vector3& v);
+    //    +=演算子のオーバーロード
+    Vector3& operator+=(const Vector3& v);
+    //    -=演算子のオーバーロード
+    Vector3& operator-=(const Vector3& v);
+};
+
+//    +演算子のオーバーロード
+Vector3 operator+(const Vector3&, const Vector3&);
+//    -演算子のオーバーロード
+Vector3 operator-(const Vector3&, const Vector3&);
+//    *演算子のオーバーロード
+Vector3 operator*(const double, const Vector3& v);
+
+#endif // VECTOR3_H
+
+// vector3.cpp
+#include "vector3.h"
+
+//    +演算子のオーバーロード
+Vector3 operator+(const Vector3& v1, const Vector3& v2)
+{
+    Vector3 v;
+    v.x = v1.x + v2.x;
+    v.y = v1.y + v2.y;
+    v.z = v1.z + v2.z;
+    return v;
+}
+//    -演算子のオーバーロード
+Vector3 operator-(const Vector3& v1, const Vector3& v2)
+{
+    Vector3 v;
+    v.x = v1.x - v2.x;
+    v.y = v1.y - v2.y;
+    v.z = v1.z - v2.z;
+    return v;
+}
+//    スカラー倍
+Vector3 operator*(const double d, const Vector3& v)
+{
+    Vector3 r;
+    r.x = d * v.x;
+    r.y = d * v.y;
+    r.z = d * v.z;
+    return r;
+}
+//    =演算子のオーバーロード
+Vector3& Vector3::operator=(const Vector3& v)
+{
+    x = v.x;
+    y = v.y;
+    z = v.z;
+    return *this;
+}
+//    +=演算子のオーバーロード
+Vector3& Vector3::operator+=(const Vector3& v)
+{
+    x += v.x;
+    y += v.y;
+    z += v.z;
+    return *this;
+}
+//    -=演算子のオーバーロード
+Vector3& Vector3::operator-=(const Vector3& v)
+{
+    x -= v.x;
+    y -= v.y;
+    z -= v.z;
+    return *this;
+}
+
+// main.cpp
+#include <iostream>
+#include "vector3.h"
+
+using namespace std;
+
+void vec(string, const Vector3&);
+
+int main(){
+    Vector3 v1, v2, v3;
+    //    ベクトルに値を代入
+    v1.x = 1.0;
+    v1.y = 2.0;
+    v1.z = 3.0;
+    v2 = v1;            //    値を代入
+    v3 = 4.0 * v1;        //    ベクトルのスカラー倍
+    vec("v1=", v1);
+    vec("v2=", v2);
+    vec("v1 + v2=", v1 + v2);
+    vec("v3=", v3);
+    v3 += v1;            //    代入演算子（+=）
+    vec("v3=", v3);
+    v1 -= v2;            //    代入演算子（-=）
+    vec("v1=", v1);
+    return 0;
+}
+
+void vec(string vecname, const Vector3& v)
+{
+    cout << vecname << "(" << v.x << "," << v.y << "," << v.z << ")" << endl;
+}
+
+【解説】
+listex7-1 の Vector2 クラスに z 成分を加え、各演算子の処理で z 成分も計算するようにします。
+  ・+、- ：x、y、z それぞれの成分同士を足す（引く）
+  ・*    ：スカラー（実数）を x、y、z すべてに掛ける
+  ・=、+=、-= ：x、y、z すべてを代入（加算・減算）し、*this の参照を返す
+代入系の演算子が *this の参照を返すのは、v1 = v2 = v3 のように続けて書けるようにするためです。
+vec() 関数も、z 成分を表示するように変更します。
+引数を const Vector3& にしているのは、v1 + v2 のような計算結果（一時オブジェクト）も
+渡せるようにするためです（const のない参照には、一時オブジェクトを渡せません）。
+
+
+================================================================
+問題 7-2　==演算子の多重定義
+------------------------------------------------------------------
+【解答】
+// NewString.h
+#ifndef NEWSTRING_H
+#define NEWSTRING_H
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class NewString{
+private:
+    //    文字列
+    string m_value;
+public:
+    //    コンストラクタ
+    NewString();
+    //    値を代入するコンストラクタ①（文字列から）
+    NewString(string value);
+    //    値を代入するコンストラクタ②（他のクラスから)
+    NewString(NewString& value);
+    //    値を代入
+    NewString& operator= (NewString& n);
+    //    値を比較（英字の大文字と小文字を区別しない）
+    bool operator== (const NewString& n) const;
+    //    stringで値を取得
+    string getValue();
+};
+
+#endif // NEWSTRING_H
+
+// NewString.cpp
+#include "NewString.h"
+#include <cctype>
+
+//    コンストラクタ
+NewString::NewString()
+{
+    m_value = "";
+}
+//    値を代入するコンストラクタ①（文字列から）
+NewString::NewString(string value)
+{
+    m_value = value;
+}
+//    値を代入するコンストラクタ②（他のクラスから)
+NewString::NewString(NewString& value)
+{
+    m_value = value.getValue();
+}
+//    値を代入
+NewString& NewString::operator= (NewString& n)
+{
+    m_value = n.getValue();
+    return *this;
+}
+//    値を比較（英字の大文字と小文字を区別しない）
+bool NewString::operator== (const NewString& n) const
+{
+    //    長さが違えば、等しくない
+    if(m_value.length() != n.m_value.length()){
+        return false;
+    }
+    //    1文字ずつ小文字にそろえて比較する
+    for(size_t i = 0; i < m_value.length(); i++){
+        int c1 = tolower(static_cast<unsigned char>(m_value[i]));
+        int c2 = tolower(static_cast<unsigned char>(n.m_value[i]));
+        if(c1 != c2){
+            return false;
+        }
+    }
+    return true;
+}
+//    stringで値を取得
+string NewString::getValue()
+{
+    return m_value;
+}
+
+（main.cpp は問題文のまま。変更なし）
+
+【解説】
+== 演算子は「bool operator== (比較する相手)」という形のメンバ関数として定義します。
+s1 == s4 と書くと、s1.operator==(s4) が呼び出され、その戻り値（true/false）が比較の結果になります。
+大文字と小文字を同一と見なすため、<cctype> の tolower() で1文字ずつ小文字に変換してから
+比べています。（tolower() に負の値を渡すと動作が未定義になるので、
+unsigned char にキャストしてから渡しています。日本語などの文字はそのまま比較されます）
+同じクラスのメンバ関数の中では、相手のオブジェクトの private メンバ（n.m_value）にも
+アクセスできます。
+比較では相手も自分も変更しないので、引数は const の参照に、関数自体にも const を付けています。
+main.cpp は、問題文の「変更後」のとおりです。

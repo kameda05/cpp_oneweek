@@ -1,0 +1,148 @@
+================================================================
+練習問題（応用編）3：テンプレートとSTL　解答と解説
+================================================================
+
+
+問題 3-1　テンプレート関数による統合
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//    2つの値を比較し、大きいほうを返すテンプレート関数
+template <typename T>
+T bigger(T a, T b)
+{
+    if(a > b){
+        return a;
+    }
+    return b;
+}
+
+int main(){
+    cout << bigger(1, 2) << endl;
+    cout << bigger(1.75, 3.12) << endl;
+    string s1 = "aiu", s2 = "eo";
+    cout << bigger(s1, s2) << endl;
+    return 0;
+}
+
+【解説】
+3つの関数は、引数と戻り値の型が違うだけで、処理の内容はまったく同じです。
+このような場合は、template <typename T> を使って型を T という仮の名前に置き換えると、
+1つの関数テンプレートにまとめることができます。
+呼び出し時の引数の型から T が自動的に決まり、
+bigger(1, 2) では int 版、bigger(1.75, 3.12) では double 版、
+bigger(s1, s2) では string 版の関数が、コンパイラによって生成されます。
+string 型は > 演算子で辞書順に比較できるので、文字列でも同じ処理が使えます。
+
+
+================================================================
+問題 3-2　テンプレートクラスへの書き換え
+------------------------------------------------------------------
+【解答】
+// collection.h
+#ifndef COLLECTION_H
+#define COLLECTION_H
+
+#include <iostream>
+
+using namespace std;
+
+//    あらゆる型の配列を保持し、最大値と最小値を取得できるクラス
+//    （テンプレートクラスなので、処理もすべてヘッダファイルに記述する）
+template <typename T>
+class Collection{
+private:
+    //    配列データ
+    T* m_pArray;
+    //    配列の長さ
+    int m_length;
+public:
+    //    コンストラクタ
+    Collection(T* array, int length)
+    {
+        m_pArray = new T[length];
+        m_length = length;
+        for(int i = 0; i < m_length; i++){
+            m_pArray[i] = array[i];
+        }
+    }
+    //    デストラクタ
+    ~Collection()
+    {
+        delete[] m_pArray;
+    }
+    //    最大値の取得
+    T getMax()
+    {
+        T max = m_pArray[0];
+        for(int i = 0; i < m_length; i++){
+            if(max < m_pArray[i]){
+                max = m_pArray[i];
+            }
+        }
+        return max;
+    }
+    //    最小値の取得
+    T getMin()
+    {
+        T min = m_pArray[0];
+        for(int i = 0; i < m_length; i++){
+            if(min > m_pArray[i]){
+                min = m_pArray[i];
+            }
+        }
+        return min;
+    }
+    //    成分の表示
+    void showArray()
+    {
+        for(int i = 0; i < m_length; i++){
+            cout << m_pArray[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+#endif // COLLECTION_H
+
+// main.cpp
+#include <iostream>
+#include "collection.h"
+
+using namespace std;
+
+int main(){
+    //    実数の場合
+    double darray[] = { 1.2, 3.5, 8.1, 4.9, 2.6, 2.2 };
+    Collection<double>* d = new Collection<double>(darray, 6);
+    cout << "実数の場合" << endl;
+    d->showArray();
+    cout << "最大値 : " << d->getMax() << endl;
+    cout << "最小値 : " << d->getMin() << endl;
+    delete d;
+
+    //    整数の場合
+    int iarray[] = { 1, 5, 4, 2, 3 };
+    Collection<int>* c = new Collection<int>(iarray, 5);
+    cout << "整数の場合" << endl;
+    c->showArray();
+    cout << "最大値 : " << c->getMax() << endl;
+    cout << "最小値 : " << c->getMin() << endl;
+    delete c;
+    return 0;
+}
+
+【解説】
+クラスの前に template <typename T> を付け、int になっていた配列の要素の型を
+すべて T に置き換えると、クラステンプレートになります。
+（配列の長さ m_length や、ループ変数 i は要素の型とは関係ないので int のままです）
+テンプレートは、使われる型が決まった時点でコンパイラがコードを生成するため、
+メンバ関数の処理もヘッダファイルに書く必要があります。
+処理を collection.cpp に分けて書くと、リンク時に「未解決の外部シンボル」エラーになります。
+そのため、collectionint.cpp に相当するソースファイルは不要です。
+使うときは Collection<double>、Collection<int> のように、< > の中に型を指定します。
+string の配列でも、同じクラスがそのまま使えます。

@@ -1,0 +1,203 @@
+================================================================
+練習問題3：アクセス指定子　解答と解説
+================================================================
+
+
+問題 3-1　セッターとゲッターの追加
+------------------------------------------------------------------
+【解答】
+// data.h
+#ifndef DATA_H
+#define DATA_H
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Data{
+private:
+    //    メンバ変数number
+    int number;
+    //    メンバ変数comment
+    string comment;
+public:
+    //    初期化
+    void init();
+    //    numberのセッター
+    void setNumber(int n);
+    //    numberのゲッター
+    int getNumber();
+    //    commentのセッター
+    void setComment(string s);
+    //    commentのゲッター
+    string getComment();
+};
+
+#endif // DATA_H
+
+// data.cpp
+#include "data.h"
+
+void Data::init()
+{
+    number = 0;
+    comment = "";
+}
+//    numberのセッター
+void Data::setNumber(int n)
+{
+    number = n;
+}
+//    numberのゲッター
+int Data::getNumber()
+{
+    return number;
+}
+//    commentのセッター
+void Data::setComment(string s)
+{
+    comment = s;
+}
+//    commentのゲッター
+string Data::getComment()
+{
+    return comment;
+}
+
+（main.cpp は問題文のまま。変更なし）
+
+【解説】
+メンバ変数 number と comment は private なので、クラスの外（main関数）からは
+直接読み書きできません。そこで、値を設定する「セッター」と、値を取得する「ゲッター」を
+public なメンバ関数として用意します。
+  ・セッター：set＋変数名。引数で受け取った値をメンバ変数に代入する（戻り値は void）
+  ・ゲッター：get＋変数名。メンバ変数の値を返す（戻り値はメンバ変数と同じ型）
+main.cpp は変更する必要はありません。
+
+
+================================================================
+問題 3-2　TwoStringsクラスの実装
+------------------------------------------------------------------
+【解答】
+// twostrings.cpp
+#include "twostrings.h"
+
+//    一つ目の文字列を設定
+void TwoStrings::setString1(string s)
+{
+    m_string1 = s;
+}
+//    二つ目の文字列を設定
+void TwoStrings::setString2(string s)
+{
+    m_string2 = s;
+}
+//    一つ目の文字列を取得
+string TwoStrings::getString1()
+{
+    return m_string1;
+}
+//    二つ目の文字列を取得
+string TwoStrings::getString2()
+{
+    return m_string2;
+}
+//    二つの文字列をつないだものを取得
+string TwoStrings::getConnectedString()
+{
+    return m_string1 + m_string2;
+}
+//    getConnectedString()で得られる文字列の長さを取得
+int TwoStrings::getConnectedLength()
+{
+    return static_cast<int>(getConnectedString().length());
+}
+
+（twostrings.h、main.cpp は問題文のまま。変更なし）
+
+【解説】
+ヘッダファイルで宣言されている6つのメンバ関数の中身を、twostrings.cpp に記述します。
+  ・getConnectedString()：string 型は + 演算子で連結できるので、m_string1 + m_string2 を返す
+  ・getConnectedLength()：連結した文字列の length() で長さを求める
+length() の戻り値は符号なしの整数型（size_t）なので、static_cast<int> で int 型に
+変換してから返しています。
+また、getConnectedLength() の中で getConnectedString() を呼び出しているように、
+メンバ関数の中からは、同じクラスの別のメンバ関数を呼び出すことができます。
+twostrings.h と main.cpp は変更する必要はありません。
+
+
+================================================================
+問題 3-3　Calculationクラスの作成
+------------------------------------------------------------------
+【解答】
+// calculation.h
+#ifndef CALCULATION_H
+#define CALCULATION_H
+
+class Calculation{
+private:
+    //    一つ目の数
+    int m_number1;
+    //    二つ目の数
+    int m_number2;
+public:
+    //    m_number1のセッター
+    void setNumber1(int n);
+    //    m_number2のセッター
+    void setNumber2(int n);
+    //    m_number1のゲッター
+    int getNumber1();
+    //    m_number2のゲッター
+    int getNumber2();
+    //    二つの数の和を返す
+    int add();
+    //    二つの数の差を返す
+    int sub();
+};
+
+#endif // CALCULATION_H
+
+// calculation.cpp
+#include "calculation.h"
+
+//    m_number1のセッター
+void Calculation::setNumber1(int n)
+{
+    m_number1 = n;
+}
+//    m_number2のセッター
+void Calculation::setNumber2(int n)
+{
+    m_number2 = n;
+}
+//    m_number1のゲッター
+int Calculation::getNumber1()
+{
+    return m_number1;
+}
+//    m_number2のゲッター
+int Calculation::getNumber2()
+{
+    return m_number2;
+}
+//    二つの数の和を返す
+int Calculation::add()
+{
+    return m_number1 + m_number2;
+}
+//    二つの数の差を返す
+int Calculation::sub()
+{
+    return m_number1 - m_number2;
+}
+
+（main.cpp は問題文のまま。変更なし）
+
+【解説】
+仕様の表どおりに、ヘッダファイルにはクラスの定義（メンバ変数とメンバ関数の宣言）を、
+ソースファイルにはメンバ関数の処理を記述します。
+メンバ変数は private にして外部から直接触れないようにし（カプセル化）、
+値の設定・取得は public なセッター・ゲッターを通して行います。
+ヘッダファイルには、二重インクルードを防ぐためのインクルードガード
+（#ifndef CALCULATION_H ～ #endif）を忘れずに付けておきましょう。

@@ -1,0 +1,183 @@
+================================================================
+練習問題5：静的メンバ　解答と解説
+================================================================
+
+
+問題 5-1　静的メンバ関数の実装
+------------------------------------------------------------------
+【解答】
+// function.cpp
+#include "function.h"
+
+//    最大値を返す関数
+int Function::max(int n1, int n2)
+{
+    if (n1 > n2){
+        return n1;
+    }
+    return n2;
+}
+//    最小値を返す関数
+int Function::min(int n1, int n2)
+{
+    if (n1 < n2){
+        return n1;
+    }
+    return n2;
+}
+
+（function.h、main.cpp は問題文のまま。変更なし）
+
+【解説】
+静的メンバ関数の処理をソースファイルに書くときは、static を付けません。
+static はヘッダファイルの宣言にだけ書き、定義は通常のメンバ関数と同じく
+「戻り値の型 クラス名::関数名(引数)」の形で記述します。
+静的メンバ関数は、インスタンスを生成せずに Function::max(m, n) のように
+「クラス名::関数名」で呼び出せます。
+function.h と main.cpp は変更する必要はありません。
+
+
+================================================================
+問題 5-2　オブジェクトの数を取得する静的メンバ関数
+------------------------------------------------------------------
+【解答】
+// object.h
+#ifndef OBJECT_H
+#define OBJECT_H
+
+class Object{
+private:
+    static int m_objectNum;
+public:
+    //    コンストラクタ
+    Object();
+    //    デストラクタ
+    ~Object();
+    //    オブジェクトの数を取得
+    static int getObjectNum();
+};
+
+#endif // OBJECT_H
+
+// object.cpp
+#include "object.h"
+
+//    静的メンバ変数の初期値を設定
+int Object::m_objectNum = 0;
+
+//    コンストラクタ
+Object::Object()
+{
+    //    オブジェクトの数をカウントする
+    m_objectNum++;
+}
+//    デストラクタ
+Object::~Object()
+{
+    //    オブジェクトの数をカウントする
+    m_objectNum--;
+}
+//    オブジェクトの数を取得
+int Object::getObjectNum()
+{
+    return m_objectNum;
+}
+
+（main.cpp は問題文のまま。変更なし）
+
+【解説】
+静的メンバ変数 m_objectNum は、インスタンスごとではなくクラスに1つだけ存在する変数です。
+コンストラクタで1増やし、デストラクタで1減らしているので、
+「現在存在しているオブジェクトの数」を表しています。
+静的メンバ関数 getObjectNum() は、インスタンスに属さないため、
+通常のメンバ変数は使えませんが、静的メンバ変数は使うことができます。
+3つ生成した時点では 3、o3 を delete した後は 2 になります。
+main.cpp は変更する必要はありません。
+
+
+================================================================
+問題 5-3　合計回数を数える静的メンバ
+------------------------------------------------------------------
+【解答】
+// counter.h
+#ifndef COUNTER_H
+#define COUNTER_H
+
+class Counter{
+private:
+    //    回数
+    int m_count;
+    //    トータルの回数（すべてのインスタンスで共有する）
+    static int m_totalCount;
+public:
+    //    コンストラクタ
+    Counter();
+    //    リセット
+    void reset();
+    //    カウント
+    void count();
+    //    カウントの数
+    int getCount();
+    //    トータルのカウントの数
+    static int getTotalCount();
+};
+
+#endif // COUNTER_H
+
+// counter.cpp
+#include "counter.h"
+
+//    静的メンバ変数の初期値を設定
+int Counter::m_totalCount = 0;
+
+//    コンストラクタ（カウント回数を0で初期化）
+Counter::Counter() : m_count(0)
+{
+}
+void Counter::reset(){
+    //    リセットした分を、トータルの回数からも差し引く
+    m_totalCount -= m_count;
+    m_count = 0;
+}
+void Counter::count(){
+    m_count++;
+    m_totalCount++;
+}
+int Counter::getCount(){
+    return m_count;
+}
+int Counter::getTotalCount(){
+    return m_totalCount;
+}
+
+// main.cpp
+#include <iostream>
+
+#include "counter.h"
+
+using namespace std;
+
+int main(){
+    Counter c1, c2;
+    c1.count();
+    c2.count();
+    c2.count();
+    c2.reset();
+    c1.count();
+    c1.count();
+    c2.count();
+    cout << "c1のカウント数:" << c1.getCount() << endl;
+    cout << "c2のカウント数:" << c2.getCount() << endl;
+    cout << "トータルのカウント数:" << Counter::getTotalCount() << endl;
+    return 0;
+}
+
+【解説】
+すべてのインスタンスのカウント数の合計を記録するために、静的メンバ変数 m_totalCount を
+追加します。静的メンバ変数は、ソースファイルで「int Counter::m_totalCount = 0;」のように
+実体を定義し、初期値を設定する必要があります。
+  ・count()：自分の m_count と、共有の m_totalCount の両方を1増やす
+  ・reset()：自分の m_count を 0 に戻す前に、その分を m_totalCount から差し引く
+reset() で差し引かないと、c2 がリセット前に数えた2回もトータルに含まれてしまい、
+c1.getCount() + c2.getCount() の結果（4）と一致しなくなります。
+main.cpp では、18行目を Counter::getTotalCount() に置き換えます。

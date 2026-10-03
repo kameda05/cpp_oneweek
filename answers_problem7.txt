@@ -1,0 +1,208 @@
+================================================================
+練習問題7：ポリモーフィズム　解答と解説
+================================================================
+
+
+問題 7-1　メンバ関数のオーバーロード
+------------------------------------------------------------------
+【解答】
+// counter.h
+#ifndef COUNTER_H
+#define COUNTER_H
+
+//    カウンタークラス
+class Counter{
+private:
+    //    カウント
+    int m_count;
+public:
+    //    コンストラクタ
+    Counter();
+    //    カウンタをリセット
+    void reset();
+    //    カウントされた回数を取得
+    int getCount();
+    //    1回カウント
+    void count();
+    //    指定した回数だけカウント
+    void count(int n);
+};
+
+#endif // COUNTER_H
+
+// counter.cpp
+#include "counter.h"
+
+//    コンストラクタ
+Counter::Counter() : m_count(0)
+{
+
+}
+//    カウンタをリセット
+void Counter::reset()
+{
+    m_count = 0;
+}
+//    回数を取得
+int Counter::getCount()
+{
+    return m_count;
+}
+//    1回カウント
+void Counter::count()
+{
+    m_count++;
+}
+//    指定した回数だけカウント
+void Counter::count(int n)
+{
+    m_count += n;
+}
+
+（main.cpp は問題文のまま。変更なし）
+
+【解説】
+引数の型や数が異なれば、同じ名前のメンバ関数を複数定義できます（オーバーロード）。
+count() と count(int n) は引数が異なるので、両方を Counter クラスに持たせることができ、
+呼び出し時の引数によって、どちらが実行されるかが自動的に決まります。
+  ・pC->count()  → 引数なしの count() が呼ばれ、1 増える
+  ・pC->count(4) → 引数ありの count(int n) が呼ばれ、4 増える
+main.cpp は変更する必要はありません。
+
+
+================================================================
+問題 7-2　コンストラクタのオーバーロード
+------------------------------------------------------------------
+【解答】
+// vector.h
+#ifndef VECTOR_H
+#define VECTOR_H
+
+//    ベクトルクラス
+class Vector{
+private:
+    double m_x;
+    double m_y;
+public:
+    //    コンストラクタ
+    Vector();
+    //    成分を指定するコンストラクタ
+    Vector(double x, double y);
+    //    成分の設定
+    void set(double x, double y);
+    //    x成分の取得
+    double getX();
+    //    y成分の取得
+    double getY();
+};
+
+#endif // VECTOR_H
+
+// vector.cpp
+#include "vector.h"
+
+//    コンストラクタ
+Vector::Vector() : m_x(0), m_y(0)
+{
+}
+//    成分を指定するコンストラクタ
+Vector::Vector(double x, double y) : m_x(x), m_y(y)
+{
+}
+//    成分の設定
+void Vector::set(double x, double y)
+{
+    m_x = x;
+    m_y = y;
+}
+//    x成分の取得
+double Vector::getX()
+{
+    return m_x;
+}
+//    y成分の取得
+double Vector::getY()
+{
+    return m_y;
+}
+
+（main.cpp は問題文のまま。変更なし）
+
+【解説】
+コンストラクタも、通常のメンバ関数と同じくオーバーロードできます。
+引数なしの Vector() に加えて、x成分・y成分を受け取る Vector(double x, double y) を追加すると、
+new Vector() では引数なし、new Vector(1.1, 2.3) では引数ありのコンストラクタが呼ばれます。
+引数ありのコンストラクタでは、初期化子リスト「: m_x(x), m_y(y)」で成分を設定しています。
+main.cpp は変更する必要はありません。
+
+
+================================================================
+問題 7-3　メンバ関数のオーバーライド
+------------------------------------------------------------------
+【解答】
+// dog.h
+#ifndef DOG_H
+#define DOG_H
+
+#include "animal.h"
+
+//    犬クラス
+class Dog : public Animal{
+public:
+    //    鳴く（オーバーライド）
+    void cry();
+};
+
+#endif // DOG_H
+
+// dog.cpp
+#include "dog.h"
+#include <iostream>
+
+using namespace std;
+
+//    鳴く（オーバーライド）
+void Dog::cry()
+{
+    cout << "ワンワン" << endl;
+}
+
+// cat.h
+#ifndef CAT_H
+#define CAT_H
+
+#include "animal.h"
+
+//    猫クラス
+class Cat : public Animal{
+public:
+    //    鳴く（オーバーライド）
+    void cry();
+};
+
+#endif // CAT_H
+
+// cat.cpp
+#include "cat.h"
+#include <iostream>
+
+using namespace std;
+
+//    鳴く（オーバーライド）
+void Cat::cry()
+{
+    cout << "ニャー" << endl;
+}
+
+（animal.h、animal.cpp、main.cpp は問題文のまま。変更なし）
+
+【解説】
+親クラスと同じ名前・同じ引数のメンバ関数を子クラスで定義し直すことを、オーバーライドといいます。
+Dog と Cat は Animal を継承し、それぞれ cry() を定義し直しているので、
+d.cry() では Dog の cry()、c.cry() では Cat の cry() が呼ばれます。
+引数を変えて同じ名前の関数を追加する「オーバーロード」（問題7-1）との違いに注意しましょう。
+dog.h と cat.h はどちらも animal.h をインクルードしていますが、インクルードガードがあるので、
+main.cpp で両方をインクルードしても Animal クラスが二重に定義されることはありません。
+なお、この問題のように、オブジェクトを直接使う場合はこれで正しく動作しますが、
+親クラスのポインタ（Animal*）を通して呼び出す場合は、親クラスの cry() が呼ばれてしまいます。
+ポインタを通しても子クラスの関数を呼ぶには、応用編6日目で学ぶ virtual（仮想関数）を使います。

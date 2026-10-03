@@ -1,0 +1,405 @@
+================================================================
+練習問題（応用編）5：STL②　解答と解説
+================================================================
+
+
+問題 5-1　英和辞書（map）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+#include <map>
+
+using namespace std;
+
+int main(){
+    //    英語と日本語の対応表
+    map<string, string> dic;
+    dic["cat"] = "猫";
+    dic["dog"] = "犬";
+    dic["bird"] = "鳥";
+    dic["tiger"] = "トラ";
+
+    string word;
+    cout << "英語で動物の名前を入力してください：";
+    cin >> word;
+
+    //    キーが登録されているかを調べる
+    map<string, string>::iterator it = dic.find(word);
+    if(it != dic.end()){
+        cout << "「" << it->second << "」です。" << endl;
+    }else{
+        cout << "対応するデータは登録されていません。" << endl;
+    }
+    return 0;
+}
+
+【解説】
+map<キーの型, 値の型> は、キーと値の組を登録しておき、キーから値を取り出せるコンテナです。
+ここでは英単語をキー、日本語を値として登録しています。
+キーが登録されているかどうかは find() で調べます。見つからなかった場合は end() が返り、
+見つかった場合はイテレータの second で値（日本語）を取り出せます（first はキー）。
+dic[word] で直接取り出すこともできますが、[] は存在しないキーを指定すると
+空の値で新しく登録してしまうため、存在の確認には find() を使います。
+
+
+================================================================
+問題 5-2　漢数字への変換（map）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+#include <map>
+
+using namespace std;
+
+int main(){
+    //    数字と漢数字の対応表
+    map<char, string> kanji;
+    kanji['0'] = "〇";
+    kanji['1'] = "一";
+    kanji['2'] = "二";
+    kanji['3'] = "三";
+    kanji['4'] = "四";
+    kanji['5'] = "五";
+    kanji['6'] = "六";
+    kanji['7'] = "七";
+    kanji['8'] = "八";
+    kanji['9'] = "九";
+
+    string s;
+    cout << "整数の値を入力してください:";
+    cin >> s;
+
+    //    入力が数字だけでできているかを調べる
+    bool valid = true;
+    for(size_t i = 0; i < s.length(); i++){
+        if(kanji.find(s[i]) == kanji.end()){
+            valid = false;
+            break;
+        }
+    }
+    if(!valid){
+        cout << "整数の値を入力してください。" << endl;
+        return 0;
+    }
+
+    //    1文字ずつ漢数字に変換し、下から3桁ごとに「,」を入れる
+    cout << "変換結果:";
+    for(size_t i = 0; i < s.length(); i++){
+        cout << kanji[s[i]];
+        size_t rest = s.length() - i - 1;    //    この後に続く桁数
+        if(rest > 0 && rest % 3 == 0){
+            cout << ",";
+        }
+    }
+    cout << endl;
+    return 0;
+}
+
+【解説】
+数字の文字（'0'～'9'）をキー、漢数字の文字列を値とする map<char, string> を作ります。
+入力は文字列として受け取り、1文字ずつ map に登録されているかを find() で調べることで、
+数字以外の文字が含まれていないか（整数として妥当か）を判定できます。
+変換では、各桁の文字をキーにして kanji[s[i]] で漢数字を取り出して出力します。
+「,」は下（右）から3桁ごとに入るので、その桁より後ろに続く桁数 rest が
+3 の倍数（かつ 0 でない）ときに出力します。
+例：1198000 の場合、1 の後ろに6桁、8 の後ろに3桁が続くので、その直後に「,」が入ります。
+
+
+================================================================
+問題 5-3　出現した数の種類（set）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <set>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int main(){
+    //    実行するたびに異なる乱数になるようにする
+    srand(static_cast<unsigned int>(time(nullptr)));
+
+    set<int> s;
+    cout << "乱数: ";
+    for(int i = 0; i < 10; i++){
+        int n = rand() % 10 + 1;    //    1～10の乱数
+        cout << n << " ";
+        s.insert(n);
+    }
+    cout << endl;
+
+    //    setには同じ値は1つしか登録されない
+    cout << "出現した数: ";
+    for(set<int>::iterator it = s.begin(); it != s.end(); it++){
+        cout << *it << " ";
+    }
+    cout << endl;
+    return 0;
+}
+
+【解説】
+set は、同じ値を重複して登録しないコンテナです。
+insert() で同じ値を何度追加しても、1つしか登録されません。
+また、set の要素は自動的に小さい順に並ぶので、イテレータで先頭からたどると、
+出現した数が昇順で表示されます。
+rand() % 10 は 0～9 の値になるので、1 を足して 1～10 の乱数にしています。
+
+
+================================================================
+問題 5-4　使われている文字の種類（set）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+#include <set>
+
+using namespace std;
+
+int main(){
+    string word;
+    cout << "英単語を入力:";
+    cin >> word;
+
+    //    単語の文字を1文字ずつsetに登録する（重複は自動的に除かれる）
+    set<char> s;
+    for(size_t i = 0; i < word.length(); i++){
+        s.insert(word[i]);
+    }
+
+    cout << "使用されているアルファベット : ";
+    for(set<char>::iterator it = s.begin(); it != s.end(); it++){
+        cout << *it << " ";
+    }
+    cout << endl;
+    return 0;
+}
+
+【解説】
+string は word[i] のように添え字で1文字ずつ取り出せます（型は char）。
+取り出した文字を set<char> に登録すると、apple の p のように複数回出てくる文字も
+1つだけになります。set の要素は小さい順（アルファベット順）に並ぶので、
+「a e l p」の順に表示されます。
+
+
+================================================================
+問題 5-5　入力した順に表示する（queue）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+#include <queue>
+
+using namespace std;
+
+int main(){
+    queue<string> q;
+    string s;
+
+    while(true){
+        cout << "文字列を入力:";
+        getline(cin, s);
+        if(s == ""){
+            break;
+        }
+        q.push(s);
+    }
+
+    //    先に入れたものから順に取り出す
+    while(!q.empty()){
+        cout << q.front() << endl;
+        q.pop();
+    }
+    return 0;
+}
+
+【解説】
+queue（キュー）は、先に入れたものから先に取り出す（FIFO：先入れ先出し）コンテナです。
+  ・push()  ：末尾に要素を追加する
+  ・front() ：先頭の要素を参照する
+  ・pop()   ：先頭の要素を削除する（値は返さない）
+pop() は値を返さないので、front() で値を取り出してから pop() で削除します。
+これを empty() が true になるまで繰り返すと、入力した順に表示されます。
+
+
+================================================================
+問題 5-6　逆の順に表示する（stack）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+#include <stack>
+
+using namespace std;
+
+int main(){
+    stack<string> st;
+    string s;
+
+    while(true){
+        cout << "文字列を入力:";
+        getline(cin, s);
+        if(s == ""){
+            break;
+        }
+        st.push(s);
+    }
+
+    //    後に入れたものから順に取り出す
+    while(!st.empty()){
+        cout << st.top() << endl;
+        st.pop();
+    }
+    return 0;
+}
+
+【解説】
+stack（スタック）は、後に入れたものから先に取り出す（LIFO：後入れ先出し）コンテナです。
+  ・push() ：一番上に要素を積む
+  ・top()  ：一番上の要素を参照する
+  ・pop()  ：一番上の要素を削除する（値は返さない）
+問題5-5の queue を stack に、front() を top() に変えるだけで、入力と逆の順で表示されます。
+
+
+================================================================
+問題 5-7　単語を逆から表示する（stack）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+#include <stack>
+
+using namespace std;
+
+int main(){
+    string word;
+    cout << "英単語を入力:";
+    cin >> word;
+
+    //    1文字ずつスタックに積む
+    stack<char> st;
+    for(size_t i = 0; i < word.length(); i++){
+        st.push(word[i]);
+    }
+    //    上から取り出すと、逆の順になる
+    while(!st.empty()){
+        cout << st.top();
+        st.pop();
+    }
+    cout << endl;
+    return 0;
+}
+
+【解説】
+単語の先頭の文字から順に stack<char> に積んでいくと、最後の文字が一番上になります。
+一番上から順に取り出して表示すれば、単語を逆から表示できます。
+（stack の LIFO の性質を利用した、典型的な使い方です）
+
+
+================================================================
+問題 5-8　漢数字への変換（queue）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+#include <map>
+#include <queue>
+
+using namespace std;
+
+int main(){
+    //    数字と漢数字の対応表
+    map<char, string> kanji;
+    kanji['0'] = "〇";
+    kanji['1'] = "一";
+    kanji['2'] = "二";
+    kanji['3'] = "三";
+    kanji['4'] = "四";
+    kanji['5'] = "五";
+    kanji['6'] = "六";
+    kanji['7'] = "七";
+    kanji['8'] = "八";
+    kanji['9'] = "九";
+
+    string s;
+    cout << "整数の値を入力してください:";
+    cin >> s;
+
+    //    1文字ずつ調べて、漢数字をキューに入れる
+    queue<string> q;
+    for(size_t i = 0; i < s.length(); i++){
+        if(kanji.find(s[i]) == kanji.end()){
+            cout << "整数の値を入力してください。" << endl;
+            return 0;
+        }
+        q.push(kanji[s[i]]);
+    }
+
+    //    先頭から取り出して表示し、残りの桁数が3の倍数になったら「,」を入れる
+    cout << "変換結果:";
+    while(!q.empty()){
+        cout << q.front();
+        q.pop();
+        if(!q.empty() && q.size() % 3 == 0){
+            cout << ",";
+        }
+    }
+    cout << endl;
+    return 0;
+}
+
+【解説】
+入力された文字列を先頭から1文字ずつ漢数字に変換し、queue に入れていきます。
+数字以外の文字が見つかった時点で、エラーを表示して終了します。
+queue は入れた順に取り出せるので、先頭から取り出して表示すれば元の並び順になります。
+1つ取り出すたびに、キューに残っている要素数 size() を調べ、
+それが 3 の倍数（かつ空でない）ときに「,」を出力すると、下から3桁ごとの区切りになります。
+問題5-2では添え字から残りの桁数を計算していましたが、queue を使うと
+「残りの要素数」がそのまま残りの桁数になるので、区切りの判定が簡単になります。
+
+
+================================================================
+問題 5-9　しりとり（map）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+#include <map>
+
+using namespace std;
+
+int main(){
+    string words[] = { "room", "wonderful", "pork", "trap", "kind", "money",
+                       "dog", "given", "yellow", "eat", "apple", "neighbor" };
+    int count = sizeof(words) / sizeof(words[0]);
+
+    //    単語の最初の文字をキーにして登録する
+    map<char, string> m;
+    for(int i = 0; i < count; i++){
+        m[words[i][0]] = words[i];
+    }
+
+    //    apple から始めて、前の単語の最後の文字で始まる単語を順にたどる
+    string word = "apple";
+    for(int i = 0; i < count; i++){
+        cout << word << " ";
+        char last = word[word.length() - 1];
+        if(m.find(last) == m.end()){
+            break;    //    続く単語がない
+        }
+        word = m[last];
+    }
+    cout << endl;
+    return 0;
+}
+
+【解説】
+12個の単語は、最初の文字がすべて異なります。
+そこで、最初の文字をキー、単語を値とする map<char, string> に登録しておくと、
+「前の単語の最後の文字」をキーにして、次につながる単語をすぐに探せます。
+apple → 最後の文字 e → eat → 最後の文字 t → trap → … のようにたどり、
+単語の数（12回）だけ表示します。
+単語の最後の文字は word[word.length() - 1] で取り出しています。
+最後の wonderful の l で始まる単語はないので、そこで終わります。

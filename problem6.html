@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="C++言語の練習問題（基本編）6。継承に関する問題です。">
 <meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cpp-lang.sevendays-study.com/problem6.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="一週間で身につくC++言語の基本">
+<meta property="og:title" content="一週間で身につくC++言語の基本|練習問題6：継承">
+<meta property="og:description" content="C++言語の練習問題（基本編）6。継承に関する問題です。">
+<meta property="og:url" content="https://cpp-lang.sevendays-study.com/problem6.html">
+<meta property="og:image" content="https://cpp-lang.sevendays-study.com/img/ogp.png">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
@@ -139,9 +148,9 @@ public:
     void setNumber1(double number);
     //    二つ目の数を設定
     void setNumber2(double number);
-    //    一つ目の数を設定
+    //    一つ目の数を取得
     double getNumber1();
-    //    二つ目の数を設定
+    //    二つ目の数を取得
     double getNumber2();
     //    二つの数の和を出力
     double add();
@@ -166,12 +175,12 @@ void FundCalc::setNumber2(double number)
 {
     m_number2 = number;
 }
-//    一つ目の数を設定
+//    一つ目の数を取得
 double FundCalc::getNumber1()
 {
     return m_number1;
 }
-//    二つ目の数を設定
+//    二つ目の数を取得
 double FundCalc::getNumber2()
 {
     return m_number2;
@@ -212,6 +221,107 @@ int main(){
         <tbody>
           <tr><td>mul</td><td>double</td><td>なし</td><td>メンバ変数m_number1、m_number2の積</td></tr>
           <tr><td>div</td><td>double</td><td>なし</td><td>メンバ変数m_number1、m_number2の商</td></tr>
+        </tbody>
+      </table>
+      </div></div>
+
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 6-3</span>
+        <span class="difficulty">★★</span>
+      <span class="prob-title">スマートフォンクラスの作成（多重継承）</span>
+      </div>
+      <div class="prob-body">
+      <p>以下のプログラムに、電話クラスPhoneとカメラクラスCameraの両方を継承した、スマートフォンクラスSmartPhoneを指定された仕様で追加し、期待される実行結果通りにプログラムが動くようにしなさい。SmartPhoneクラスのshowSpec()では、親クラスのprotectedメンバ変数m_phoneNumberとm_pixelsを使って表示すること。</p>
+      <div class="code-label">prob6-3：phone.h</div>
+<pre>#ifndef PHONE_H
+#define PHONE_H
+
+#include &lt;string&gt;
+
+using namespace std;
+
+//    電話クラス
+class Phone{
+protected:
+    //    電話番号
+    string m_phoneNumber;
+public:
+    //    コンストラクタ
+    Phone();
+    //    電話をかける
+    void call();
+};
+
+#endif // PHONE_H</pre>
+      <div class="code-label">phone.cpp</div>
+<pre>#include "phone.h"
+#include &lt;iostream&gt;
+
+//    コンストラクタ
+Phone::Phone() : m_phoneNumber("090-1234-5678")
+{
+}
+//    電話をかける
+void Phone::call()
+{
+    cout &lt;&lt; "電話をかける" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">camera.h</div>
+<pre>#ifndef CAMERA_H
+#define CAMERA_H
+
+//    カメラクラス
+class Camera{
+protected:
+    //    画素数（万画素）
+    int m_pixels;
+public:
+    //    コンストラクタ
+    Camera();
+    //    写真を撮る
+    void takePicture();
+};
+
+#endif // CAMERA_H</pre>
+      <div class="code-label">camera.cpp</div>
+<pre>#include "camera.h"
+#include &lt;iostream&gt;
+
+using namespace std;
+
+//    コンストラクタ
+Camera::Camera() : m_pixels(1200)
+{
+}
+//    写真を撮る
+void Camera::takePicture()
+{
+    cout &lt;&lt; "写真を撮る" &lt;&lt; endl;
+}</pre>
+      <div class="code-label">main.cpp</div>
+<pre>#include &lt;iostream&gt;
+#include "smartphone.h"
+
+using namespace std;
+
+int main(){
+    SmartPhone s;
+    s.call();           //    Phoneクラスから継承
+    s.takePicture();    //    Cameraクラスから継承
+    s.browse();         //    SmartPhoneクラスで追加
+    s.showSpec();       //    SmartPhoneクラスで追加
+    return 0;
+}</pre>
+      <div class="result-label">期待される実行結果</div>
+      <div class="result-box">電話をかける<br>写真を撮る<br>インターネットを閲覧する<br>電話番号:090-1234-5678 画素数:1200万画素</div>
+      <p>SmartPhoneクラスのヘッダファイルは、<strong>smartphone.h</strong>、ソースファイルは、<strong>smartphone.cpp</strong>とすること。</p>
+      <table class="data-table">
+        <caption>クラスSmartPhoneの仕様(メンバ関数)</caption>
+        <thead><tr><th>関数名</th><th>戻り値の型</th><th>引数</th><th>概要</th></tr></thead>
+        <tbody>
+          <tr><td>browse</td><td>void</td><td>なし</td><td>「インターネットを閲覧する」と表示し、改行する。</td></tr>
+          <tr><td>showSpec</td><td>void</td><td>なし</td><td>電話番号と画素数を、期待される実行結果のように表示し、改行する。</td></tr>
         </tbody>
       </table>
       </div></div>
@@ -290,17 +400,17 @@ int main(){
     <div class="footer-col">
       <h4>プログラミング</h4>
       <ul>
-        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
-        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
-        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
-        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
-        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+        <li><a href="https://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="https://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="https://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="https://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="https://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Web関連</h4>
       <ul>
-        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+        <li><a href="https://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -320,13 +430,13 @@ int main(){
       <h4>リンク</h4>
       <ul>
         <li><a href="link.html">相互リンク</a></li>
-        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
         <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-copy">
-    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+    Copyright © <a href="https://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
   </div>
 </footer>
 

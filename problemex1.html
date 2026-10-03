@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="C++言語の練習問題（応用編）1。C言語との違いに関する問題です。">
 <meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cpp-lang.sevendays-study.com/problemex1.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="一週間で身につくC++言語の基本">
+<meta property="og:title" content="一週間で身につくC++言語の基本|練習問題（応用編）1：C言語との違い">
+<meta property="og:description" content="C++言語の練習問題（応用編）1。C言語との違いに関する問題です。">
+<meta property="og:url" content="https://cpp-lang.sevendays-study.com/problemex1.html">
+<meta property="og:image" content="https://cpp-lang.sevendays-study.com/img/ogp.png">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
@@ -75,9 +84,10 @@ using namespace std;
 int main(){
     int a = 7;
     int &amp;n = a;
-    cout &lt;&lt; "a= " &lt;&lt; a &lt;&lt; endl;
-    cout &lt;&lt; "a= " &lt;&lt; a &lt;&lt; endl;
+    cout &lt;&lt; "a = " &lt;&lt; a &lt;&lt; endl;
 
+    cout &lt;&lt; "a = " &lt;&lt; a &lt;&lt; endl;
+    return 0;
 }</pre>
       <div class="result-label">期待される実行結果</div>
       <div class="result-box">a = 7<br>a = 10</div>
@@ -89,7 +99,7 @@ int main(){
       <span class="prob-title">ポインタ渡しから参照渡しへ</span>
       </div>
       <div class="prob-body">
-      <p>以下のプログラムのchangeNum()関数の引数を、変数のポインタではなく、参照を与える形に変えて、同じ結果が得られるようにプログラムを変更しなさい。</p>
+      <p>以下のプログラムのchangeNumber()関数の引数を、変数のポインタではなく、参照を与える形に変えて、同じ結果が得られるようにプログラムを変更しなさい。</p>
       <div class="code-label">main.cpp</div>
 <pre>#include &lt;iostream&gt;
 
@@ -102,11 +112,11 @@ int main(){
     cout &lt;&lt; "変更前 : " &lt;&lt; n &lt;&lt; endl;
     changeNumber(&amp;n);
     cout &lt;&lt; "変更後 : " &lt;&lt; n &lt;&lt; endl;
-
+    return 0;
 }
 
 void changeNumber(int* n){
-    *n *= 2;    //    数値
+    *n *= 2;    //    数値を2倍にする
 }</pre>
       <div class="result-label">実行結果</div>
       <div class="result-box">変更前 : 5<br>変更後 : 10</div>
@@ -144,6 +154,43 @@ void swap(int *a, int *b)
 }</pre>
       <div class="result-label">実行結果の例</div>
       <div class="result-box">a = 1 b = 2<br>a = 2 b = 1</div>
+      </div></div>
+
+      <div class="prob-item">
+      <div class="prob-header">
+        <span class="prob-num">問題 1-4</span>
+        <span class="difficulty">★★</span>
+      <span class="prob-title">構造体とbool型</span>
+      </div>
+      <div class="prob-body">
+      <p>学生の名前と点数をまとめた構造体Studentを定義し、4人分の配列を作って、期待される実行結果のように、各学生の合否と合格者の数を表示するプログラムを作りなさい。合否の判定には、60点以上ならtrue、60点未満ならfalseを返すbool型の関数isPassed()を作って用いること。また、構造体の変数は、C言語のように struct を付けずに宣言すること。</p>
+      <div class="result-label">期待される実行結果</div>
+      <div class="result-box">山田 : 75点 合格<br>佐藤 : 52点 不合格<br>鈴木 : 60点 合格<br>田中 : 38点 不合格<br>合格者数 : 2人</div>
+      <table class="data-table">
+        <caption>使用するデータ</caption>
+        <thead><tr><th>名前</th><th>点数</th></tr></thead>
+        <tbody>
+          <tr><td>山田</td><td>75</td></tr>
+          <tr><td>佐藤</td><td>52</td></tr>
+          <tr><td>鈴木</td><td>60</td></tr>
+          <tr><td>田中</td><td>38</td></tr>
+        </tbody>
+      </table>
+      <table class="data-table">
+        <caption>構造体Studentのメンバ</caption>
+        <thead><tr><th>メンバ名</th><th>型</th><th>概要</th></tr></thead>
+        <tbody>
+          <tr><td>name</td><td>string</td><td>名前</td></tr>
+          <tr><td>score</td><td>int</td><td>点数</td></tr>
+        </tbody>
+      </table>
+      <table class="data-table">
+        <caption>関数isPassedの仕様</caption>
+        <thead><tr><th>関数名</th><th>戻り値の型</th><th>引数</th><th>概要</th></tr></thead>
+        <tbody>
+          <tr><td>isPassed</td><td>bool</td><td>Student&amp; s</td><td>s の点数が60点以上なら true、そうでなければ false を返す。</td></tr>
+        </tbody>
+      </table>
       </div></div>
 
       <div class="page-nav">
@@ -229,17 +276,17 @@ void swap(int *a, int *b)
     <div class="footer-col">
       <h4>プログラミング</h4>
       <ul>
-        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
-        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
-        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
-        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
-        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+        <li><a href="https://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="https://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="https://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="https://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="https://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Web関連</h4>
       <ul>
-        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+        <li><a href="https://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -259,13 +306,13 @@ void swap(int *a, int *b)
       <h4>リンク</h4>
       <ul>
         <li><a href="link.html">相互リンク</a></li>
-        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
         <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-copy">
-    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+    Copyright © <a href="https://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
   </div>
 </footer>
 

@@ -1,0 +1,350 @@
+================================================================
+練習問題（応用編）4：STL①　解答と解説
+================================================================
+
+
+問題 4-1　奇数と偶数に分ける（vector）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main(){
+    vector<int> even;    //    偶数
+    vector<int> odd;    //    奇数
+    int n;
+
+    while(true){
+        cout << "正の整数を入力:";
+        cin >> n;
+        if(n == -1){
+            break;
+        }
+        //    2で割り切れるかどうかで、格納する先を分ける
+        if(n % 2 == 0){
+            even.push_back(n);
+        }else{
+            odd.push_back(n);
+        }
+    }
+
+    cout << "偶数 : ";
+    for(size_t i = 0; i < even.size(); i++){
+        cout << even[i] << " ";
+    }
+    cout << endl;
+    cout << "奇数 : ";
+    for(size_t i = 0; i < odd.size(); i++){
+        cout << odd[i] << " ";
+    }
+    cout << endl;
+    return 0;
+}
+
+【解説】
+偶数用と奇数用に、2つの vector<int> を用意します。
+入力された値を 2 で割った余り（n % 2）で偶数・奇数を判定し、push_back() で
+それぞれの vector の末尾に追加します。-1 が入力されたら break でループを抜けます。
+vector の要素数は size() で取得でき、配列と同じく [] で要素を参照できます。
+size() の戻り値は符号なしの整数型（size_t）なので、ループ変数も size_t にしています。
+
+
+================================================================
+問題 4-2　最大値と最小値（vector）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main(){
+    vector<int> v;
+    int n;
+
+    while(true){
+        cout << "正の整数を入力:";
+        cin >> n;
+        if(n == -1){
+            break;
+        }
+        v.push_back(n);
+    }
+    //    1つも入力されなかった場合は終了
+    if(v.empty()){
+        return 0;
+    }
+
+    //    最初の要素を仮の最大値・最小値として、残りの要素と比べる
+    int max = v[0];
+    int min = v[0];
+    for(size_t i = 1; i < v.size(); i++){
+        if(v[i] > max){
+            max = v[i];
+        }
+        if(v[i] < min){
+            min = v[i];
+        }
+    }
+    cout << "最大値 : " << max << endl;
+    cout << "最小値 : " << min << endl;
+    return 0;
+}
+
+【解説】
+入力された値をすべて vector に格納してから、最大値と最小値を探します。
+最初の要素 v[0] を仮の最大値・最小値とし、2番目以降の要素と順に比べて更新していきます。
+いきなり -1 が入力された場合は v[0] が存在しないので、empty() で空かどうかを確認しています。
+（<algorithm> の max_element()、min_element() を使って求めることもできます）
+
+
+================================================================
+問題 4-3　一の位ごとにまとめる（vector）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main(){
+    vector<int> v;
+    int n;
+
+    while(true){
+        cout << "正の整数を入力:";
+        cin >> n;
+        if(n == -1){
+            break;
+        }
+        v.push_back(n);
+    }
+
+    //    一の位が0～9のそれぞれについて、該当する数を表示する
+    for(int digit = 0; digit < 10; digit++){
+        cout << "一の位が" << digit << " : ";
+        bool found = false;
+        for(size_t i = 0; i < v.size(); i++){
+            if(v[i] % 10 == digit){
+                cout << v[i] << " ";
+                found = true;
+            }
+        }
+        if(!found){
+            cout << "なし";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
+【解説】
+整数の一の位は、10 で割った余り（n % 10）で求められます。
+一の位が 0 から 9 までの各数字について、vector の全要素を調べ、
+一の位が一致するものを表示します（外側のループが一の位、内側のループが vector の要素）。
+該当する数が1つもなかったかどうかを bool 型の変数 found で記録しておき、
+最後まで false のままなら「なし」と表示します。
+
+
+================================================================
+問題 4-4　最長・最短の単語（vector）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main(){
+    vector<string> v;
+    string s;
+
+    //    何も入力せずにEnterが押されるまで、文字列を入力させ続ける
+    while(true){
+        cout << "文字列を入力:";
+        getline(cin, s);
+        if(s == ""){
+            break;
+        }
+        v.push_back(s);
+    }
+    if(v.empty()){
+        return 0;
+    }
+
+    //    最も長い単語の長さと、最も短い単語の長さを求める
+    size_t maxLen = v[0].length();
+    size_t minLen = v[0].length();
+    for(size_t i = 1; i < v.size(); i++){
+        if(v[i].length() > maxLen){
+            maxLen = v[i].length();
+        }
+        if(v[i].length() < minLen){
+            minLen = v[i].length();
+        }
+    }
+
+    //    その長さの単語をすべて表示する
+    cout << "最長の単語:";
+    for(size_t i = 0; i < v.size(); i++){
+        if(v[i].length() == maxLen){
+            cout << v[i] << " ";
+        }
+    }
+    cout << endl;
+    cout << "最短の単語:";
+    for(size_t i = 0; i < v.size(); i++){
+        if(v[i].length() == minLen){
+            cout << v[i] << " ";
+        }
+    }
+    cout << endl;
+    return 0;
+}
+
+【解説】
+何も入力せずに Enter が押されたことを判定するため、cin >> s ではなく getline() で
+1行ずつ読み込みます（cin >> は空白や改行を読み飛ばすので、空の入力を検出できません）。
+最長・最短の単語が複数ある場合にすべて表示するため、2段階で処理しています。
+  1. まず、最も長い単語の長さ maxLen と、最も短い単語の長さ minLen を求める
+  2. 次に、長さが maxLen（minLen）と等しい単語をすべて表示する
+最初から「最長の単語」そのものを1つだけ記録する方法では、同じ長さの単語
+（例：big と dog）を両方表示できない点に注意しましょう。
+
+
+================================================================
+問題 4-5　特定の値の削除（list）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+int main(){
+    list<int> l;
+    int n;
+
+    while(true){
+        cout << "正の整数を入力:";
+        cin >> n;
+        if(n == -1){
+            break;
+        }
+        l.push_back(n);
+    }
+    //    値が2の要素をすべて削除する
+    l.remove(2);
+
+    //    イテレータを使って、残った要素を表示する
+    for(list<int>::iterator it = l.begin(); it != l.end(); it++){
+        cout << *it << " ";
+    }
+    cout << endl;
+    return 0;
+}
+
+【解説】
+list の remove(値) は、指定した値と等しい要素を「すべて」削除します。
+2 が3回入力されていても、l.remove(2); の1行で全部取り除けます。
+list は vector と違い [] で要素を参照できないので、要素を順にたどるには
+イテレータ（list<int>::iterator）を使います。
+begin() が先頭の要素、end() が末尾の「次」の位置を表し、*it で要素の値を取り出します。
+
+
+================================================================
+問題 4-6　小さい順に挿入する（list）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+int main(){
+    list<int> l;
+    int n;
+
+    while(true){
+        cout << "正の整数を入力:";
+        cin >> n;
+        if(n == -1){
+            break;
+        }
+        //    入力された数より大きい最初の要素を探し、その前に挿入する
+        list<int>::iterator it = l.begin();
+        while(it != l.end() && *it <= n){
+            it++;
+        }
+        l.insert(it, n);
+
+        cout << "入力された数：";
+        for(list<int>::iterator i = l.begin(); i != l.end(); i++){
+            cout << *i << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
+【解説】
+list の insert(イテレータ, 値) は、イテレータが指す要素の「前」に値を挿入します。
+リストは常に小さい順に並んでいるので、先頭から順にたどって、
+入力された数 n より大きい最初の要素を見つけ、その前に挿入すれば、並び順が保たれます。
+n より大きい要素がない場合、イテレータは end() まで進むので、末尾に追加されます。
+条件を *it <= n としているので、同じ数が入力された場合は、既存の数の後ろに挿入されます。
+list は途中への挿入・削除が速いので、このような「並びを保ったままの挿入」に向いています。
+
+
+================================================================
+問題 4-7　5文字以上の単語を削除する（list）
+------------------------------------------------------------------
+【解答】
+#include <iostream>
+#include <string>
+#include <list>
+
+using namespace std;
+
+int main(){
+    list<string> l;
+    string s;
+
+    while(true){
+        cout << "文字列を入力:";
+        getline(cin, s);
+        if(s == ""){
+            break;
+        }
+        l.push_back(s);
+    }
+
+    //    5文字以上の単語を削除する
+    list<string>::iterator it = l.begin();
+    while(it != l.end()){
+        if((*it).length() >= 5){
+            it = l.erase(it);    //    削除した要素の次の位置が返される
+        }else{
+            it++;
+        }
+    }
+
+    cout << "5文字未満の単語:";
+    for(it = l.begin(); it != l.end(); it++){
+        cout << *it << " ";
+    }
+    cout << endl;
+    return 0;
+}
+
+【解説】
+条件に合う要素をイテレータで削除するには erase() を使います。
+erase() を実行すると、削除した要素を指していたイテレータは使えなくなります。
+そのため、erase() の戻り値（削除した要素の次の位置）をイテレータに代入し、
+削除しなかったときだけ it++ で次に進めます。
+（for 文の中で erase() した後に it++ すると、無効なイテレータを進めることになり、
+　プログラムが異常終了する原因になります）
+なお、条件で削除する専用のメンバ関数 remove_if() を使う方法もあります。

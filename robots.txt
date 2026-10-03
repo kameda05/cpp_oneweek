@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cpp-lang.sevendays-study.com/sitemap.xml

@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="C++言語の練習問題（基本編）5。静的メンバに関する問題です。">
 <meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cpp-lang.sevendays-study.com/problem5.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="一週間で身につくC++言語の基本">
+<meta property="og:title" content="一週間で身につくC++言語の基本|練習問題5：静的メンバ">
+<meta property="og:description" content="C++言語の練習問題（基本編）5。静的メンバに関する問題です。">
+<meta property="og:url" content="https://cpp-lang.sevendays-study.com/problem5.html">
+<meta property="og:image" content="https://cpp-lang.sevendays-study.com/img/ogp.png">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9EGEJV4MJS"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9EGEJV4MJS');</script>
@@ -89,7 +98,7 @@ using namespace std;
 int main(){
     int m = 3, n = 1;
     cout &lt;&lt; m &lt;&lt; "と" &lt;&lt; n &lt;&lt; "のうち、最大のものは" &lt;&lt; Function::max(m, n) &lt;&lt; endl;
-    cout &lt;&lt; m &lt;&lt; "と" &lt;&lt; n &lt;&lt; "のうち、最大のものは" &lt;&lt; Function::min(m, n) &lt;&lt; endl;
+    cout &lt;&lt; m &lt;&lt; "と" &lt;&lt; n &lt;&lt; "のうち、最小のものは" &lt;&lt; Function::min(m, n) &lt;&lt; endl;
     return 0;
 }</pre>
       <div class="result-label">実行結果</div>
@@ -217,8 +226,8 @@ int main(){
     c1.count();
     c1.count();
     c2.count();
-    cout &lt;&lt; "c1のカウント数：" &lt;&lt; c1.getCount() &lt;&lt; endl;
-    cout &lt;&lt; "c2のカウント数：" &lt;&lt; c2.getCount() &lt;&lt; endl;
+    cout &lt;&lt; "c1のカウント数:" &lt;&lt; c1.getCount() &lt;&lt; endl;
+    cout &lt;&lt; "c2のカウント数:" &lt;&lt; c2.getCount() &lt;&lt; endl;
     cout &lt;&lt; "トータルのカウント数:" &lt;&lt; c1.getCount() + c2.getCount() &lt;&lt; endl;
     return 0;
 }</pre>
@@ -303,17 +312,17 @@ int main(){
     <div class="footer-col">
       <h4>プログラミング</h4>
       <ul>
-        <li><a href="http://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
-        <li><a href="http://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
-        <li><a href="http://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
-        <li><a href="http://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
-        <li><a href="http://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
+        <li><a href="https://c-lang.sevendays-study.com/">一週間でわかるC言語</a></li>
+        <li><a href="https://cpp-lang.sevendays-study.com/">一週間でわかるC++言語</a></li>
+        <li><a href="https://java.sevendays-study.com/">一週間でわかるJava言語</a></li>
+        <li><a href="https://csharp.sevendays-study.com/">一週間でわかるC#言語</a></li>
+        <li><a href="https://sevendays-study.com/algorithm/">一週間でわかるアルゴリズム</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Web関連</h4>
       <ul>
-        <li><a href="http://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
+        <li><a href="https://web.sevendays-study.com/mysql/">一週間でわかるMySQL</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -333,13 +342,13 @@ int main(){
       <h4>リンク</h4>
       <ul>
         <li><a href="link.html">相互リンク</a></li>
-        <li><a href="http://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
+        <li><a href="https://sevendays-study.com/computer-literacy/">コンピュータリテラシ</a></li>
         <li><a href="https://sevendays-study.com/privacypolicy.html">プライバシーポリシー</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-copy">
-    Copyright © <a href="http://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
+    Copyright © <a href="https://shift-system.jp/" style="color:inherit">shift-system.jp</a> All Rights Reserved.
   </div>
 </footer>
 

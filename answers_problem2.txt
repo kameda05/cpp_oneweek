@@ -1,0 +1,115 @@
+================================================================
+練習問題2：クラス　解答と解説
+================================================================
+
+
+問題 2-1　メンバ関数の追加
+------------------------------------------------------------------
+【解答】
+// keisan.h
+#ifndef KEISAN_H
+#define KEISAN_H
+
+class Keisan{
+public:
+    int a;
+    int b;
+    int add();
+    int sub();
+};
+
+#endif // KEISAN_H
+
+// keisan.cpp
+#include "keisan.h"
+
+int Keisan::add()
+{
+    return a + b;
+}
+int Keisan::sub()
+{
+    return a - b;
+}
+
+// main.cpp
+#include <iostream>
+#include "keisan.h"
+
+using namespace std;
+
+int main(){
+    Keisan k;
+    k.a = 4;
+    k.b = 3;
+    cout << k.a << " + " << k.b << " = " << k.add() << endl;
+    cout << k.a << " - " << k.b << " = " << k.sub() << endl;
+    return 0;
+}
+
+【解説】
+メンバ関数を追加するには、次の2か所に記述します。
+  ・ヘッダファイル（keisan.h）のクラス定義の中に、関数の宣言 int sub(); を書く
+  ・ソースファイル（keisan.cpp）に、クラス名::関数名 の形で処理の中身を書く
+Keisan::sub() のように「クラス名::」を付けることで、その関数が Keisan クラスの
+メンバ関数であることを表します。メンバ関数の中では、メンバ変数 a、b をそのまま使えます。
+
+
+================================================================
+問題 2-2　3つの数の最大値・最小値
+------------------------------------------------------------------
+【解答】
+// minmax.h
+#ifndef MINMAX_H
+#define MINMAX_H
+
+class MinMax{
+public:
+    int max(int n1, int n2, int n3);
+    int min(int n1, int n2, int n3);
+};
+
+#endif // MINMAX_H
+
+// minmax.cpp
+#include "minmax.h"
+
+//    最大値を返す
+int MinMax::max(int n1, int n2, int n3){
+    int m = n1;
+    if (n2 > m){
+        m = n2;
+    }
+    if (n3 > m){
+        m = n3;
+    }
+    return m;
+}
+//    最小値を返す
+int MinMax::min(int n1, int n2, int n3){
+    return -max(-n1, -n2, -n3);
+}
+
+// main.cpp
+#include <iostream>
+#include "minmax.h"
+
+using namespace std;
+
+int main(){
+    MinMax m;
+    int a = 4;
+    int b = 2;
+    int c = 7;
+    cout << a << "と" << b << "と" << c << "のうち、最大のものは" << m.max(a, b, c) << endl;
+    cout << a << "と" << b << "と" << c << "のうち、最小のものは" << m.min(a, b, c) << endl;
+    return 0;
+}
+
+【解説】
+引数の数を変えるときは、ヘッダファイルの宣言と、ソースファイルの定義の両方を
+同じ形に直す必要があります（片方だけ直すとビルドエラーになります）。
+max() では、最初の数を仮の最大値とし、残りの数と順に比べて大きいほうに置き換えています。
+min() は元のプログラムと同じく、符号を反転させた数の最大値を求め、
+その符号をもう一度反転させることで最小値を求めています。
+もちろん、max() と同じように比較を使って書いてもかまいません。
